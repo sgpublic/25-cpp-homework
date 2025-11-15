@@ -1,20 +1,19 @@
 [workspace]
 authors = ["Haven Madray <sgpublic2002@gmail.com>"]
-channels = ["conda-forge"]
+channels = ["conda-forge", "anaconda"]
 name = "25-cpp-homework"
 platforms = ["linux-64", "win-64", "osx-64", "osx-arm64"]
 version = "0.1.0"
 
 [tasks]
 
-[tasks.clion_install]
-cmd = ["conan", "install", ".", "--output-folder=./cmake-build-debug/conan", "--build=missing"]
+[tasks.vcpkg_init]
+cmd = ["python", "./scripts/vcpkg_init.py"]
 
-[tasks.clion_build_debug]
-cmd = ["cmake", "build", "-S", ".", "-B", "./.conan/ouptut/Debug", "--toolchain", "./cmake-build-debug/conan/conan_toolchain.cmake", "-DCMAKE_BUILD_TYPE=Debug"]
-
-[tasks.install]
-cmd = ["conan", "install", ".", "--build=missing"]
+[tasks.vcpkg_install]
+cmd = ["python", "./scripts/vcpkg_install.py"]
+depends-on = ["vcpkg_init"]
+env.ZIC = 'zic'
 
 [dependencies]
 pixi-pycharm = ">=0.0.9,<0.0.10"
@@ -23,4 +22,4 @@ python = ">=3.14,<3.15"
 cmake = ">=3.24,<4.0"
 
 [pypi-dependencies]
-conan = ">=2.22.2, <3"
+pathlib = ">=1.0.1, <2"

@@ -22,3 +22,6 @@ cmake-build-*
 .pixi/*
 !.pixi/config.toml
 .conan/
+
+.vcpkg/*
+!.vcpkg/scripts

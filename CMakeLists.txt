@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 
+include(vcpkg_provider.cmake)
+
 project(CppHomework)
 
 set(CMAKE_CXX_STANDARD 20)
