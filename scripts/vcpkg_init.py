@@ -12,7 +12,7 @@ def main(update: bool):
     if (VCPKG_ROOT / '.git').exists():
         result = subprocess.run(['git', 'pull'])
     else:
-        result = subprocess.run(['git', 'clone', 'https://github.com/microsoft/vcpkg.git', '--depth=1', str(VCPKG_ROOT)])
+        result = subprocess.run(['git', 'clone', 'https://github.com/microsoft/vcpkg.git', str(VCPKG_ROOT)])
     if result.returncode != 0:
         return
     env = vcpkg_envs()
