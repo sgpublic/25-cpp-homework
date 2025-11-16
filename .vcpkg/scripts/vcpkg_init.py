@@ -2,8 +2,8 @@
 import argparse
 import subprocess
 
-from vcpkg_const import VCPKG_ROOT, VCPKG_BIN, vcpkg_envs
-from vcpkg_utils import shell_script, run
+from vcpkg_const import VCPKG_ROOT, VCPKG_BIN, run
+from vcpkg_utils import shell_script
 
 
 def main(update: bool):

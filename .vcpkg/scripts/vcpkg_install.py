@@ -1,7 +1,4 @@
-import subprocess
-
-from vcpkg_const import VCPKG_BIN, VCPKG_INSTALL_HOME
-from vcpkg_utils import run
+from vcpkg_const import VCPKG_BIN, VCPKG_INSTALL_HOME, run
 
 
 def main():
