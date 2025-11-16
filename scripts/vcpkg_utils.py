@@ -1,6 +1,9 @@
 import os
 import platform
+import subprocess
 from pathlib import Path
+
+from vcpkg_const import vcpkg_envs
 
 
 def executable(name: str) -> str:
@@ -24,3 +27,9 @@ def env_path(name: str, default: Path) -> Path:
 def mkdir(path: Path) -> Path:
     path.mkdir(exist_ok=True, parents=True)
     return path
+
+def run(command: list[str], env: dict[str, str]=None):
+    if env is None:
+        env = {}
+    env = vcpkg_envs() + env
+    return subprocess.run(command, env=env)

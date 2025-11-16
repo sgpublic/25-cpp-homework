@@ -3,20 +3,19 @@ import argparse
 import subprocess
 
 from vcpkg_const import VCPKG_ROOT, VCPKG_BIN, vcpkg_envs
-from vcpkg_utils import shell_script
+from vcpkg_utils import shell_script, run
 
 
 def main(update: bool):
     if VCPKG_BIN.exists() and not update:
         return
     if (VCPKG_ROOT / '.git').exists():
-        result = subprocess.run(['git', 'pull'])
+        result = run(['git', 'pull'])
     else:
-        result = subprocess.run(['git', 'clone', 'https://github.com/microsoft/vcpkg.git', str(VCPKG_ROOT)])
+        result = run(['git', 'clone', 'https://github.com/microsoft/vcpkg.git', str(VCPKG_ROOT)])
     if result.returncode != 0:
         return
-    env = vcpkg_envs()
-    subprocess.run([str(VCPKG_ROOT / shell_script('bootstrap-vcpkg'))], env=env)
+    run([str(VCPKG_ROOT / shell_script('bootstrap-vcpkg'))])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

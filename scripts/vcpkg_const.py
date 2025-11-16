@@ -17,4 +17,5 @@ def vcpkg_envs():
     env = os.environ.copy()
     env['VCPKG_DOWNLOADS'] = str(VCPKG_DOWNLOADS.resolve())
     env['VCPKG_DEFAULT_BINARY_CACHE'] = str(VCPKG_DEFAULT_BINARY_CACHE.resolve())
+    env['PKG_CONFIG_PATH'] = '/usr/lib/x86_64-linux-gnu/pkgconfig'
     return env

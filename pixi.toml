@@ -25,6 +25,7 @@ pixi-pycharm = ">=0.0.9,<0.0.10"
 ninja = ">=1.13.1,<2"
 python = ">=3.14,<3.15"
 cmake = ">=3.24,<4.0"
+nasm = ">=2.16.1,<2.17"
 
 [pypi-dependencies]
 pathlib = ">=1.0.1, <2"
