@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.30)
 
-include(.vcpkg/vcpkg_provider.cmake)
+#include(.vcpkg/vcpkg_provider.cmake)
 
 project(CppHomework)
 

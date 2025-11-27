@@ -79,3 +79,17 @@ CMake Error at cmake/libprotobuf-lite.cmake:30 (target_link_libraries):
 事实上最新版本的 `protobuf` 已经移除了对这玩意的使用：[protocolbuffers/protobuf#20413](https://github.com/protocolbuffers/protobuf/pull/20413)，而 vcpkg 仓库源还没更新到最新版本（巨硬还在[苦苦挣扎](https://github.com/microsoft/vcpkg/pulls?q=is%3Apr+in%3Atitle+protobuf+update+to)）。
 
 那么解决方案就只能是给 `abseil` 降级了：降级到 `20250127.1` 即可。
+
+## QtCreator
+
+### 1. Process finished with exit code -1073741515 (0xC0000135)
+
+具体表现为，使用 QtCreator 能正常启动调试，但 CLion 启动报错：
+
+```
+Process finished with exit code -1073741515 (0xC0000135)
+```
+
+解决方案：
+
+CLion 中，打开 `Edit Configurations...`，将 QT 库的 `bin` 文件夹（例如 `C:/Qt/6.10.1/mingw_64/bin`）添加到 `PATH` 环境变量里。
