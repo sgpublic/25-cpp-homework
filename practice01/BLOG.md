@@ -92,4 +92,6 @@ Process finished with exit code -1073741515 (0xC0000135)
 
 解决方案：
 
+> 参考文章：https://stackoverflow.com/questions/59187030
+
 CLion 中，打开 `Edit Configurations...`，将 QT 库的 `bin` 文件夹（例如 `C:/Qt/6.10.1/mingw_64/bin`）添加到 `PATH` 环境变量里。

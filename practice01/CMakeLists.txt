@@ -5,7 +5,7 @@ qt_standard_project_setup()
 
 
 # BiliQt
-file(GLOB SRC_FILES "src/*.cpp" "src/**/*.cpp")
+file(GLOB SRC_FILES "src/**/*.cpp" "src/**/*.qml")
 file(GLOB HEADER_FILES "include/*.h" "include/**/*.h")
 
 qt_add_executable(BiliQt ${SRC_FILES} ${HEADER_FILES})
