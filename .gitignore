@@ -21,3 +21,10 @@ cmake-build-*
 
 build
 .qtcreator
+
+# pixi environments
+.pixi/*
+!.pixi/config.toml
+.conan/
+
+.vcpkg/vcpkg

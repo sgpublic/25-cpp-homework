@@ -11,13 +11,8 @@
 
      ```shell
      sudo apt update
-     sudo apt install -y build-essential pkg-config autoconf-archive
-     sudo apt install -y libgl-dev xorg-dev libx11-xcb-dev libxcb*-dev libegl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev
-     ```
-   + macOS（在 macOS 14.7.2 上完成测试）：
-
-     ```shell
-     brew install pkg-config autoconf-archive
+     sudo apt install -y build-essential pkg-config
+     sudo apt install -y qt6-base-dev qt6-declarative-dev qt6-shadertools-dev qt6-5compat-dev qt6-l10n-tools qt6-wayland-dev
      ```
 3. 安装 vcpkg：
 
