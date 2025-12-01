@@ -12,7 +12,7 @@
      ```shell
      sudo apt update
      sudo apt install -y build-essential pkg-config
-     sudo apt install -y qt6-base-dev qt6-declarative-dev qt6-shadertools-dev qt6-5compat-dev qt6-l10n-tools qt6-wayland-dev
+     sudo apt install -y libgl-dev xorg-dev libx11-xcb-dev libxcb*-dev libegl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev
      ```
 3. 安装 vcpkg：
 

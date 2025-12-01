@@ -1,10 +1,12 @@
 #include <QApplication>
 #include <QPushButton>
+#include <QQmlApplicationEngine>
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    QPushButton button("Hello world!", nullptr);
-    button.resize(200, 100);
-    button.show();
+
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/ui/MainWindow.qml")));
+
     return QApplication::exec();
 }
