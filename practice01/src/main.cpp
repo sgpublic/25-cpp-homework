@@ -1,12 +1,14 @@
 #include <QApplication>
-#include <QPushButton>
 #include <QQmlApplicationEngine>
+#include <utils/resources.h>
+
+using namespace biliqt::utils;
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/ui/MainWindow.qml")));
+    engine.load(Resources::get_qml("/App.qml"));
 
     return QApplication::exec();
 }

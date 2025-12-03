@@ -28,3 +28,7 @@ build
 .conan/
 
 .vcpkg/vcpkg
+
+/core
+
+*.qm
