@@ -15,7 +15,7 @@ FluWindow {
         displayMode: FluNavigationViewType.Open
         height: parent.height
         logo: ResourceModule.getDrawable("/app_logo.svg")
-        pageMode: FluNavigationViewType.NoStack
+        pageMode: FluNavigationViewType.Stack
         title: qsTrId("app_name")
         width: parent.width
 

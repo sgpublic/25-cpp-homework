@@ -125,5 +125,5 @@ qt_add_translations(${PROJECT_NAME}
 
 ```cmake
 add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lupdate)
-add_dependencies(${PROJECT_NAME} update_translations)
+add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lrelease)
 ```

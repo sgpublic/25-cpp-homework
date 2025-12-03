@@ -7,12 +7,10 @@ FluObject {
     id: home_navView_item
 
     property var navigationView
-    property var paneItemMenu
 
     FluPaneItem{
         id: home_navView_item_setting
         title: qsTrId("home_navView_item_home")
-        menuDelegate: paneItemMenu
         icon: FluentIcons.Home
         url: ResourceModule.getQml("/pages/HomePage.qml")
         onTap: {
@@ -22,7 +20,6 @@ FluObject {
     FluPaneItem{
         id: home_navView_item_mine
         title: qsTrId("home_navView_item_mine")
-        menuDelegate: paneItemMenu
         icon: FluentIcons.People
         url: ResourceModule.getQml("/pages/MinePage.qml")
         onTap: {
