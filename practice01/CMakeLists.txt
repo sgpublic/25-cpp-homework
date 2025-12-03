@@ -68,9 +68,14 @@ qt_add_resources(${PROJECT_NAME} ${PROJECT_NAME}
 # - 执行 lupdate 更新 ts
 # - 执行 lrelease 生成 qm
 qt_add_translations(${PROJECT_NAME}
-        TARGETS ${PROJECT_NAME}
+        SOURCE_TARGETS ${PROJECT_NAME}
         TS_OUTPUT_DIRECTORY ${TRANS_DIR}
+        INCLUDE_DIRECTORIES ${SRC_DIR} ${INC_DIR} ${QML_DIR}
+        RESOURCE_PREFIX "/biliqt/i18n"
 )
+add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lupdate)
+add_dependencies(${PROJECT_NAME} update_translations)
+add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lrelease)
 
 
 # ================================

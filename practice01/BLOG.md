@@ -95,3 +95,35 @@ Process finished with exit code -1073741515 (0xC0000135)
 > 参考文章：https://stackoverflow.com/questions/59187030
 
 CLion 中，打开 `Edit Configurations...`，将 QT 库的 `bin` 文件夹（例如 `C:/Qt/6.10.1/mingw_64/bin`）添加到 `PATH` 环境变量里。
+
+### 2. 翻译 .ts 文仅生成空文件
+
+具体表现为，使用以下命令添加翻译文件自动生成：
+
+```cmake
+qt_add_translations(${PROJECT_NAME}
+        SOURCE_TARGETS ${PROJECT_NAME}
+        TS_OUTPUT_DIRECTORY ${TRANS_DIR}
+        INCLUDE_DIRECTORIES ${SRC_DIR} ${INC_DIR} ${QML_DIR}
+)
+```
+
+但仅生成空白的 .ts 文件：
+
+```xml
+<?xml version="1.0" encoding="utf-8"?> 
+<!-- Run the update_translations CMake target to populate the source strings in this file. --> 
+<!DOCTYPE TS>
+<TS version="2.1" language="en" sourcelanguage="en"/>
+```
+
+解决方案：
+
+> 参考文章：https://forum.qt.io/post/751606
+
+添加命令以自动更新 .ts 文件：
+
+```cmake
+add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lupdate)
+add_dependencies(${PROJECT_NAME} update_translations)
+```
