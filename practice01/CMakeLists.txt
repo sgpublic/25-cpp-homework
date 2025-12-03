@@ -1,66 +1,81 @@
-# qt
-find_package(Qt6 CONFIG COMPONENTS Core Gui Widgets Quick REQUIRED)
+cmake_minimum_required(VERSION 3.22)
+project(BiliQt LANGUAGES CXX)
 
-qt_standard_project_setup()
-
-set(CURRENT_PROJECT_NAME BiliQt)
-
-
-# BiliQt
-file(GLOB_RECURSE SRC_FILES "src/*")
-file(GLOB_RECURSE HEADER_FILES "include/*")
-file(GLOB_RECURSE QML_FILES "res/qml/*")
-list(APPEND SRC_FILES ${QRC_PATH})
-qt_add_resources(QML_RES ${QRC_PATH})
-qt_add_executable(${CURRENT_PROJECT_NAME} ${QML_RES} res/biliqt.qrc ${SRC_FILES} ${HEADER_FILES})
-target_link_libraries(${CURRENT_PROJECT_NAME} PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Quick fluentuiplugin)
-target_include_directories(${CURRENT_PROJECT_NAME} PRIVATE include)
-
-
-# 添加国际化脚本
-find_program(QT_LUPDATE NAMES lupdate lupdate-qt6 REQUIRED)
-find_program(QT_LRELEASE NAMES lrelease lrelease-qt6 REQUIRED)
-set(LANGUAGES en_US zh_CN)
-file(GLOB_RECURSE LUPDATE_SOURCES
-        "${CMAKE_CURRENT_LIST_DIR}/res/*.qml"
+# ================================
+# Qt
+# ================================
+find_package(Qt6 CONFIG REQUIRED Core Gui Widgets Quick LinguistTools)
+qt_standard_project_setup(
+        I18N_TRANSLATED_LANGUAGES zh_CN en
 )
-set(GENERATED_QM_FILES "")
-set(TRANSLATION_FILE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/res/translations")
-foreach(LANG ${LANGUAGES})
-    set(TS_FILE "${TRANSLATION_FILE_DIR}/${CURRENT_PROJECT_NAME}_${LANG}.ts")
-    set(QM_FILE "${TRANSLATION_FILE_DIR}/${CURRENT_PROJECT_NAME}_${LANG}.qm")
-    add_custom_command(
-            OUTPUT ${QM_FILE}
-            COMMAND ${QT_LUPDATE} ${CMAKE_CURRENT_LIST_DIR} -ts ${TS_FILE}
-            COMMAND ${QT_LRELEASE} ${TS_FILE}
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${QM_FILE} ${APPLICATION_DIR_PATH}/i18n/${QM_FILE}
-            DEPENDS ${LUPDATE_SOURCES}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-            COMMENT "Updating translations for ${LANG}"
-    )
-    list(APPEND GENERATED_QM_FILES ${QM_FILE})
-endforeach()
-add_custom_target(${CURRENT_PROJECT_NAME}_Translations ALL
-        DEPENDS ${GENERATED_QM_FILES}
+
+# ================================
+# 源码 / 资源目录
+# ================================
+set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
+set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
+set(RES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/res")
+set(QML_DIR "${RES_DIR}/qml")
+set(DRAWABLE_DIR "${RES_DIR}/drawable")
+set(TRANS_DIR "${RES_DIR}/translations")
+
+file(GLOB_RECURSE SRC_FILES "${SRC_DIR}/*")
+file(GLOB_RECURSE HEADER_FILES "${INC_DIR}/*")
+file(GLOB_RECURSE QML_FILES "${QML_DIR}/*")
+
+# ================================
+# 可执行文件
+# ================================
+qt_add_executable(${PROJECT_NAME}
+        ${SRC_FILES}
+        ${HEADER_FILES}
 )
-add_dependencies(${CURRENT_PROJECT_NAME} ${CURRENT_PROJECT_NAME}_Translations)
+
+target_link_libraries(${PROJECT_NAME}
+        PRIVATE
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
+        Qt6::Quick
+        fluentuiplugin
+)
+
+target_include_directories(${PROJECT_NAME}
+        PRIVATE ${INC_DIR}
+)
 
 
-# 自动把 QML 写入 biliqt.qrc
-file(WRITE ${QRC_PATH} "<RCC>\n  <qresource prefix=\"/biliqt\">\n")
-file(GLOB_RECURSE RESOURCE_FILE "res/qml/*" "res/drawble/*" "res/translations/*.qm")
-list(APPEND RESOURCE_FILE ${QML_FILES})
-foreach(res ${RESOURCE_FILE})
-    if (IS_DIRECTORY ${res})
-        continue()
-    endif()
-    file(RELATIVE_PATH REL ${CMAKE_CURRENT_SOURCE_DIR}/res/ ${res})
-    file(APPEND ${QRC_PATH} "    <file>${REL}</file>\n")
-endforeach()
-file(APPEND ${QRC_PATH} "  </qresource>\n</RCC>\n")
+# ================================
+# 自动添加资源文件到 qrc
+# ================================
+file(GLOB_RECURSE RESOURCE_FILES
+        "${QML_DIR}/*"
+        "${DRAWABLE_DIR}/*"
+)
+
+qt_add_resources(${PROJECT_NAME} ${PROJECT_NAME}
+        PREFIX "/biliqt"
+        BASE ${RES_DIR}
+        FILES ${RESOURCE_FILES}
+)
 
 
-# FluentUI
+# ================================
+# 自动生成翻译文件并加入资源
+# ================================
+# qt6_add_translation 会自动：
+# - 创建 ts 文件（不存在时）
+# - 执行 lupdate 更新 ts
+# - 执行 lrelease 生成 qm
+qt_add_translations(${PROJECT_NAME}
+        TARGETS ${PROJECT_NAME}
+        TS_OUTPUT_DIRECTORY ${TRANS_DIR}
+)
+
+
+# ================================
+# Fluent UI
+# ================================
 set(FLUENTUI_BUILD_EXAMPLES OFF)
 set(FLUENTUI_BUILD_STATIC_LIB OFF)
 add_subdirectory(thirdparty/FluentUI)

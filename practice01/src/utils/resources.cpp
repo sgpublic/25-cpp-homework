@@ -17,6 +17,6 @@ QUrl Resources::get_qml(const std::string& path) {
     return get("/qml" + path);
 }
 
-QUrl Resources::get_resources(const std::string& path) {
-    return get("/drawble" + path);
+QUrl Resources::get_drawable(const std::string& path) {
+    return get("/drawable" + path);
 }
