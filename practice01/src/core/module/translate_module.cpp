@@ -5,6 +5,8 @@
 
 #include "core/module/setting_module.h"
 
+using namespace Qt::StringLiterals;
+
 namespace biliqt::core::module {
 
     TranslateModule::TranslateModule(QObject *parent) : QObject(parent) {
@@ -17,7 +19,7 @@ namespace biliqt::core::module {
         _engine = engine;
         _translator = new QTranslator(this);
         QGuiApplication::installTranslator(_translator);
-        if (_translator->load(QLocale(), "BiliQt", "_", ":/biliqt/i18n")) {
+        if (_translator->load(":/biliqt/i18n/BiliQt_" + _current + ".qm")) {
             _engine->retranslate();
         }
     }
