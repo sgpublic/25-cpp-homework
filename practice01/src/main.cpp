@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("SettingModule", SettingModule::getInstance());
     engine.rootContext()->setContextProperty("TranslateModule", TranslateModule::getInstance());
 
-    engine.load(ResourceModule::getInstance()->get_qml("/App.qml"));
+    engine.load(ResourceModule::getInstance()->getQml("/App.qml"));
 
     return QApplication::exec();
 }

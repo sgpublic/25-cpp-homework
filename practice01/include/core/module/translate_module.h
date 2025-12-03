@@ -9,13 +9,14 @@
 #include "utils/stdafx.h"
 
 using namespace biliqt::utils;
+using namespace std;
 
 namespace biliqt::core::module {
 
     class TranslateModule : public QObject {
         Q_OBJECT
         Q_PROPERTY_AUTO(QString, current)
-        Q_PROPERTY_READONLY_AUTO(QStringList, languages)
+        Q_PROPERTY_READONLY_AUTO(QVariantMap, languages)
     private:
         explicit TranslateModule(QObject *parent = nullptr);
 

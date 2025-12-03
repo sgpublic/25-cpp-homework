@@ -13,11 +13,11 @@ namespace biliqt::core::module {
         return "qrc:/biliqt" + path;
     }
 
-    QString ResourceModule::get_qml(const QString& path) {
+    QString ResourceModule::getQml(const QString& path) {
         return get("/qml" + path);
     }
 
-    QString ResourceModule::get_drawable(const QString& path) {
+    QString ResourceModule::getDrawable(const QString& path) {
         return get("/drawable" + path);
     }
 

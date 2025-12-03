@@ -10,8 +10,8 @@ using namespace Qt::StringLiterals;
 namespace biliqt::core::module {
 
     TranslateModule::TranslateModule(QObject *parent) : QObject(parent) {
-        _languages << "en";
-        _languages << "zh_CN";
+        _languages.insert("en", "language_en");
+        _languages.insert("zh_CN", "language_zh_CN");
         _current = SettingModule::getInstance()->getLanguage();
     }
 

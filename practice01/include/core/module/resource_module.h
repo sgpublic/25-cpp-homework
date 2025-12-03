@@ -17,11 +17,9 @@ namespace biliqt::core::module {
         SINGLETON(ResourceModule);
 
         Q_INVOKABLE QString get(const QString& path);
-        Q_INVOKABLE QString get_qml(const QString& path);
-        Q_INVOKABLE QString get_drawable(const QString& path);
+        Q_INVOKABLE QString getQml(const QString& path);
+        Q_INVOKABLE QString getDrawable(const QString& path);
     private:
-        QString get_qrc(const QString& path);
-
         explicit ResourceModule(QObject *parent = nullptr);
     };
 }
