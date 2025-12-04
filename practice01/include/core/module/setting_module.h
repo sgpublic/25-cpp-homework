@@ -9,8 +9,6 @@
 #include <QScopedPointer>
 #include "utils/singleton.h"
 
-using namespace biliqt::utils;
-
 namespace biliqt::core::module {
 
     class SettingModule : public QObject {

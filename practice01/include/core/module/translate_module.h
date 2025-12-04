@@ -8,9 +8,6 @@
 #include "utils/singleton.h"
 #include "utils/stdafx.h"
 
-using namespace biliqt::utils;
-using namespace std;
-
 namespace biliqt::core::module {
 
     class TranslateModule : public QObject {

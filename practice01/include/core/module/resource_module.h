@@ -8,8 +8,6 @@
 
 #include "utils/singleton.h"
 
-using namespace biliqt::utils;
-
 namespace biliqt::core::module {
     class ResourceModule: public QObject {
         Q_OBJECT

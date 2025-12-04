@@ -4,18 +4,18 @@
 <context>
     <name></name>
     <message id="app_name">
-        <location filename="../qml/window/MainWindow.qml" line="8"/>
-        <location filename="../qml/window/MainWindow.qml" line="19"/>
+        <location filename="../qml/window/MainWindow.qml" line="7"/>
+        <location filename="../qml/window/MainWindow.qml" line="18"/>
         <source></source>
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/component/navigation/NavCommonItems.qml" line="13"/>
+        <location filename="../qml/window/MainWindow.qml" line="24"/>
         <source></source>
         <translation>Home</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/component/navigation/NavCommonItems.qml" line="22"/>
+        <location filename="../qml/window/MainWindow.qml" line="33"/>
         <source></source>
         <translation>My Watchlist</translation>
     </message>
@@ -55,7 +55,7 @@
         <translation>Language</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/component/navigation/NavFooterItems.qml" line="13"/>
+        <location filename="../qml/window/MainWindow.qml" line="45"/>
         <source></source>
         <translation>Settings</translation>
     </message>

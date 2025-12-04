@@ -14,13 +14,13 @@ namespace biliqt::utils {
         return instance;
     }
 
+}
+
 #define SINGLETON(Class)                                                                           \
 private:                                                                                           \
-    friend class Singleton<Class>;                                                                 \
+    friend class biliqt::utils::Singleton<Class>;                                                  \
                                                                                                    \
 public:                                                                                            \
     static Class *getInstance() {                                                                  \
-        return Singleton<Class>::getInstance();                                                    \
+        return biliqt::utils::Singleton<Class>::getInstance();                                     \
     }
-
-}

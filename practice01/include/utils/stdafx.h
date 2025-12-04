@@ -1,7 +1,5 @@
 #pragma once
 
-namespace biliqt::utils {
-
 #define Q_PROPERTY_AUTO_P(TYPE, M)                                                                 \
     Q_PROPERTY(TYPE M MEMBER _##M NOTIFY M##Changed)                                               \
 public:                                                                                            \
@@ -48,4 +46,3 @@ public:                                                                         
 private:                                                                                           \
     TYPE _##M;
 
-}

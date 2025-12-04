@@ -1,6 +1,5 @@
 import QtQuick 2.15
 import FluentUI 1.0
-import "../component/navigation"
 
 FluWindow {
     id: window_main
@@ -19,12 +18,41 @@ FluWindow {
         title: qsTrId("app_name")
         width: parent.width
 
-        items: NavCommonItems
-        footerItems: NavFooterItems
+        items: FluObject {
+            FluPaneItem {
+                id: home_navView_item_setting
+                title: qsTrId("home_navView_item_home")
+                icon: FluentIcons.Home
+                url: ResourceModule.getQml("/pages/HomePage.qml")
+                onTap: {
+                    home_navView.push(url)
+                }
+            }
+            FluPaneItem {
+                id: home_navView_item_mine
+                title: qsTrId("home_navView_item_mine")
+                icon: FluentIcons.People
+                url: ResourceModule.getQml("/pages/MinePage.qml")
+                onTap: {
+                    home_navView.push(url)
+                }
+            }
+        }
+
+        footerItems: FluObject {
+            FluPaneItem {
+                id: home_navView_footer_setting
+                title: qsTrId("home_navView_footer_setting")
+                icon: FluentIcons.Settings
+                url: ResourceModule.getQml("/pages/SettingPage.qml")
+                onTap: {
+                    home_navView.push(url)
+                }
+            }
+        }
+
 
         Component.onCompleted: {
-            NavCommonItems.navigationView = home_navView;
-            NavFooterItems.navigationView = home_navView;
             window_main.setHitTestVisible(home_navView.buttonMenu);
             window_main.setHitTestVisible(home_navView.buttonBack);
             window_main.setHitTestVisible(home_navView.imageLogo);

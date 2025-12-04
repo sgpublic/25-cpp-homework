@@ -27,6 +27,7 @@ namespace biliqt::core::module {
         if (_translator->load(":/biliqt/i18n/BiliQt_" + language + ".qm")) {
             _engine->retranslate();
         }
+        current(language);
     }
 
     int TranslateModule::indexOfCurrent() {

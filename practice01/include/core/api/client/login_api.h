@@ -3,20 +3,15 @@
 //
 #pragma once
 
-#include <oatpp/codegen/ApiClient_define.hpp>
-
 #include "oatpp/web/client/ApiClient.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 
 #include OATPP_CODEGEN_BEGIN(ApiClient)
 
-using namespace oatpp::web::client;
-using namespace oatpp::data::mapping;
-
 class QrcodeResp;
 
 namespace biliqt::core::api::client {
-    class LoginApi : public ApiClient {
+    class LoginApi : public oatpp::web::client::ApiClient {
         API_CLIENT_INIT(LoginApi)
 
         API_CALL(
