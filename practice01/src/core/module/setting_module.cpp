@@ -10,6 +10,7 @@ namespace biliqt::core::module {
 
     void SettingModule::save(const QString &key, QVariant val) {
         m_settings->setValue(key, val);
+        m_settings->sync();
     }
 
     QVariant SettingModule::get(const QString &key, QVariant def) {

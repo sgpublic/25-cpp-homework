@@ -4,7 +4,7 @@ project(BiliQt LANGUAGES CXX)
 # ================================
 # Qt
 # ================================
-find_package(Qt6 CONFIG REQUIRED Core Gui Widgets Quick LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Quick LinguistTools)
 qt_standard_project_setup(
         I18N_TRANSLATED_LANGUAGES zh_CN en
 )
@@ -31,13 +31,11 @@ qt_add_executable(${PROJECT_NAME}
         ${HEADER_FILES}
 )
 
-target_link_libraries(${PROJECT_NAME}
-        PRIVATE
+target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt6::Core
         Qt6::Gui
         Qt6::Widgets
         Qt6::Quick
-        fluentuiplugin
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -83,3 +81,22 @@ add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lrelease)
 set(FLUENTUI_BUILD_EXAMPLES OFF)
 set(FLUENTUI_BUILD_STATIC_LIB OFF)
 add_subdirectory(thirdparty/FluentUI)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        fluentuiplugin
+)
+
+# ================================
+# 其他依赖
+# ================================
+find_package(oatpp CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        oatpp::oatpp
+)
+
+find_package(OpenSSL REQUIRED)
+find_package(oatpp-openssl CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        OpenSSL::SSL
+        oatpp::oatpp-openssl
+)

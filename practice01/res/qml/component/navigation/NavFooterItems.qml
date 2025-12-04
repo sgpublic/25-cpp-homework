@@ -8,7 +8,7 @@ FluObject {
 
     property var navigationView
 
-    FluPaneItem{
+    FluPaneItem {
         id: home_navView_footer_setting
         title: qsTrId("home_navView_footer_setting")
         icon: FluentIcons.Settings

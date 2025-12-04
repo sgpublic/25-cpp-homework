@@ -27,11 +27,19 @@ namespace biliqt::core::module {
         Q_INVOKABLE int getDarkMode() {
             return get("darkMode", QVariant(0)).toInt();
         }
+
         Q_INVOKABLE void saveLanguage(const QString &language) {
             save("language", language);
         }
         Q_INVOKABLE QString getLanguage() {
             return get("language", QVariant("zh_CN")).toString();
+        }
+
+        Q_INVOKABLE void saveUsername(const QString &username) {
+            save("username", username);
+        }
+        Q_INVOKABLE QString getUsername() {
+            return get("username", QVariant("")).toString();
         }
 
     private:

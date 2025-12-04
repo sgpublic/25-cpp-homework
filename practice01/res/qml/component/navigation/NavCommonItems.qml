@@ -8,7 +8,7 @@ FluObject {
 
     property var navigationView
 
-    FluPaneItem{
+    FluPaneItem {
         id: home_navView_item_setting
         title: qsTrId("home_navView_item_home")
         icon: FluentIcons.Home
@@ -17,7 +17,7 @@ FluObject {
             navigationView.push(url)
         }
     }
-    FluPaneItem{
+    FluPaneItem {
         id: home_navView_item_mine
         title: qsTrId("home_navView_item_mine")
         icon: FluentIcons.People

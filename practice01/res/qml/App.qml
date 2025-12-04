@@ -9,7 +9,7 @@ FluLauncher {
         FluApp.init(biliQt, Qt.locale(TranslateModule.current));
         FluApp.useSystemAppBar = true;
         FluApp.windowIcon = ResourceModule.getDrawable("/app_logo.svg");
-        FluTheme.darkMode = 0;
+        FluTheme.darkMode = SettingModule.getDarkMode();
         FluTheme.animationEnabled = true;
         FluRouter.routes = {
             "/": ResourceModule.getQml("/window/MainWindow.qml")

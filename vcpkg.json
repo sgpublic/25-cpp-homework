@@ -4,6 +4,7 @@
   "dependencies": [
     "oatpp",
     "oatpp-openssl",
+    "openssl",
     "protobuf"
   ],
   "builtin-baseline": "0804e3b55b7e435c593707071052363fa876f170",
@@ -15,6 +16,10 @@
     {
       "name": "oatpp-openssl",
       "version": "1.3.0"
+    },
+    {
+      "name": "openssl",
+      "version": "3.6.0#3"
     },
     {
       "name": "protobuf",
