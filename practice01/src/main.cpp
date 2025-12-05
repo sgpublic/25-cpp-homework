@@ -8,10 +8,15 @@
 #include "core/module/translate_module.h"
 #include "core/module/viewmodel_module.h"
 
+#include "oatpp/core/macro/component.hpp"
+
 using namespace biliqt::utils;
 using namespace biliqt::core::module;
+using namespace oatpp::base;
 
 int main(int argc, char *argv[]) {
+    Environment::init();
+
     SettingModule::getInstance()->init(argv);
 
     QApplication application(argc, argv);
@@ -26,5 +31,7 @@ int main(int argc, char *argv[]) {
 
     engine.load(ResourceModule::getInstance()->getQml("/App.qml"));
 
-    return QApplication::exec();
+    const int exitCode = QApplication::exec();
+    Environment::destroy();
+    return exitCode;
 }

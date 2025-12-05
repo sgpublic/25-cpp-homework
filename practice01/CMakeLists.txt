@@ -87,6 +87,12 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 )
 
 # ================================
+# cppcoro
+# ================================
+add_subdirectory(thirdparty/cppcoro)
+
+
+# ================================
 # 其他依赖
 # ================================
 find_package(oatpp CONFIG REQUIRED)
@@ -100,3 +106,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         OpenSSL::SSL
         oatpp::oatpp-openssl
 )
+
+find_package(Boost REQUIRED COMPONENTS url)
+target_link_libraries(${PROJECT_NAME} PRIVATE Boost::url)

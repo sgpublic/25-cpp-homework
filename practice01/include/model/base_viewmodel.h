@@ -11,8 +11,7 @@ namespace biliqt::model {
     class ViewModel : public QObject {
         Q_OBJECT
     public:
-        explicit ViewModel(QObject *parent)
-            : QObject(parent) {}
+        explicit ViewModel(QObject *parent = nullptr) : QObject(parent) {}
 
         virtual void onClear() = 0;
     };

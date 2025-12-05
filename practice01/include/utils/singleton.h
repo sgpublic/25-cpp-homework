@@ -5,14 +5,11 @@ namespace biliqt::utils {
     template <typename T>
     class Singleton {
     public:
-        static T *getInstance();
+        static T* getInstance() {
+            static T *instance = new T();
+            return instance;
+        }
     };
-
-    template <typename T>
-    T *Singleton<T>::getInstance() {
-        static T *instance = new T();
-        return instance;
-    }
 
 }
 

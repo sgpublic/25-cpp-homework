@@ -5,6 +5,7 @@
     "oatpp",
     "oatpp-openssl",
     "openssl",
+    "boost-url",
     "protobuf"
   ],
   "builtin-baseline": "0804e3b55b7e435c593707071052363fa876f170",
@@ -20,6 +21,10 @@
     {
       "name": "openssl",
       "version": "3.6.0#3"
+    },
+    {
+      "name": "boost-url",
+      "version": "1.89.0"
     },
     {
       "name": "protobuf",

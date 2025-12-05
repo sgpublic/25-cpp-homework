@@ -127,3 +127,9 @@ qt_add_translations(${PROJECT_NAME}
 add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lupdate)
 add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lrelease)
 ```
+
+## CPP
+
+### 1. undefined reference to `vtable for biliqt::model::LoginWindowViewModel'
+
+父类中有纯虚函数，但子类没实现。

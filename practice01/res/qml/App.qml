@@ -12,7 +12,9 @@ FluLauncher {
         FluTheme.darkMode = SettingModule.getDarkMode();
         FluTheme.animationEnabled = true;
         FluRouter.routes = {
-            "/": ResourceModule.getQml("/window/MainWindow.qml")
+            "/": ResourceModule.getQml("/window/MainWindow.qml"),
+            "/login": ResourceModule.getQml("/window/LoginWindow.qml"),
+            "/about": ResourceModule.getQml("/window/AboutWindow.qml")
         };
         FluRouter.navigate("/");
     }

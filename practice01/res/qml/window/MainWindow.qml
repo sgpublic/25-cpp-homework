@@ -3,10 +3,13 @@ import FluentUI 1.0
 
 FluWindow {
     id: window_main
+    property var viewModel
+
     height: 900
     title: qsTrId("app_name")
     visible: true
     width: 1500
+    launchMode: FluWindowType.SingleTask
 
     FluNavigationView {
         id: home_navView
@@ -41,6 +44,14 @@ FluWindow {
 
         footerItems: FluObject {
             FluPaneItem {
+                id: home_navView_footer_about
+                title: qsTrId("home_navView_footer_about")
+                icon: FluentIcons.Contact
+                onTapListener: function () {
+                    FluRouter.navigate("/about")
+                }
+            }
+            FluPaneItem {
                 id: home_navView_footer_setting
                 title: qsTrId("home_navView_footer_setting")
                 icon: FluentIcons.Settings
@@ -51,8 +62,9 @@ FluWindow {
             }
         }
 
-
         Component.onCompleted: {
+            viewModel = ViewModelModule.createViewModel("window_main", window_main)
+
             window_main.setHitTestVisible(home_navView.buttonMenu);
             window_main.setHitTestVisible(home_navView.buttonBack);
             window_main.setHitTestVisible(home_navView.imageLogo);

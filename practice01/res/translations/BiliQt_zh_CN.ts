@@ -4,20 +4,26 @@
 <context>
     <name></name>
     <message id="app_name">
-        <location filename="../qml/window/MainWindow.qml" line="7"/>
-        <location filename="../qml/window/MainWindow.qml" line="18"/>
+        <location filename="../qml/window/AboutWindow.qml" line="28"/>
+        <location filename="../qml/window/MainWindow.qml" line="9"/>
+        <location filename="../qml/window/MainWindow.qml" line="21"/>
         <source></source>
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="24"/>
+        <location filename="../qml/window/MainWindow.qml" line="27"/>
         <source></source>
         <translation>主页</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="33"/>
+        <location filename="../qml/window/MainWindow.qml" line="36"/>
         <source></source>
         <translation>我的追番</translation>
+    </message>
+    <message id="home_navView_footer_about">
+        <location filename="../qml/window/MainWindow.qml" line="48"/>
+        <source></source>
+        <translation>关于</translation>
     </message>
     <message id="page_setting_title">
         <location filename="../qml/pages/SettingPage.qml" line="11"/>
@@ -55,18 +61,24 @@
         <translation>语言</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="45"/>
+        <location filename="../qml/window/MainWindow.qml" line="56"/>
         <source></source>
         <translation>设置</translation>
-    </message>
-    <message id="page_home_title">
-        <source></source>
-        <translation type="vanished">主页</translation>
     </message>
     <message id="page_mine_title">
         <location filename="../qml/pages/MinePage.qml" line="7"/>
         <source></source>
         <translation>我的追番</translation>
+    </message>
+    <message id="about_title">
+        <location filename="../qml/window/AboutWindow.qml" line="9"/>
+        <source></source>
+        <translation>关于</translation>
+    </message>
+    <message id="login_title">
+        <location filename="../qml/window/LoginWindow.qml" line="10"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
