@@ -20,8 +20,13 @@
         <source></source>
         <translation>My Watchlist</translation>
     </message>
-    <message id="home_navView_footer_about">
+    <message id="home_navView_footer_login">
         <location filename="../qml/window/MainWindow.qml" line="48"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="home_navView_footer_about">
+        <location filename="../qml/window/MainWindow.qml" line="65"/>
         <source></source>
         <translation>About</translation>
     </message>
@@ -61,7 +66,7 @@
         <translation>Language</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="56"/>
+        <location filename="../qml/window/MainWindow.qml" line="73"/>
         <source></source>
         <translation>Settings</translation>
     </message>

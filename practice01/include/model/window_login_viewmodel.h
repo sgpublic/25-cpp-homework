@@ -5,18 +5,13 @@
 
 #include "base_viewmodel.h"
 #include "core/api/client/passport_api.h"
+#include "core/api/dto/passport_dto.h"
 #include "utils/stdafx.h"
 
 namespace biliqt::model {
 
     class LoginWindowViewModel: public ViewModel {
-    private:
-        std::shared_ptr<core::api::client::PassportApi> _loginApi;
-
-    public:
-        explicit LoginWindowViewModel(QObject *parent = nullptr);
-        void onClear() override;
-
+        Q_OBJECT
         enum QrcodeState {
             Loading, // 加载二维码
             Waiting, // 等待扫描
@@ -29,8 +24,14 @@ namespace biliqt::model {
         Q_PROPERTY_READONLY_AUTO(QString, qrcodeUrl);
         Q_PROPERTY_READONLY_AUTO(QString, qrcodeKey);
         Q_PROPERTY_READONLY_AUTO(QString, errorMessage);
+    private:
+        std::shared_ptr<core::api::client::PassportApi> _loginApi;
 
-        Q_INVOKABLE void getLoginQrcode();
+    public:
+        explicit LoginWindowViewModel(QObject *parent = nullptr);
+        void onClear() override;
+
+        Q_INVOKABLE void requestLoginQrcode();
     };
 
 }

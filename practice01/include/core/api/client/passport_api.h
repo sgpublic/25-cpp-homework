@@ -15,13 +15,14 @@ class QrcodeResp;
 namespace biliqt::core::api::client {
 
     class PassportApi : public oatpp::web::client::ApiClient {
-        BILI_SIGN_CLIENT_INIT(PassportApi, "passport.bilibili.com")
+        BILI_SIGN_CLIENT_INIT(PassportApi, "passport.bilibili.com", true)
 
         API_CALL(
             "POST", "/x/passport-tv-login/qrcode/auth_code",
             qrcodeTv,
-            QUERY(String, body)
+            BODY_STRING(String, body)
         )
+        BILI_SIGN_CALL(qrcodeTv)
     };
 
 }

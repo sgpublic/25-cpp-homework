@@ -16,14 +16,25 @@ namespace biliqt::model {
         _loginApi = PassportApi::createShared();
     }
 
-    void LoginWindowViewModel::getLoginQrcode() {
-        qrcodeState(Loading);
-        auto dto = LoginQrcodeTvReq::createShared();
-        auto result = _loginApi->qrcodeTv(dto->signedBody());
-        auto body = readRespBody<LoginQrcodeTvResp>(result);
-        qrcodeUrl(body->data->url->data());
-        qrcodeKey(body->data->authCode->data());
-        qrcodeState(Waiting);
+    void LoginWindowViewModel::requestLoginQrcode() {
+        try {
+            qrcodeState(Loading);
+            auto dto = LoginQrcodeTvReq::createShared();
+            auto result = _loginApi->qrcodeTv(dto->asSignedBody());
+            auto body = readRespBody<LoginQrcodeTvResp>(result);
+            if (body->code != 200) {
+                errorMessage(body->message->data());
+                qrcodeState(Error);
+            } else {
+                qrcodeUrl(body->data->url->data());
+                qrcodeKey(body->data->authCode->data());
+                qrcodeState(Waiting);
+            }
+        } catch (std::runtime_error e) {
+            errorMessage(e.what());
+            qrcodeState(Error);
+        }
+        qDebug() << "LoginWindowViewModel::requestLoginQrcode, error: " << _errorMessage;
     }
 
     void LoginWindowViewModel::onClear() {

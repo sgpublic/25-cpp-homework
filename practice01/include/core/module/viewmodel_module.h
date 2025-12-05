@@ -12,14 +12,13 @@
 namespace biliqt::core::module {
     class ViewModelModule: public QObject {
         Q_OBJECT
+        SINGLETON(ViewModelModule);
     private:
         explicit ViewModelModule(QObject *parent = nullptr);
 
         QMap<QString, std::function<QObject*(QObject*)>> viewModelRegistry;
 
     public:
-        SINGLETON(ViewModelModule);
-
         Q_INVOKABLE QObject* createViewModel(const QString& name, QObject* parent);
     };
 }

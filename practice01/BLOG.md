@@ -133,3 +133,11 @@ add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lrelease)
 ### 1. undefined reference to `vtable for biliqt::model::LoginWindowViewModel'
 
 父类中有纯虚函数，但子类没实现。
+
+### 2. TypeError in qml: Property of object is not a function
+
+检查所访问的标识符是否是 public。
+
+### 3. oatpp 跟随重定向
+
+没有解决方案：[oatpp/oatpp#439](https://github.com/oatpp/oatpp/issues/439)。

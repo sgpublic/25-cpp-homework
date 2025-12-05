@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <QDebug>
 #include <oatpp/core/Types.hpp>
 #include <oatpp/web/protocol/http/incoming/Response.hpp>
 #include <oatpp/parser/json/mapping/ObjectMapper.hpp>
@@ -17,7 +18,8 @@ namespace biliqt::core::api {
     >::type
     readRespBody(std::shared_ptr<oatpp::web::protocol::http::incoming::Response> body) {
         auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared();
-        auto dto = body->readBodyToDto<oatpp::Object<T>>(objectMapper);
+        auto bodyStr = body->readBodyToString();
+        auto dto = objectMapper->readFromString<oatpp::Object<T>>(bodyStr);
         return dto.getPtr();
     }
 
@@ -30,7 +32,7 @@ public:                                                                         
         return Z__CLASS_GET_FIELDS_MAP();                                                                       \
     }                                                                                                           \
                                                                                                                 \
-    const oatpp::String signedBody() {                                                                          \
+    const oatpp::String asSignedBody() {                                                                        \
         return doSign(this, API_SECRET);                                                                        \
     }                                                                                                           \
 DTO_FIELD(String, appkey) = API_KEY;                                                                            \

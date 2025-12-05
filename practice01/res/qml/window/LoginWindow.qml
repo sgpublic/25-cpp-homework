@@ -26,6 +26,6 @@ FluWindow {
 
     Component.onCompleted: {
         viewModel = ViewModelModule.createViewModel("window_login", window_login)
-        viewModel.getLoginQrcode()
+        viewModel.requestLoginQrcode()
     }
 }

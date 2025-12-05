@@ -9,7 +9,6 @@
 namespace biliqt::model {
 
     class ViewModel : public QObject {
-        Q_OBJECT
     public:
         explicit ViewModel(QObject *parent = nullptr) : QObject(parent) {}
 

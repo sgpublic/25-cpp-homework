@@ -8,8 +8,9 @@
 namespace biliqt::model {
 
     class HomePageViewModel: public ViewModel {
+        Q_OBJECT
     public:
-        explicit HomePageViewModel(QObject *parent);
+        explicit HomePageViewModel(QObject *parent = nullptr);
         void onClear() override;
     };
 

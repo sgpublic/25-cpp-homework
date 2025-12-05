@@ -9,11 +9,12 @@
 namespace biliqt::model {
 
     class MainWindowViewModel: public ViewModel {
+        Q_OBJECT
+
+        Q_PROPERTY_READONLY_AUTO(bool, hasLogin);
     public:
         explicit MainWindowViewModel(QObject *parent = nullptr);
         void onClear() override;
-
-        Q_PROPERTY_READONLY_AUTO(bool, hasLogin);
     };
 
 }

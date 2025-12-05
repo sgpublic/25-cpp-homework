@@ -44,9 +44,26 @@ FluWindow {
 
         footerItems: FluObject {
             FluPaneItem {
+                id: home_navView_footer_login
+                title: qsTrId("home_navView_footer_login")
+                icon: FluentIcons.Contact
+                onTapListener: function () {
+                    FluRouter.navigate("/login")
+                }
+                visible: viewModel != null ? !viewModel.hasLogin : false
+            }
+            FluPaneItem {
+                id: home_navView_footer_user
+                icon: FluentIcons.Contact
+                onTapListener: function () {
+
+                }
+                visible: viewModel != null ? viewModel.hasLogin : false
+            }
+            FluPaneItem {
                 id: home_navView_footer_about
                 title: qsTrId("home_navView_footer_about")
-                icon: FluentIcons.Contact
+                icon: FluentIcons.Info
                 onTapListener: function () {
                     FluRouter.navigate("/about")
                 }

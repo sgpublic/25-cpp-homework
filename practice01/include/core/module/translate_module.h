@@ -12,15 +12,16 @@ namespace biliqt::core::module {
 
     class TranslateModule : public QObject {
         Q_OBJECT
+
         Q_PROPERTY_AUTO(QString, current)
         Q_PROPERTY_READONLY_AUTO(QStringList, languages)
+
+        SINGLETON(TranslateModule);
     private:
         explicit TranslateModule(QObject *parent = nullptr);
 
     public:
-        SINGLETON(TranslateModule);
         void init(QQmlEngine *engine);
-
         Q_INVOKABLE void setLanguage(const int& index = -1);
         Q_INVOKABLE int indexOfCurrent();
         Q_INVOKABLE QString keyOfIndex(const int& index);
