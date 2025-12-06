@@ -7,16 +7,31 @@
 #include <sstream>
 #include <boost/url.hpp>
 #include <boost/url/rfc/pchars.hpp>
+#include <oatpp/core/data/mapping/type/Primitive.hpp>
+#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <openssl/evp.h>
+
+using namespace oatpp::data::mapping::type;
+using namespace oatpp::parser::json::mapping;
 
 namespace biliqt::utils {
 
+    std::shared_ptr<std::string> void_to_string(const Void& value) {
+        if (value.getValueType() == String::Class::getType()) {
+            const String& str = value.cast<String>();
+            return str.getPtr();
+        }
+        const std::shared_ptr<ObjectMapper> objMapper = ObjectMapper::createShared();
+        const String& str = objMapper->writeToString(value);
+        return str.getPtr();
+    }
+
     std::string url_encode(const std::string &str) {
         std::string strVal = str;
-        const int bufferSize = strVal.length() * 3;
+        const unsigned long bufferSize = strVal.length() * 3;
         char buf[bufferSize];
-        boost::urls::encode(buf, bufferSize, strVal, boost::urls::pchars);
-        strVal = buf;
+        std::size_t size = boost::urls::encode(buf, bufferSize, strVal, boost::urls::pchars);
+        buf[size] = '\0';
         return strVal;
     }
 

@@ -15,8 +15,31 @@ using namespace oatpp::parser::json::mapping;
 using namespace oatpp::web::client;
 
 namespace biliqt::core::api {
+
+    std::shared_ptr<RequestExecutor::Response> BiliApiExecutor::executeOnceReal(const int &redirectTime,
+        const String &method, const String &path, const Headers &headers, const std::shared_ptr<Body> &body,
+        const std::shared_ptr<ConnectionHandle> &connectionHandle) {
+        printRequestDetails(method, path, headers);
+        std::shared_ptr<Response> resp = _inner->executeOnce(method, path, headers, body, connectionHandle);
+        return resp;
+    }
+
+    oatpp::async::CoroutineStarterForResult<const std::shared_ptr<RequestExecutor::Response> &>
+    BiliApiExecutor::executeOnceAsyncReal(const int &redirectTime, const String &method, const String &path, const Headers &headers,
+        const std::shared_ptr<Body> &body, const std::shared_ptr<ConnectionHandle> &connectionHandle) {
+        printRequestDetails(method, path, headers);
+        oatpp::async::CoroutineStarterForResult<const std::shared_ptr<Response>&> resp = _inner->executeAsync(method, path, headers, body, connectionHandle);
+        return resp;
+    }
+
+    void BiliApiExecutor::printRequestDetails(const String &method, const String &path, const Headers &headers) {
+        OATPP_LOGI("BiliApiExecutor", "- %s %s", method->c_str(), path->c_str());
+        for (const auto&[key, value] : headers.getAll()) {
+            OATPP_LOGI("BiliApiExecutor", "  %s: %s", key.std_str().c_str(), value.std_str().c_str());
+        }
+    }
+
     BiliApiExecutor::BiliApiExecutor(const std::string& baseUrl, const bool& useHttps, const std::shared_ptr<RetryPolicy>& retryPolicy) : RequestExecutor(retryPolicy) {
-        auto jsonObjectMapper = ObjectMapper::createShared();
         auto address = oatpp::network::Address(baseUrl, 443);
         std::shared_ptr<oatpp::network::ClientConnectionProvider> connectionProvider = nullptr;
         if (useHttps) {
@@ -46,36 +69,9 @@ namespace biliqt::core::api {
         return executeOnceReal(0, method, path, headers, body, connectionHandle);
     }
 
-    std::shared_ptr<RequestExecutor::Response> BiliApiExecutor::executeOnceReal(const int &redirectTime,
-        const String &method, const String &path, const Headers &headers, const std::shared_ptr<Body> &body,
-        const std::shared_ptr<ConnectionHandle> &connectionHandle) {
-        if (redirectTime >= 10) {
-            throw oatpp::web::protocol::http::HttpError(oatpp::web::protocol::http::Status::CODE_429, "Too Many Requests");
-        }
-
-        std::shared_ptr<Response> resp = _inner->executeOnce(method, path, headers, body, connectionHandle);
-        // const int status = resp->getStatusCode();
-        // if (status != 301 && status != 302 && status != 307) {
-            return resp;
-        // }
-        // const std::string location = resp->getHeader("Location");
-        // if (status == 307) {
-        //     return executeOnceReal(redirectTime + 1, method, location, headers, body, connectionHandle);
-        // }
-        // return executeOnceReal(redirectTime + 1, "GET", location, headers, body, connectionHandle);
-    }
-
     oatpp::async::CoroutineStarterForResult<const std::shared_ptr<RequestExecutor::Response>&>
     BiliApiExecutor::executeOnceAsync(const String &method, const String &path, const Headers &headers,
         const std::shared_ptr<Body> &body, const std::shared_ptr<ConnectionHandle> &connectionHandle) {
-        auto resp = _inner->executeOnceAsync(method, path, headers, body, connectionHandle);
-        return resp;
-    }
-
-    oatpp::async::CoroutineStarterForResult<const std::shared_ptr<RequestExecutor::Response> &>
-    BiliApiExecutor::executeOnceAsyncReal(const int &redirectTime, const String &method, const String &path, const Headers &headers,
-        const std::shared_ptr<Body> &body, const std::shared_ptr<ConnectionHandle> &connectionHandle) {
-        oatpp::async::CoroutineStarterForResult<const std::shared_ptr<Response>&> resp = _inner->executeAsync(method, path, headers, body, connectionHandle);
-        return resp;
+        return executeOnceAsyncReal(0, method, path, headers, body, connectionHandle);
     }
 }

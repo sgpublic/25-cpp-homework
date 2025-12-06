@@ -19,22 +19,30 @@ namespace biliqt::model {
     void LoginWindowViewModel::requestLoginQrcode() {
         try {
             qrcodeState(Loading);
-            auto dto = LoginQrcodeTvReq::createShared();
-            auto result = _loginApi->qrcodeTv(dto->asSignedBody());
+            const auto dto = LoginQrcodeTvReq::createShared();
+            const auto result = _loginApi->qrcodeTv(dto->asSignedBody());
+            if (result->getStatusCode() != 200) {
+                errorMessage(result->getStatusDescription()->data());
+                qrcodeState(Error);
+                qDebug() << "LoginWindowViewModel::requestLoginQrcode, code:" << result->getStatusCode() << "error:" << _errorMessage;
+                return;
+            }
             auto body = readRespBody<LoginQrcodeTvResp>(result);
-            if (body->code != 200) {
+            if (body->code != 0) {
                 errorMessage(body->message->data());
                 qrcodeState(Error);
-            } else {
-                qrcodeUrl(body->data->url->data());
-                qrcodeKey(body->data->authCode->data());
-                qrcodeState(Waiting);
+                qDebug() << "LoginWindowViewModel::requestLoginQrcode, errorMessage: " << _errorMessage;
+                return;
             }
-        } catch (std::runtime_error e) {
+            qrcodeUrl(body->data->url->data());
+            qrcodeKey(body->data->auth_code->data());
+            qrcodeState(Waiting);
+            qDebug() << "LoginWindowViewModel::requestLoginQrcode, url: " << _qrcodeUrl;
+        } catch (std::runtime_error& e) {
             errorMessage(e.what());
             qrcodeState(Error);
+            qDebug() << "LoginWindowViewModel::requestLoginQrcode, catched error: " << _errorMessage;
         }
-        qDebug() << "LoginWindowViewModel::requestLoginQrcode, error: " << _errorMessage;
     }
 
     void LoginWindowViewModel::onClear() {

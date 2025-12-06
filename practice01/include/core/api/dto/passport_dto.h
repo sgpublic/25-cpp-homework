@@ -22,7 +22,7 @@ namespace biliqt::core::api::dto {
             DTO_INIT(Data, DTO)
 
             DTO_FIELD(String, url);
-            DTO_FIELD(String, authCode);
+            DTO_FIELD(String, auth_code);
         };
         BILI_RESP_DTO(LoginQrcodeTvResp, Data)
     };

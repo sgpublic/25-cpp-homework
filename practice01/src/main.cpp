@@ -12,10 +12,9 @@
 
 using namespace biliqt::utils;
 using namespace biliqt::core::module;
-using namespace oatpp::base;
 
 int main(int argc, char *argv[]) {
-    Environment::init();
+    oatpp::base::Environment::init();
 
     SettingModule::getInstance()->init(argv);
 
@@ -32,6 +31,7 @@ int main(int argc, char *argv[]) {
     engine.load(ResourceModule::getInstance()->getQml("/App.qml"));
 
     const int exitCode = QApplication::exec();
-    Environment::destroy();
+
+    oatpp::base::Environment::destroy();
     return exitCode;
 }

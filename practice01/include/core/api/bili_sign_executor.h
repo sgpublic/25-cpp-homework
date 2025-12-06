@@ -33,5 +33,8 @@ namespace biliqt::core::api {
         oatpp::async::CoroutineStarterForResult<const std::shared_ptr<Response> &> executeOnceAsyncReal(
             const int& redirectTime, const String &method, const String &path, const Headers &headers, const std::shared_ptr<Body> &body,
             const std::shared_ptr<ConnectionHandle> &connectionHandle);
+
+    private:
+        void printRequestDetails(const String &method, const String &path, const Headers &headers);
     };
 }

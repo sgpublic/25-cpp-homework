@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QDebug>
 #include <queue>
 #include <oatpp/network/tcp/client/ConnectionProvider.hpp>
 #include <oatpp/web/client/HttpRequestExecutor.hpp>
@@ -27,15 +28,13 @@ namespace biliqt::core::api {
         std::is_base_of<oatpp::DTO, T>::value,
         oatpp::String
     >::type
-    doSign(T* body, std::string apiSecret) {
-        oatpp::parser::json::mapping::ObjectMapper objectMapper;
-
+    doSign(T* body, const std::string& apiSecret) {
         auto map = T::getProperties()->getMap();
-        std::priority_queue<std::string> keys;
+        std::priority_queue<std::string, std::vector<std::string>, std::greater<>> keys;
         for (const auto &field: map) {
             keys.push(field.first);
         }
-        std::ostringstream oss;
+        std::ostringstream secretCalculate;
         bool isFirst = true;
         while (!keys.empty()) {
             auto key = keys.top();
@@ -43,30 +42,33 @@ namespace biliqt::core::api {
             if (isFirst) {
                 isFirst = false;
             } else {
-                oss << "&";
+                secretCalculate << "&";
             }
             oatpp::data::mapping::type::Void value = map[key]->get(body);
-            std::string strVal = objectMapper.writeToString(value);
-            oss << key << "=" << strVal;
+            std::shared_ptr<std::string> strVal = utils::void_to_string(value);
+            secretCalculate << key << "=" << utils::url_encode(*strVal);
         }
-        oss << apiSecret;
-        std::string sign = utils::md5(oss.str());
+        secretCalculate << apiSecret;
+        qDebug() << "secretCalculate:" << secretCalculate.str();
+        std::string sign = utils::md5(secretCalculate.str());
 
-        oss.clear();
+        std::ostringstream paramsOutput;
         isFirst = true;
         for (const auto &field: map) {
             if (isFirst) {
                 isFirst = false;
             } else {
-                oss << "&";
+                paramsOutput << "&";
             }
             auto value = map[field.first]->get(body);
-            std::string strVal = objectMapper.writeToString(value);
-            oss << field.first << "=" << utils::url_encode(strVal);
+            std::shared_ptr<std::string> strVal = utils::void_to_string(value);
+            paramsOutput << field.first << "=" << utils::url_encode(*strVal);
         }
-        oss << "&" << "sign=" << sign;
+        paramsOutput << "&" << "sign=" << sign;
 
-        return oss.str();
+        qDebug() << "paramsOutput:" << paramsOutput.str();
+
+        return paramsOutput.str();
     }
 }
 
@@ -80,5 +82,6 @@ public:                                                                         
 
 #define BILI_SIGN_CALL(NAME)                                                                       \
     API_CALL_HEADERS(NAME) {                                                                       \
-        headers.put("User-Agent", "Mozilla/5.0 BiliDroid/7.1.1 (sgpublic2002@gmail.com)");         \
+        headers.putOrReplace("User-Agent", "Mozilla/5.0 BiliDroid/7.1.1 (sgpublic2002@gmail.com)");\
+        headers.putOrReplace("Content-Type", "application/x-www-form-urlencoded");                 \
     }

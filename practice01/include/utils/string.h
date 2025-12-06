@@ -4,16 +4,11 @@
 #pragma once
 
 #include <string>
-#include <sstream>
+#include <oatpp/core/data/mapping/type/Type.hpp>
 
 namespace biliqt::utils {
 
-    template <typename T>
-    std::string to_string(T* ptr) {
-        std::ostringstream oss;
-        oss << *ptr;
-        return oss.str();
-    }
+    std::shared_ptr<std::string> void_to_string(const oatpp::data::mapping::type::Void& value);
 
     std::string url_encode(const std::string &str);
 
