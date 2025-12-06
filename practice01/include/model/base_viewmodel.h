@@ -4,15 +4,52 @@
 
 #pragma once
 
-#include <QObject>
+#include <QtConcurrentRun>
+#include <oatpp/core/Types.hpp>
+
+#include "base_viewmodel.h"
 
 namespace biliqt::model {
 
     class ViewModel : public QObject {
+    private:
+        QList<QFuture<void>> tasks;
     public:
         explicit ViewModel(QObject *parent = nullptr) : QObject(parent) {}
 
-        virtual void onClear() = 0;
+        ~ViewModel() override {
+            for (QFuture<void>& task : tasks) {
+                if (!task.isFinished()) {
+                    task.cancel();
+                }
+            }
+        }
+
+        void startTask(std::function<void()> block) {
+            if (needInterrupt()) {
+                return;
+            }
+            const QFuture<void> task = QtConcurrent::run(block);
+            tasks.append(task);
+        }
+
+        static oatpp::String oat_str(const QString& qstr) {
+            return oatpp::String(qstr.toUtf8().data(), qstr.toUtf8().size());
+        }
+
+        static bool needInterrupt() {
+            return QThread::currentThread()->isInterruptionRequested();
+        }
     };
 
 }
+
+#define VIEW_MODEL_COROUTINE_TASK(NAME)                                                                    \
+    public:                                                                                                \
+        Q_INVOKABLE void request##NAME() {                                                                 \
+            startTask([this]() {                                                                           \
+                NAME();                                                                                    \
+            });                                                                                            \
+        }                                                                                                  \
+    private:                                                                                               \
+        void NAME();

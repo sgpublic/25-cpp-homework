@@ -1,6 +1,0 @@
-[submodule "practice01/thirdparty/FluentUI"]
-	path = practice01/thirdparty/FluentUI
-	url = https://github.com/zhuzichu520/FluentUI.git
-[submodule "practice01/thirdparty/cppcoro"]
-	path = practice01/thirdparty/cppcoro
-	url = https://github.com/andreasbuhr/cppcoro

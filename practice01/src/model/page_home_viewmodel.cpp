@@ -13,8 +13,4 @@ namespace biliqt::model {
 
     }
 
-    void HomePageViewModel::onClear() {
-
-    }
-
 }

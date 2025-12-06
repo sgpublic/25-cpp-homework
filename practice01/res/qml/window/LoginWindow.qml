@@ -1,7 +1,7 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import FluentUI 1.0
+import BiliQt.ViewModel.LoginWindow 1.0
 
 FluWindow {
     id: window_login
@@ -15,17 +15,50 @@ FluWindow {
 
     ColumnLayout {
         width: parent.width
-        FluQRCode{
+
+        FluStatusLayout {
+            id: login_qrcode
+            implicitWidth: 140
+            implicitHeight: 140
             Layout.topMargin: 40
             Layout.alignment: Qt.AlignHCenter
 
-            size: 140
-            text: viewModel.qrcodeUrl
+            statusMode: viewModel.ui_statusMode
+            errorText: viewModel.ui_errorText
+            loadingText: viewModel.ui_loadingText
+
+            FluQRCode {
+                size: 140
+                margins: 10
+
+                text: viewModel.qrcodeUrl
+            }
+        }
+        Connections {
+            target: login_qrcode
+
+            function onErrorClicked() {
+                viewModel.requestLoginQrcode()
+            }
+        }
+
+        FluText {
+            Layout.topMargin: 20
+            Layout.alignment: Qt.AlignHCenter
+
+            text: qsTrId("login_qrcode_scan_info")
+            font: FluTextStyle.Body
         }
     }
 
     Component.onCompleted: {
         viewModel = ViewModelModule.createViewModel("window_login", window_login)
+
+        viewModel.closeWindowSignal.connect(function() {
+            setResult({loginSucceed: true})
+            window_login.close();
+        })
+
         viewModel.requestLoginQrcode()
     }
 }

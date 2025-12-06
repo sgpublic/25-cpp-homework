@@ -7,6 +7,7 @@
 
 #include "core/module/translate_module.h"
 #include "core/module/viewmodel_module.h"
+#include "model/window_login_viewmodel.h"
 
 #include "oatpp/core/macro/component.hpp"
 
@@ -19,6 +20,8 @@ int main(int argc, char *argv[]) {
     SettingModule::getInstance()->init(argv);
 
     QApplication application(argc, argv);
+
+    qmlRegisterType<biliqt::model::LoginWindowViewModel::QrcodeState>("BiliQt.ViewModel.LoginWindow", 1, 0, "QrcodeState");
 
     QQmlApplicationEngine engine;
 

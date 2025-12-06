@@ -11,6 +11,16 @@ FluWindow {
     width: 1500
     launchMode: FluWindowType.SingleTask
 
+    FluWindowResultLauncher {
+        id: loginResultLauncher
+        path: "/login"
+        onResult: (data) => {
+            if (data.loginSucceed) {
+                viewModel.requestLoginSucceed()
+            }
+        }
+    }
+
     FluNavigationView {
         id: home_navView
 
@@ -48,9 +58,9 @@ FluWindow {
                 title: qsTrId("home_navView_footer_login")
                 icon: FluentIcons.Contact
                 onTapListener: function () {
-                    FluRouter.navigate("/login")
+                    loginResultLauncher.launch()
                 }
-                visible: viewModel != null ? !viewModel.hasLogin : false
+                visible: !viewModel.hasLogin
             }
             FluPaneItem {
                 id: home_navView_footer_user
@@ -58,7 +68,7 @@ FluWindow {
                 onTapListener: function () {
 
                 }
-                visible: viewModel != null ? viewModel.hasLogin : false
+                visible: viewModel.hasLogin
             }
             FluPaneItem {
                 id: home_navView_footer_about

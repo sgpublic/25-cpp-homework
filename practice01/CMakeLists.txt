@@ -4,7 +4,7 @@ project(BiliQt LANGUAGES CXX)
 # ================================
 # Qt
 # ================================
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Quick LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Quick Concurrent LinguistTools)
 qt_standard_project_setup(
         I18N_TRANSLATED_LANGUAGES zh_CN en
 )
@@ -36,6 +36,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt6::Gui
         Qt6::Widgets
         Qt6::Quick
+        Qt6::Concurrent
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -74,22 +75,23 @@ qt_add_translations(${PROJECT_NAME}
 add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lupdate)
 add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lrelease)
 
+include(FetchContent)
 
 # ================================
-# Fluent UI
+# Third Party
 # ================================
+# FluentUI
 set(FLUENTUI_BUILD_EXAMPLES OFF)
 set(FLUENTUI_BUILD_STATIC_LIB OFF)
-add_subdirectory(thirdparty/FluentUI)
-
+FetchContent_Declare(
+        FluentUI
+        GIT_REPOSITORY https://github.com/zhuzichu520/FluentUI.git
+        GIT_TAG        0cd0b83a10ae67aab9fbe06dcd205c08e7be4383
+)
+FetchContent_MakeAvailable(FluentUI)
 target_link_libraries(${PROJECT_NAME} PRIVATE
         fluentuiplugin
 )
-
-# ================================
-# cppcoro
-# ================================
-add_subdirectory(thirdparty/cppcoro)
 
 
 # ================================

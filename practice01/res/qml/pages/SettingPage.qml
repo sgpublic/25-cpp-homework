@@ -53,10 +53,10 @@ FluScrollablePage {
                                 text: qsTrId("page_setting_theme_dark")
                             }
                         }
-                        currentIndex: SettingModule.getDarkMode();
+                        currentIndex: SettingModule.darkMode();
 
                         onCurrentIndexChanged: {
-                            SettingModule.saveDarkMode(currentIndex)
+                            SettingModule.darkMode(currentIndex)
                             FluTheme.darkMode = currentIndex
                         }
                     }
@@ -84,7 +84,7 @@ FluScrollablePage {
                         currentIndex: TranslateModule.indexOfCurrent();
 
                         onCurrentIndexChanged: {
-                            SettingModule.saveLanguage(TranslateModule.keyOfIndex(currentIndex));
+                            SettingModule.language(TranslateModule.keyOfIndex(currentIndex));
                             TranslateModule.setLanguage(currentIndex);
                         }
                     }

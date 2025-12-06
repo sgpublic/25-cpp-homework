@@ -4,14 +4,16 @@
 
 #include "model/window_main_viewmodel.h"
 
+#include "core/module/setting_module.h"
+
 namespace biliqt::model {
 
-    MainWindowViewModel::MainWindowViewModel(QObject *parent) : ViewModel(parent), _hasLogin(false) {
-
+    MainWindowViewModel::MainWindowViewModel(QObject *parent) : ViewModel(parent) {
+        hasLogin(core::module::SettingModule::getInstance()->login());
     }
 
-    void MainWindowViewModel::onClear() {
-
+    void MainWindowViewModel::LoginSucceed() {
+        hasLogin(true);
     }
 
 }

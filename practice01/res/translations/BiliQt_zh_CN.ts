@@ -6,27 +6,27 @@
     <message id="app_name">
         <location filename="../qml/window/AboutWindow.qml" line="28"/>
         <location filename="../qml/window/MainWindow.qml" line="9"/>
-        <location filename="../qml/window/MainWindow.qml" line="21"/>
+        <location filename="../qml/window/MainWindow.qml" line="31"/>
         <source></source>
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="27"/>
+        <location filename="../qml/window/MainWindow.qml" line="37"/>
         <source></source>
         <translation>主页</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="36"/>
+        <location filename="../qml/window/MainWindow.qml" line="46"/>
         <source></source>
         <translation>我的追番</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="48"/>
+        <location filename="../qml/window/MainWindow.qml" line="58"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation>登陆</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="65"/>
+        <location filename="../qml/window/MainWindow.qml" line="75"/>
         <source></source>
         <translation>关于</translation>
     </message>
@@ -66,7 +66,7 @@
         <translation>语言</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="73"/>
+        <location filename="../qml/window/MainWindow.qml" line="83"/>
         <source></source>
         <translation>设置</translation>
     </message>
@@ -83,7 +83,37 @@
     <message id="login_title">
         <location filename="../qml/window/LoginWindow.qml" line="10"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation>登陆</translation>
+    </message>
+    <message id="login_qrcode_scan_info">
+        <location filename="../qml/window/LoginWindow.qml" line="49"/>
+        <source></source>
+        <translation>请使用哔哩哔哩手机客户端扫描登陆</translation>
+    </message>
+    <message id="login_qrcode_loading">
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="115"/>
+        <source></source>
+        <translation>正在获取二维码...</translation>
+    </message>
+    <message id="login_qrcode_doing">
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="126"/>
+        <source></source>
+        <translation>正在登录</translation>
+    </message>
+    <message id="login_qrcode_error">
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="132"/>
+        <source></source>
+        <translation>出错了：%s</translation>
+    </message>
+    <message id="login_qrcode_confirm">
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="136"/>
+        <source></source>
+        <translation>已扫描，请在客户端中确认登录</translation>
+    </message>
+    <message id="login_qrcode_expire">
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="140"/>
+        <source></source>
+        <translation>二维码已过期</translation>
     </message>
 </context>
 </TS>

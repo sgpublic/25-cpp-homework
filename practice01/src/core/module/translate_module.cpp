@@ -12,7 +12,7 @@ namespace biliqt::core::module {
     TranslateModule::TranslateModule(QObject *parent) : QObject(parent) {
         _languages << "zh_CN";
         _languages << "en";
-        _current = SettingModule::getInstance()->getLanguage();
+        _current = SettingModule::getInstance()->language();
     }
 
     void TranslateModule::init(QQmlEngine *engine) {

@@ -11,7 +11,6 @@ namespace biliqt::model {
         Q_OBJECT
     public:
         explicit HomePageViewModel(QObject *parent = nullptr);
-        void onClear() override;
     };
 
 }

@@ -11,10 +11,13 @@ namespace biliqt::model {
     class MainWindowViewModel: public ViewModel {
         Q_OBJECT
 
-        Q_PROPERTY_READONLY_AUTO(bool, hasLogin);
+        Q_PROPERTY_READONLY_AUTO(bool, hasLogin) = false;
+        Q_PROPERTY_READONLY_AUTO(QString, username);
+        Q_PROPERTY_READONLY_AUTO(QString, avatarUrl);
     public:
         explicit MainWindowViewModel(QObject *parent = nullptr);
-        void onClear() override;
+
+        VIEW_MODEL_COROUTINE_TASK(LoginSucceed)
     };
 
 }
