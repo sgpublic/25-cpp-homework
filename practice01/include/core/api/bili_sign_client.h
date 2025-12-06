@@ -16,9 +16,6 @@ namespace biliqt::core::api {
     template<typename T>
     std::shared_ptr<T> createShared(const std::string& baseUrl, const bool& useHttps) {
         auto jsonObjectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared();
-        // auto address = oatpp::network::Address(baseUrl, 443);
-        // auto connectionProvider = oatpp::network::tcp::client::ConnectionProvider::createShared(address);
-        // auto requestExecutor = oatpp::web::client::HttpRequestExecutor::createShared(connectionProvider);
         auto requestExecutor = std::make_shared<BiliApiExecutor>(baseUrl, useHttps);
         return T::createShared(requestExecutor, jsonObjectMapper);
     }
@@ -49,7 +46,6 @@ namespace biliqt::core::api {
             secretCalculate << key << "=" << utils::url_encode(*strVal);
         }
         secretCalculate << apiSecret;
-        qDebug() << "secretCalculate:" << secretCalculate.str();
         std::string sign = utils::md5(secretCalculate.str());
 
         std::ostringstream paramsOutput;
@@ -66,11 +62,10 @@ namespace biliqt::core::api {
         }
         paramsOutput << "&" << "sign=" << sign;
 
-        qDebug() << "paramsOutput:" << paramsOutput.str();
-
         return paramsOutput.str();
     }
 }
+
 
 #define BILI_SIGN_CLIENT_INIT(Class, BASE_URL, USE_HTTPS)                                          \
     API_CLIENT_INIT(Class)                                                                         \
@@ -79,15 +74,24 @@ public:                                                                         
         return biliqt::core::api::createShared<Class>(BASE_URL, USE_HTTPS);                        \
     }                                                                                              \
 private:                                                                                           \
-    static const oatpp::data::share::StringKeyLabel& ___HEADER_KEY_HOST() {                        \
-        const oatpp::data::share::StringKeyLabel& host = BASE_URL;                                 \
-        return host;                                                                               \
+    static oatpp::data::share::StringKeyLabel ___HEADER_KEY_HOST() {                               \
+        return BASE_URL;                                                                           \
     }
 
 
-#define BILI_SIGN_CALL(NAME)                                                                       \
+#define BILI_SIGN_DEFAULT_HEADERS                                                                  \
+    headers.putOrReplace("User-Agent", "Mozilla/5.0 BiliDroid/7.1.1 (sgpublic2002@gmail.com)");    \
+    headers.putOrReplace("Host", ___HEADER_KEY_HOST());
+
+
+#define BILI_SIGN_POST(NAME)                                                                       \
     API_CALL_HEADERS(NAME) {                                                                       \
-        headers.putOrReplace("User-Agent", "Mozilla/5.0 BiliDroid/7.1.1 (sgpublic2002@gmail.com)");\
+        BILI_SIGN_DEFAULT_HEADERS                                                                  \
         headers.putOrReplace("Content-Type", "application/x-www-form-urlencoded");                 \
-        headers.putOrReplace("Host", ___HEADER_KEY_HOST());                                        \
+    }
+
+
+#define BILI_SIGN_GET(NAME)                                                                        \
+    API_CALL_HEADERS(NAME) {                                                                       \
+        BILI_SIGN_DEFAULT_HEADERS                                                                  \
     }

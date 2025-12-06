@@ -23,7 +23,14 @@ namespace biliqt::core::api::client {
             qrcodeTv,
             BODY_STRING(String, body)
         )
-        BILI_SIGN_CALL(qrcodeTv)
+        BILI_SIGN_POST(qrcodeTv)
+
+        API_CALL(
+            "POST", "/x/passport-tv-login/qrcode/poll",
+            qrcodeTvPoll,
+            BODY_STRING(String, body)
+        )
+        BILI_SIGN_POST(qrcodeTvPoll)
     };
 
 }

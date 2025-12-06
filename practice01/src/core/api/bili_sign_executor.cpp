@@ -33,9 +33,9 @@ namespace biliqt::core::api {
     }
 
     void BiliApiExecutor::printRequestDetails(const String &method, const String &path, const Headers &headers) {
-        OATPP_LOGI("BiliApiExecutor", "- %s %s", method->c_str(), path->c_str());
+        OATPP_LOGD("BiliApiExecutor", " %s %s", method->c_str(), path->c_str());
         for (const auto&[key, value] : headers.getAll()) {
-            OATPP_LOGI("BiliApiExecutor", "  %s: %s", key.std_str().c_str(), value.std_str().c_str());
+            OATPP_LOGD("BiliApiExecutor", "   %s: %s", key.std_str().c_str(), value.std_str().c_str());
         }
     }
 
