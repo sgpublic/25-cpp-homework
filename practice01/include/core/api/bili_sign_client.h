@@ -77,6 +77,11 @@ namespace biliqt::core::api {
 public:                                                                                            \
     static std::shared_ptr<Class> createShared() {                                                 \
         return biliqt::core::api::createShared<Class>(BASE_URL, USE_HTTPS);                        \
+    }                                                                                              \
+private:                                                                                           \
+    static const oatpp::data::share::StringKeyLabel& ___HEADER_KEY_HOST() {                        \
+        const oatpp::data::share::StringKeyLabel& host = BASE_URL;                                 \
+        return host;                                                                               \
     }
 
 
@@ -84,4 +89,5 @@ public:                                                                         
     API_CALL_HEADERS(NAME) {                                                                       \
         headers.putOrReplace("User-Agent", "Mozilla/5.0 BiliDroid/7.1.1 (sgpublic2002@gmail.com)");\
         headers.putOrReplace("Content-Type", "application/x-www-form-urlencoded");                 \
+        headers.putOrReplace("Host", ___HEADER_KEY_HOST());                                        \
     }
