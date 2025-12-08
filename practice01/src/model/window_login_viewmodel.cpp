@@ -14,14 +14,14 @@ using namespace biliqt::core::api;
 namespace biliqt::model {
 
     LoginWindowViewModel::LoginWindowViewModel(QObject *parent) : ViewModel(parent) {
-        _loginApi = PassportApi::createShared();
+        _passportClient = PassportClient::createShared();
     }
 
-    void LoginWindowViewModel::LoginQrcode() {
+    void LoginWindowViewModel::onLoginQrcode() {
         try {
             setQrcodeState(Loading, "", "", "");
             const auto dto = LoginQrcodeTvReq::createShared();
-            const auto result = _loginApi->qrcodeTv(dto->asSignedBody());
+            const auto result = _passportClient->qrcodeTv(dto->asSignedParams());
             if (result->getStatusCode() != 200) {
                 setQrcodeState(Error, "", "", result->getStatusDescription());
                 return;
@@ -49,7 +49,7 @@ namespace biliqt::model {
         startTask([this] {
             const oatpp::Object<LoginQrcodeTvPollReq>& dto = LoginQrcodeTvPollReq::createShared();
             dto->auth_code = oat_str(_qrcodeKey);
-            const auto result = _loginApi->qrcodeTvPoll(dto->asSignedBody());
+            const auto result = _passportClient->qrcodeTvPoll(dto->asSignedParams());
             qDebug() << "statusCode:" << result->getStatusCode();
             if (result->getStatusCode() != 200) {
                 setQrcodeState(Error, "", "", result->getStatusDescription());
@@ -109,25 +109,21 @@ namespace biliqt::model {
         qDebug() << "setQrcodeState:" << state << ", message:" << message;
         switch (state) {
             case Loading:
-                qrcodeUrl();
-                qrcodeKey();
+                qrcodeUrl(nullptr);
+                qrcodeKey(nullptr);
                 ui_statusMode(0x0000);
                 ui_loadingText(qtTrId("login_qrcode_loading"));
-                ui_errorText();
                 break;
             case Waiting:
                 qrcodeUrl(url.data());
                 qrcodeKey(authCode.data());
                 ui_statusMode(0x0004);
-                ui_loadingText();
                 break;
             case Success:
                 ui_statusMode(0x0000);
                 ui_loadingText(qtTrId("login_qrcode_doing"));
                 break;
             case Error:
-                qrcodeUrl();
-                qrcodeKey();
                 ui_statusMode(0x0002);
                 ui_errorText(qtTrId("login_qrcode_error").arg(message.data()));
                 break;

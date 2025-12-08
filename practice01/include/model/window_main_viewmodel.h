@@ -5,6 +5,8 @@
 
 #include "base_viewmodel.h"
 #include "utils/stdafx.h"
+#include "core/api/client/api_client.h"
+#include "core/api/client/app_client.h"
 
 namespace biliqt::model {
 
@@ -12,12 +14,17 @@ namespace biliqt::model {
         Q_OBJECT
 
         Q_PROPERTY_READONLY_AUTO(bool, hasLogin) = false;
-        Q_PROPERTY_READONLY_AUTO(QString, username);
+        Q_PROPERTY_READONLY_AUTO(QString, nick);
         Q_PROPERTY_READONLY_AUTO(QString, avatarUrl);
+    private:
+        std::shared_ptr<core::api::client::ApiClient> _apiClient;
+        std::shared_ptr<core::api::client::AppClient> _appClient;
     public:
         explicit MainWindowViewModel(QObject *parent = nullptr);
 
         VIEW_MODEL_COROUTINE_TASK(LoginSucceed)
+        VIEW_MODEL_COROUTINE_TASK(LoadUserInfo)
+        VIEW_MODEL_COROUTINE_TASK(LoadBannerData)
     };
 
 }

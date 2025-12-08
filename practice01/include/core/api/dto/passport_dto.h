@@ -10,7 +10,7 @@
 #include OATPP_CODEGEN_BEGIN(DTO)
 
 namespace biliqt::core::api::dto {
-#define TV_LOCAL_ID 0
+    #define TV_LOCAL_ID 0
 
     class LoginQrcodeTvReq final : public oatpp::DTO {
         BILI_SIGN_PASSPORT_REQUEST_DTO(LoginQrcodeTvReq)

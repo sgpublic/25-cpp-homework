@@ -25,7 +25,7 @@ namespace biliqt::model {
             }
         }
 
-        void startTask(std::function<void()> block) {
+        void startTask(const std::function<void()>& block) {
             if (needInterrupt()) {
                 return;
             }
@@ -34,7 +34,7 @@ namespace biliqt::model {
         }
 
         static oatpp::String oat_str(const QString& qstr) {
-            return oatpp::String(qstr.toUtf8().data(), qstr.toUtf8().size());
+            return {qstr.toUtf8().data(), qstr.toUtf8().size()};
         }
 
         static bool needInterrupt() {
@@ -48,8 +48,8 @@ namespace biliqt::model {
     public:                                                                                                \
         Q_INVOKABLE void request##NAME() {                                                                 \
             startTask([this]() {                                                                           \
-                NAME();                                                                                    \
+                on##NAME();                                                                                \
             });                                                                                            \
         }                                                                                                  \
     private:                                                                                               \
-        void NAME();
+        void on##NAME();

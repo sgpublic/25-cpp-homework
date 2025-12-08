@@ -4,7 +4,7 @@
 #pragma once
 
 #include "base_viewmodel.h"
-#include "core/api/client/passport_api.h"
+#include "core/api/client/passport_client.h"
 #include "core/api/dto/passport_dto.h"
 #include "utils/stdafx.h"
 
@@ -31,7 +31,7 @@ namespace biliqt::model {
     signals:
         void closeWindowSignal();
     private:
-        std::shared_ptr<core::api::client::PassportApi> _loginApi;
+        std::shared_ptr<core::api::client::PassportClient> _passportClient;
 
     public:
         explicit LoginWindowViewModel(QObject *parent = nullptr);

@@ -31,6 +31,8 @@ FluWindow {
         title: qsTrId("app_name")
         width: parent.width
 
+        buttonBack.visible: false
+
         items: FluObject {
             FluPaneItem {
                 id: home_navView_item_setting
@@ -65,6 +67,19 @@ FluWindow {
             FluPaneItem {
                 id: home_navView_footer_user
                 icon: FluentIcons.Contact
+                property Component avatarImg: FluClip {
+                    radius: [12, 12, 12, 12]
+                    width: 24
+                    height: 24
+
+                    FluImage {
+                        width: 24
+                        height: 24
+                        source: viewModel.avatarUrl
+                    }
+                }
+                iconDelegate: viewModel.avatarUrl === "" ? null : avatarImg
+                title: viewModel.nick
                 onTapListener: function () {
 
                 }

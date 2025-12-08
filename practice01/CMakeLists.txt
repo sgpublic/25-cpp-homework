@@ -102,7 +102,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         oatpp::oatpp
 )
 
-find_package(OpenSSL REQUIRED)
+find_package(OpenSSL CONFIG REQUIRED)
 find_package(oatpp-openssl CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE
         OpenSSL::SSL
@@ -111,3 +111,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 find_package(Boost REQUIRED COMPONENTS url)
 target_link_libraries(${PROJECT_NAME} PRIVATE Boost::url)
+
+find_package(nlohmann_json CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)

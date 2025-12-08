@@ -8,14 +8,16 @@
 #include "core/api/bili_sign_client.h"
 #include <oatpp/codegen/ApiClient_define.hpp>
 
+#include "_base_client.h"
+
 #include OATPP_CODEGEN_BEGIN(ApiClient)
 
 class QrcodeResp;
 
 namespace biliqt::core::api::client {
 
-    class PassportApi : public oatpp::web::client::ApiClient {
-        BILI_SIGN_CLIENT_INIT(PassportApi, "passport.bilibili.com", true)
+    class PassportClient : public BaseApiClient {
+        BILI_SIGN_CLIENT_INIT(PassportClient, "passport.bilibili.com", true)
 
     public:
         API_CALL(

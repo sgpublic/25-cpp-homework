@@ -11,22 +11,22 @@
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="37"/>
+        <location filename="../qml/window/MainWindow.qml" line="39"/>
         <source></source>
         <translation>主页</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="46"/>
+        <location filename="../qml/window/MainWindow.qml" line="48"/>
         <source></source>
         <translation>我的追番</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="58"/>
+        <location filename="../qml/window/MainWindow.qml" line="60"/>
         <source></source>
         <translation>登陆</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="75"/>
+        <location filename="../qml/window/MainWindow.qml" line="90"/>
         <source></source>
         <translation>关于</translation>
     </message>
@@ -66,7 +66,7 @@
         <translation>语言</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="83"/>
+        <location filename="../qml/window/MainWindow.qml" line="98"/>
         <source></source>
         <translation>设置</translation>
     </message>
@@ -96,24 +96,29 @@
         <translation>正在获取二维码...</translation>
     </message>
     <message id="login_qrcode_doing">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="126"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="124"/>
         <source></source>
         <translation>正在登录</translation>
     </message>
     <message id="login_qrcode_error">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="132"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="128"/>
         <source></source>
         <translation>出错了：%s</translation>
     </message>
     <message id="login_qrcode_confirm">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="136"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="132"/>
         <source></source>
         <translation>已扫描，请在客户端中确认登录</translation>
     </message>
     <message id="login_qrcode_expire">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="140"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="136"/>
         <source></source>
         <translation>二维码已过期</translation>
+    </message>
+    <message id="main_nick_unknown">
+        <location filename="../../src/model/window_main_viewmodel.cpp" line="38"/>
+        <source></source>
+        <translation>未知用户</translation>
     </message>
 </context>
 </TS>

@@ -4,16 +4,52 @@
 
 #include "model/window_main_viewmodel.h"
 
+#include "core/api/dto/app_dto.h"
+#include "core/api/dto/api_dto.h"
 #include "core/module/setting_module.h"
+#include "utils/string.h"
+
+using namespace biliqt::utils;
 
 namespace biliqt::model {
 
     MainWindowViewModel::MainWindowViewModel(QObject *parent) : ViewModel(parent) {
+        _apiClient = core::api::client::ApiClient::createShared();
+        _appClient = core::api::client::AppClient::createShared();
         hasLogin(core::module::SettingModule::getInstance()->login());
+        if (_hasLogin) {
+            requestLoadUserInfo();
+            requestLoadBannerData();
+        }
     }
 
-    void MainWindowViewModel::LoginSucceed() {
+    void MainWindowViewModel::onLoginSucceed() {
         hasLogin(true);
+        requestLoadUserInfo();
     }
 
+    void MainWindowViewModel::onLoadUserInfo() {
+        const auto dto = core::api::dto::MyinfoReq::createShared();
+        dto->access_key = qstr_to_oatstr(core::module::SettingModule::getInstance()->accessToken());
+        const auto result = _appClient->myinfo(dto->asSignedParams());
+        const auto body = core::api::readRespBody<core::api::dto::MyinfoResp>(result);
+        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        if (body->code != 0) {
+            nick(qtTrId("main_nick_unknown"));
+            avatarUrl(nullptr);
+        } else {
+            nick(body->data->name->data());
+            avatarUrl(body->data->face->data());
+        }
+    }
+
+    void MainWindowViewModel::onLoadBannerData() {
+        const auto dto = core::api::dto::PgcPageReq::createShared();
+        dto->access_key = qstr_to_oatstr(core::module::SettingModule::getInstance()->accessToken());
+        const auto result = _apiClient->pgc_page(dto->asSignedParams());
+        const auto body = core::api::readRespBody(result);
+        const std::string code = body["code"];
+        const std::string message = body["message"];
+        qDebug() << "code:" << code << "message:" << message;
+    }
 }

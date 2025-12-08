@@ -3,32 +3,37 @@
 //
 
 #include <oatpp/network/Address.hpp>
+#include <oatpp/network/Url.hpp>
 #include <oatpp/network/tcp/client/ConnectionProvider.hpp>
 #include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <oatpp-openssl/client/ConnectionProvider.hpp>
 
 #include "core/api/bili_sign_executor.h"
 
-#include <QDebug>
+#include "core/api/bili_sign_client.h"
+#include "core/api/bili_sign_object.h"
 
 using namespace oatpp::parser::json::mapping;
 using namespace oatpp::web::client;
+using namespace oatpp::network;
 
 namespace biliqt::core::api {
 
     std::shared_ptr<RequestExecutor::Response> BiliApiExecutor::executeOnceReal(const int &redirectTime,
         const String &method, const String &path, const Headers &headers, const std::shared_ptr<Body> &body,
         const std::shared_ptr<ConnectionHandle> &connectionHandle) {
-        printRequestDetails(method, path, headers);
-        std::shared_ptr<Response> resp = _inner->executeOnce(method, path, headers, body, connectionHandle);
+        const auto newPath = signedPath(method, path);
+        printRequestDetails(method, newPath, headers);
+        std::shared_ptr<Response> resp = _inner->executeOnce(method, newPath, headers, body, connectionHandle);
         return resp;
     }
 
     oatpp::async::CoroutineStarterForResult<const std::shared_ptr<RequestExecutor::Response> &>
     BiliApiExecutor::executeOnceAsyncReal(const int &redirectTime, const String &method, const String &path, const Headers &headers,
         const std::shared_ptr<Body> &body, const std::shared_ptr<ConnectionHandle> &connectionHandle) {
-        printRequestDetails(method, path, headers);
-        oatpp::async::CoroutineStarterForResult<const std::shared_ptr<Response>&> resp = _inner->executeAsync(method, path, headers, body, connectionHandle);
+        const auto newPath = signedPath(method, path);
+        printRequestDetails(method, newPath, headers);
+        oatpp::async::CoroutineStarterForResult<const std::shared_ptr<Response>&> resp = _inner->executeAsync(method, newPath, headers, body, connectionHandle);
         return resp;
     }
 
@@ -39,14 +44,27 @@ namespace biliqt::core::api {
         }
     }
 
+    oatpp::String BiliApiExecutor::signedPath(const String &method, const String &path) {
+        if (method != "GET") {
+            return path;
+        }
+        const int queryMark = path->find('?');
+        if (queryMark < 0) {
+            return path;
+        }
+        const Url& url = Url::Parser::parseUrl(path);
+        const std::string queriesStr = path->substr(queryMark + 9);
+        return url.path + "?" + queriesStr;
+    }
+
     BiliApiExecutor::BiliApiExecutor(const std::string& baseUrl, const bool& useHttps, const std::shared_ptr<RetryPolicy>& retryPolicy) : RequestExecutor(retryPolicy) {
-        auto address = oatpp::network::Address(baseUrl, 443);
-        std::shared_ptr<oatpp::network::ClientConnectionProvider> connectionProvider = nullptr;
+        const auto address = Address(baseUrl, 443);
+        std::shared_ptr<ClientConnectionProvider> connectionProvider = nullptr;
         if (useHttps) {
             const std::shared_ptr<oatpp::openssl::Config> config = oatpp::openssl::Config::createDefaultClientConfigShared();
             connectionProvider = oatpp::openssl::client::ConnectionProvider::createShared(config, address);
         } else {
-            connectionProvider = oatpp::network::tcp::client::ConnectionProvider::createShared(address);
+            connectionProvider = tcp::client::ConnectionProvider::createShared(address);
         }
         _inner = HttpRequestExecutor::createShared(connectionProvider);
     }

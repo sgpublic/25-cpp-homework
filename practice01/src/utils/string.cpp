@@ -4,8 +4,9 @@
 #include "utils/string.h"
 
 #include <iomanip>
+#include <QString>
 #include <sstream>
-#include <boost/url.hpp>
+#include <boost/url/encode.hpp>
 #include <boost/url/rfc/pchars.hpp>
 #include <oatpp/core/data/mapping/type/Primitive.hpp>
 #include <oatpp/parser/json/mapping/ObjectMapper.hpp>
@@ -24,6 +25,11 @@ namespace biliqt::utils {
         const std::shared_ptr<ObjectMapper> objMapper = ObjectMapper::createShared();
         const String& str = objMapper->writeToString(value);
         return str.getPtr();
+    }
+
+    oatpp::String qstr_to_oatstr(const QString& str) {
+        oatpp::String result = str.toStdString();
+        return result;
     }
 
     std::string url_encode(const std::string &str) {
@@ -67,5 +73,9 @@ namespace biliqt::utils {
         }
 
         return oss.str();
+    }
+
+    std::string concat(const std::string &str, const std::string &sep) {
+        return str + sep;
     }
 }

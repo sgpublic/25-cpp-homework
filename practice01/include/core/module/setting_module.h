@@ -30,7 +30,7 @@ namespace biliqt::core::module {
 
     public:
         SETTING_MEMBER(darkMode, int, Int, 0)
-        SETTING_MEMBER(language, QString, String, "")
+        SETTING_MEMBER(language, QString, String, "zh_CN")
 
         SETTING_MEMBER(login, bool, Bool, false)
         SETTING_MEMBER(username, QString, String, "")

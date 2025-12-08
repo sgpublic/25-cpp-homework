@@ -11,22 +11,22 @@
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="37"/>
+        <location filename="../qml/window/MainWindow.qml" line="39"/>
         <source></source>
         <translation>Home</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="46"/>
+        <location filename="../qml/window/MainWindow.qml" line="48"/>
         <source></source>
         <translation>My Watchlist</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="58"/>
+        <location filename="../qml/window/MainWindow.qml" line="60"/>
         <source></source>
         <translation>Login</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="75"/>
+        <location filename="../qml/window/MainWindow.qml" line="90"/>
         <source></source>
         <translation>About</translation>
     </message>
@@ -66,7 +66,7 @@
         <translation>Language</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="83"/>
+        <location filename="../qml/window/MainWindow.qml" line="98"/>
         <source></source>
         <translation>Settings</translation>
     </message>
@@ -96,24 +96,29 @@
         <translation>Loading qrcode...</translation>
     </message>
     <message id="login_qrcode_doing">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="126"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="124"/>
         <source></source>
         <translation>Logining in...</translation>
     </message>
     <message id="login_qrcode_error">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="132"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="128"/>
         <source></source>
         <translation>Error occurred: %s</translation>
     </message>
     <message id="login_qrcode_confirm">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="136"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="132"/>
         <source></source>
         <translation>Scanned, please confirm login in the client.</translation>
     </message>
     <message id="login_qrcode_expire">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="140"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="136"/>
         <source></source>
         <translation>The QR code has expired.</translation>
+    </message>
+    <message id="main_nick_unknown">
+        <location filename="../../src/model/window_main_viewmodel.cpp" line="38"/>
+        <source></source>
+        <translation>Unknown User</translation>
     </message>
 </context>
 </TS>

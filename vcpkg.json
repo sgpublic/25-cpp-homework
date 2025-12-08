@@ -6,6 +6,7 @@
     "oatpp-openssl",
     "openssl",
     "boost-url",
+    "nlohmann-json",
     "protobuf"
   ],
   "builtin-baseline": "0804e3b55b7e435c593707071052363fa876f170",
@@ -25,6 +26,10 @@
     {
       "name": "boost-url",
       "version": "1.89.0"
+    },
+    {
+      "name": "nlohmann-json",
+      "version": "3.12.0#1"
     },
     {
       "name": "protobuf",
