@@ -46,10 +46,10 @@ namespace biliqt::model {
 
 #define VIEW_MODEL_COROUTINE_TASK(NAME)                                                                    \
     public:                                                                                                \
-        Q_INVOKABLE void request##NAME() {                                                                 \
-            startTask([this]() {                                                                           \
-                on##NAME();                                                                                \
+        Q_INVOKABLE void request##NAME(const QVariantMap& args = QVariantMap()) {                          \
+            startTask([this, args]() {                                                                     \
+                on##NAME(args);                                                                            \
             });                                                                                            \
         }                                                                                                  \
     private:                                                                                               \
-        void on##NAME();
+        void on##NAME(const QVariantMap& args = QVariantMap());

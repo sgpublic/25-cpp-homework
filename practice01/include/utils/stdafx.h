@@ -1,7 +1,7 @@
 #pragma once
 
 #define Q_PROPERTY_AUTO_P(TYPE, M)                                                                 \
-    Q_PROPERTY(TYPE M MEMBER _##M NOTIFY M##Changed)                                               \
+    Q_PROPERTY(TYPE M READ M WRITE M NOTIFY M##Changed)                                            \
 public:                                                                                            \
     Q_SIGNAL void M##Changed();                                                                    \
     void M(TYPE in_##M) {                                                                          \
@@ -15,8 +15,9 @@ public:                                                                         
 private:                                                                                           \
     TYPE _##M
 
+
 #define Q_PROPERTY_AUTO(TYPE, M)                                                                   \
-    Q_PROPERTY(TYPE M MEMBER _##M NOTIFY M##Changed)                                               \
+    Q_PROPERTY(TYPE M READ M WRITE M NOTIFY M##Changed)                                            \
 public:                                                                                            \
     Q_SIGNAL void M##Changed();                                                                    \
     void M(const TYPE &in_##M) {                                                                   \

@@ -141,3 +141,21 @@ add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lrelease)
 ### 3. oatpp 跟随重定向
 
 没有解决方案：[oatpp/oatpp#439](https://github.com/oatpp/oatpp/issues/439)。
+
+### 4. Failed to initialize graphics backend for OpenGL
+
+使用 X11 转发开发的时候，出现无法使用 OpenGL 的问题：
+
+```
+libGL error: No matching fbConfigs or visuals found
+libGL error: failed to load driver: swrast
+QGLXContext: Failed to create dummy context
+QRhiGles2: Failed to create temporary context
+QRhiGles2: Failed to create context
+Failed to create RHI (backend 2)
+Failed to initialize graphics backend for OpenGL.
+```
+
+解决方案：
+
+添加环境变量 `QT_QUICK_BACKEND=software`。

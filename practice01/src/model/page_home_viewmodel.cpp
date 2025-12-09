@@ -13,4 +13,7 @@ namespace biliqt::model {
 
     }
 
+    void HomePageViewModel::onLoadSearchSuggest(const QVariantMap& args) {
+
+    }
 }

@@ -38,7 +38,6 @@ namespace biliqt::model {
 
         VIEW_MODEL_COROUTINE_TASK(LoginQrcode)
     private:
-
         void startQrcodeCheck();
         void doLoginPostWork(const oatpp::Object<core::api::dto::LoginQrcodeTvPollResp::Data>& data);
         void setQrcodeState(const QrcodeState& state, const std::string& url, const std::string& authCode, const std::string& message);

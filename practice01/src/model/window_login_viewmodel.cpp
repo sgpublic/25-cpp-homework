@@ -17,7 +17,7 @@ namespace biliqt::model {
         _passportClient = PassportClient::createShared();
     }
 
-    void LoginWindowViewModel::onLoginQrcode() {
+    void LoginWindowViewModel::onLoginQrcode(const QVariantMap& args) {
         try {
             setQrcodeState(Loading, "", "", "");
             const auto dto = LoginQrcodeTvReq::createShared();

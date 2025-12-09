@@ -10,29 +10,33 @@
 #include "utils/string.h"
 
 using namespace biliqt::utils;
+using namespace biliqt::core::module;
+using namespace biliqt::core::api;
+using namespace biliqt::core::api::client;
+using namespace biliqt::core::api::dto;
 
 namespace biliqt::model {
 
     MainWindowViewModel::MainWindowViewModel(QObject *parent) : ViewModel(parent) {
-        _apiClient = core::api::client::ApiClient::createShared();
-        _appClient = core::api::client::AppClient::createShared();
-        hasLogin(core::module::SettingModule::getInstance()->login());
+        _apiClient = ApiClient::createShared();
+        _appClient = AppClient::createShared();
+        hasLogin(SettingModule::getInstance()->login());
+        requestLoadBannerData();
         if (_hasLogin) {
             requestLoadUserInfo();
-            requestLoadBannerData();
         }
     }
 
-    void MainWindowViewModel::onLoginSucceed() {
+    void MainWindowViewModel::onLoginSucceed(const QVariantMap& args) {
         hasLogin(true);
         requestLoadUserInfo();
     }
 
-    void MainWindowViewModel::onLoadUserInfo() {
-        const auto dto = core::api::dto::MyinfoReq::createShared();
-        dto->access_key = qstr_to_oatstr(core::module::SettingModule::getInstance()->accessToken());
+    void MainWindowViewModel::onLoadUserInfo(const QVariantMap& args) {
+        const auto dto = MyinfoReq::createShared();
+        dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
         const auto result = _appClient->myinfo(dto->asSignedParams());
-        const auto body = core::api::readRespBody<core::api::dto::MyinfoResp>(result);
+        const auto body = core::api::readRespBody<MyinfoResp>(result);
         qDebug() << "code:" << body->code << "message:" << body->message->data();
         if (body->code != 0) {
             nick(qtTrId("main_nick_unknown"));
@@ -43,13 +47,18 @@ namespace biliqt::model {
         }
     }
 
-    void MainWindowViewModel::onLoadBannerData() {
-        const auto dto = core::api::dto::PgcPageReq::createShared();
-        dto->access_key = qstr_to_oatstr(core::module::SettingModule::getInstance()->accessToken());
+    void MainWindowViewModel::onLoadBannerData(const QVariantMap& args) {
+        const auto dto = PgcPageReq::createShared();
+        dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
         const auto result = _apiClient->pgc_page(dto->asSignedParams());
-        const auto body = core::api::readRespBody(result);
-        const std::string code = body["code"];
+        const auto body = readRespBody(result);
+        const int code = body["code"];
         const std::string message = body["message"];
         qDebug() << "code:" << code << "message:" << message;
+        if (code != 0) {
+            return;
+        }
+        const auto& banner = findModules<PgcPageResp::ModuleItems>(body, "v_card");
+        bannerData(*banner);
     }
 }

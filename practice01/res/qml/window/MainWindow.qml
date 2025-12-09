@@ -17,6 +17,7 @@ FluWindow {
         onResult: (data) => {
             if (data.loginSucceed) {
                 viewModel.requestLoginSucceed()
+                viewModel.requestLoadBannerData()
             }
         }
     }

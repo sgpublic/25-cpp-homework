@@ -16,6 +16,7 @@ namespace biliqt::model {
         Q_PROPERTY_READONLY_AUTO(bool, hasLogin) = false;
         Q_PROPERTY_READONLY_AUTO(QString, nick);
         Q_PROPERTY_READONLY_AUTO(QString, avatarUrl);
+        Q_PROPERTY_READONLY_AUTO(QList<QVariantMap>, bannerData);
     private:
         std::shared_ptr<core::api::client::ApiClient> _apiClient;
         std::shared_ptr<core::api::client::AppClient> _appClient;

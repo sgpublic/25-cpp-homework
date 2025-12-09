@@ -10,6 +10,15 @@ FluScrollablePage {
 
     launchMode: FluPageType.SingleTask
 
+    FluAutoSuggestBox {
+        iconSource: FluentIcons.Search
+        emptyText: qsTrId("home_search_hint")
+        text: viewModel.searchText
+        onTextChanged: {
+            viewModel.searchText = text
+        }
+    }
+
     Component.onCompleted: {
         viewModel = ViewModelModule.createViewModel("page_home", page_home)
     }

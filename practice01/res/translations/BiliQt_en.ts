@@ -6,27 +6,27 @@
     <message id="app_name">
         <location filename="../qml/window/AboutWindow.qml" line="28"/>
         <location filename="../qml/window/MainWindow.qml" line="9"/>
-        <location filename="../qml/window/MainWindow.qml" line="31"/>
+        <location filename="../qml/window/MainWindow.qml" line="32"/>
         <source></source>
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="39"/>
+        <location filename="../qml/window/MainWindow.qml" line="40"/>
         <source></source>
         <translation>Home</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="48"/>
+        <location filename="../qml/window/MainWindow.qml" line="49"/>
         <source></source>
         <translation>My Watchlist</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="60"/>
+        <location filename="../qml/window/MainWindow.qml" line="61"/>
         <source></source>
         <translation>Login</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="90"/>
+        <location filename="../qml/window/MainWindow.qml" line="91"/>
         <source></source>
         <translation>About</translation>
     </message>
@@ -66,7 +66,7 @@
         <translation>Language</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="98"/>
+        <location filename="../qml/window/MainWindow.qml" line="99"/>
         <source></source>
         <translation>Settings</translation>
     </message>
@@ -116,9 +116,14 @@
         <translation>The QR code has expired.</translation>
     </message>
     <message id="main_nick_unknown">
-        <location filename="../../src/model/window_main_viewmodel.cpp" line="38"/>
+        <location filename="../../src/model/window_main_viewmodel.cpp" line="42"/>
         <source></source>
         <translation>Unknown User</translation>
+    </message>
+    <message id="home_search_hint">
+        <location filename="../qml/pages/HomePage.qml" line="15"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
