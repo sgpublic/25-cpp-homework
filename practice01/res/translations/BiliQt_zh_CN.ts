@@ -116,12 +116,12 @@
         <translation>二维码已过期</translation>
     </message>
     <message id="main_nick_unknown">
-        <location filename="../../src/model/window_main_viewmodel.cpp" line="42"/>
+        <location filename="../../src/model/window_main_viewmodel.cpp" line="40"/>
         <source></source>
         <translation>未知用户</translation>
     </message>
     <message id="home_search_hint">
-        <location filename="../qml/pages/HomePage.qml" line="15"/>
+        <location filename="../qml/pages/HomePage.qml" line="19"/>
         <source></source>
         <translation type="unfinished"></translation>
     </message>

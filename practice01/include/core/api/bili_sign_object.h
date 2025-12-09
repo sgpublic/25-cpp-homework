@@ -6,6 +6,7 @@
 
 #include <QDebug>
 #include <QVariant>
+#include <QQmlListProperty>
 #include <oatpp/core/Types.hpp>
 #include <oatpp/web/protocol/http/incoming/Response.hpp>
 #include <oatpp/parser/json/mapping/ObjectMapper.hpp>
@@ -32,11 +33,11 @@ namespace biliqt::core::api {
     template<typename T>
     typename std::enable_if<
         std::is_base_of<oatpp::DTO, T>::value,
-        std::shared_ptr<QList<QVariantMap>>
+        std::shared_ptr<QVariantList>
     >::type
     findModules(const nlohmann::json& body, const std::string& style) {
         const auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared();
-        const auto& modules = std::make_shared<QList<QVariantMap>>();
+        const auto& modules = std::make_shared<QVariantList>();
         if (!body.contains("result") || !body["result"].contains("modules")) {
             return modules;
         }

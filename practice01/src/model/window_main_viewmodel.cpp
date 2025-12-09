@@ -18,10 +18,8 @@ using namespace biliqt::core::api::dto;
 namespace biliqt::model {
 
     MainWindowViewModel::MainWindowViewModel(QObject *parent) : ViewModel(parent) {
-        _apiClient = ApiClient::createShared();
         _appClient = AppClient::createShared();
         hasLogin(SettingModule::getInstance()->login());
-        requestLoadBannerData();
         if (_hasLogin) {
             requestLoadUserInfo();
         }
@@ -45,20 +43,5 @@ namespace biliqt::model {
             nick(body->data->name->data());
             avatarUrl(body->data->face->data());
         }
-    }
-
-    void MainWindowViewModel::onLoadBannerData(const QVariantMap& args) {
-        const auto dto = PgcPageReq::createShared();
-        dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
-        const auto result = _apiClient->pgc_page(dto->asSignedParams());
-        const auto body = readRespBody(result);
-        const int code = body["code"];
-        const std::string message = body["message"];
-        qDebug() << "code:" << code << "message:" << message;
-        if (code != 0) {
-            return;
-        }
-        const auto& banner = findModules<PgcPageResp::ModuleItems>(body, "v_card");
-        bannerData(*banner);
     }
 }

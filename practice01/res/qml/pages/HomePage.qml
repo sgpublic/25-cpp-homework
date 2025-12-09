@@ -1,6 +1,7 @@
 pragma Singleton
 
 import QtQuick 2.15
+import QtQuick.Layouts 2.15
 import FluentUI 1.0
 
 FluScrollablePage {
@@ -11,11 +12,43 @@ FluScrollablePage {
     launchMode: FluPageType.SingleTask
 
     FluAutoSuggestBox {
+        Layout.alignment: Qt.AlignHCenter
+        Layout.preferredWidth: 400
+
         iconSource: FluentIcons.Search
-        emptyText: qsTrId("home_search_hint")
+        placeholderText: qsTrId("home_search_hint")
         text: viewModel.searchText
         onTextChanged: {
             viewModel.searchText = text
+        }
+    }
+
+    FluCarousel {
+        id: banner_carousel
+
+        Layout.preferredWidth: 680
+        Layout.preferredHeight: 200
+        Layout.alignment: Qt.AlignHCenter
+        Layout.topMargin: 20
+
+        model: viewModel.bannerData
+
+        orientation: Qt.Horizontal
+        indicatorGravity: Qt.AlignBottom | Qt.AlignHCenter
+        autoPlay: true
+        loopTime: 5000
+        delegate: Component {
+            FluClip {
+                radius: [12, 12, 12, 12]
+                anchors.fill: parent
+
+                Image {
+                    anchors.fill: parent
+                    source: "https://i0.hdslb.com/bfs/bangumi/image/ea82d2ac85cafc14513db9f1bf687f9a8cd78927.png"
+                    asynchronous: true
+                    fillMode: Image.PreserveAspectCrop
+                }
+            }
         }
     }
 

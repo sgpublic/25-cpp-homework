@@ -23,7 +23,6 @@ namespace biliqt::core::api::dto {
             EXPOSE_PROPERTY_DTO(ModuleItems)
             DTO_FIELD(String, cover);
             DTO_FIELD(String, title);
-            DTO_FIELD(String, desc);
         };
     };
 
