@@ -159,3 +159,12 @@ Failed to initialize graphics backend for OpenGL.
 解决方案：
 
 添加环境变量 `QT_QUICK_BACKEND=software`。
+
+### 5. qml 中 ListModel 不认 QVariantList
+
+使用如下方法将 QVariantList 转为 Array：
+
+```qmllang
+model: list // 原始代码
+model: [...list] // 改为这一行
+```

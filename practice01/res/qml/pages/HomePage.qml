@@ -31,7 +31,7 @@ FluScrollablePage {
         Layout.alignment: Qt.AlignHCenter
         Layout.topMargin: 20
 
-        model: viewModel.bannerData
+        model: [...viewModel.bannerData]
 
         orientation: Qt.Horizontal
         indicatorGravity: Qt.AlignBottom | Qt.AlignHCenter
@@ -44,7 +44,7 @@ FluScrollablePage {
 
                 Image {
                     anchors.fill: parent
-                    source: "https://i0.hdslb.com/bfs/bangumi/image/ea82d2ac85cafc14513db9f1bf687f9a8cd78927.png"
+                    source: model.cover
                     asynchronous: true
                     fillMode: Image.PreserveAspectCrop
                 }
