@@ -6,9 +6,11 @@ FluWindow {
     property var viewModel
 
     height: 900
+    width: 1500
+    minimumHeight: 700
+    minimumWidth: 1300
     title: qsTrId("app_name")
     visible: true
-    width: 1500
     launchMode: FluWindowType.SingleTask
 
     FluWindowResultLauncher {

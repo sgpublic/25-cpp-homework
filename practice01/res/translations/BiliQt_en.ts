@@ -5,28 +5,28 @@
     <name></name>
     <message id="app_name">
         <location filename="../qml/window/AboutWindow.qml" line="28"/>
-        <location filename="../qml/window/MainWindow.qml" line="9"/>
-        <location filename="../qml/window/MainWindow.qml" line="32"/>
+        <location filename="../qml/window/MainWindow.qml" line="12"/>
+        <location filename="../qml/window/MainWindow.qml" line="34"/>
         <source></source>
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="40"/>
+        <location filename="../qml/window/MainWindow.qml" line="42"/>
         <source></source>
         <translation>Home</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="49"/>
+        <location filename="../qml/window/MainWindow.qml" line="51"/>
         <source></source>
         <translation>My Watchlist</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="61"/>
+        <location filename="../qml/window/MainWindow.qml" line="63"/>
         <source></source>
         <translation>Login</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="91"/>
+        <location filename="../qml/window/MainWindow.qml" line="93"/>
         <source></source>
         <translation>About</translation>
     </message>
@@ -66,7 +66,7 @@
         <translation>Language</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="99"/>
+        <location filename="../qml/window/MainWindow.qml" line="101"/>
         <source></source>
         <translation>Settings</translation>
     </message>
@@ -121,7 +121,7 @@
         <translation>Unknown User</translation>
     </message>
     <message id="home_search_hint">
-        <location filename="../qml/pages/HomePage.qml" line="19"/>
+        <location filename="../qml/pages/HomePage.qml" line="26"/>
         <source></source>
         <translation type="unfinished"></translation>
     </message>

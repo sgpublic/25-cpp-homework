@@ -4,6 +4,7 @@
 #include "model/base_viewmodel.h"
 #include "model/page_home_viewmodel.h"
 
+#include "../../../cmake-build-debug/_deps/fluentui-src/src/qmlcustomplot/RealTimePlot.h"
 #include "core/api/dto/api_dto.h"
 #include "core/module/setting_module.h"
 
@@ -18,6 +19,7 @@ namespace biliqt::model {
     HomePageViewModel::HomePageViewModel(QObject *parent): ViewModel(parent) {
         _apiClient = ApiClient::createShared();
         requestLoadBannerData();
+        requestLoadBangumiList({{"is_refresh", false}});
     }
 
     void HomePageViewModel::onLoadSearchSuggest(const QVariantMap& args) {
@@ -35,8 +37,42 @@ namespace biliqt::model {
             return;
         }
         const auto& banner = findModules<PgcPageResp::ModuleItems>(body, "topic");
-        sleep(2);
         qDebug() << "banner image count:" << banner->size();
         bannerData(*banner);
+    }
+
+    void HomePageViewModel::onLoadBangumiList(const QVariantMap &args) {
+        const int isRefresh = args.value("is_refresh").toBool() ? 1 : 0;
+        const auto dto = PgcPageBangumiReq::createShared();
+        dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
+        dto->cursor = _cursor;
+        dto->is_refresh = isRefresh;
+        const auto result = _apiClient->pgc_page_bangumi(dto->asSignedParams());
+        const auto body = readRespBody(result);
+        const int code = body["code"];
+        const std::string message = body["message"];
+        qDebug() << "onLoadBangumiList" << "code:" << code << ", messasge:" << message;
+        if (code != 0) {
+            return;
+        }
+        const auto& list = findModules<PgcPageBangumiResp::ModuleItems>(body, "double_feed");
+        qDebug() << "bangumi item count:" << list->size();
+        bangumiList(*list);
+    }
+
+    void HomePageViewModel::onPageWidthChanged(const double width) {
+        constexpr int maxWidth = 1700;
+        ui_listWidth(width > maxWidth ? maxWidth : width);
+
+        const double maxCellWidth = maxWidth / 5;
+        if (const double cellWidth = ui_listWidth() / 4; cellWidth > maxCellWidth) {
+            ui_listCellWidth(ui_listWidth() / 5);
+        } else {
+            ui_listCellWidth(cellWidth);
+        }
+        ui_listCellContentWidth(ui_listCellWidth() - 2 * ui_listCellContentPadding());
+
+        ui_listCellContentHeight(ui_listCellWidth() / 8 * 5);
+        ui_listCellHeight(ui_listCellContentHeight() + 60);
     }
 }

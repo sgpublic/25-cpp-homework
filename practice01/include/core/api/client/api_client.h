@@ -28,6 +28,13 @@ namespace biliqt::core::api::client {
         )
         BILI_SIGN_GET(pgc_page)
 
+        API_CALL(
+            "GET", "/pgc/page/bangumi",
+            pgc_page_bangumi,
+            QUERY(String, queries)
+        )
+        BILI_SIGN_GET(pgc_page_bangumi)
+
     };
 
 }

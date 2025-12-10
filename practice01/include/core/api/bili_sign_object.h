@@ -72,6 +72,8 @@ namespace biliqt::core::api {
                     } else if (valueRef->type == oatpp::Float32::Class::getType()) {
                         const float& value = item[keyRef];
                         result[key] = QVariant(value);
+                    } else {
+                        qDebug() << "unsupported type of key:" << key;
                     }
                 }
                 modules->append(result);
