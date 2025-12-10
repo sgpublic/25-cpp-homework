@@ -31,9 +31,9 @@ namespace biliqt::model {
         Q_PROPERTY_READONLY_AUTO(double, ui_listCellWidth) = 100;
         Q_PROPERTY_READONLY_AUTO(double, ui_listCellPadding) = 8;
 
-        Q_PROPERTY_READONLY_AUTO(double, ui_listCellContentPadding) = 1;
         Q_PROPERTY_READONLY_AUTO(int, ui_listCellContentHeight) = 100;
         Q_PROPERTY_READONLY_AUTO(int, ui_listCellContentWidth) = 100;
+        Q_PROPERTY_READONLY_AUTO(int, ui_listCellContentCoverHeight) = 100;
     public:
         Q_INVOKABLE void onPageWidthChanged(double width);
     };

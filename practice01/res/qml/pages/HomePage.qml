@@ -78,17 +78,20 @@ FluPage {
             Item {
                 anchors.margins: viewModel.ui_listCellPadding
 
-                FluFrame {
-                    radius: 8
+                FluClip {
+                    radius: [8, 8, 8, 8]
                     width: viewModel.ui_listCellContentWidth
-                    height: viewModel.ui_listCellContentHeight
-                    padding: viewModel.ui_listCellContentPadding
+                    height: viewModel.ui_listCellContentCoverHeight
 
                     Image {
                         source: modelData.cover
+                        cache: true
+                        asynchronous: true
+                        retainWhileLoading: true
+                        mipmap: true
                         sourceSize {
                             width: viewModel.ui_listCellContentWidth
-                            height: viewModel.ui_listCellContentHeight
+                            height: viewModel.ui_listCellContentCoverHeight
                         }
 
                         fillMode: Image.PreserveAspectCrop

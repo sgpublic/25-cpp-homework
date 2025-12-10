@@ -70,9 +70,10 @@ namespace biliqt::model {
         } else {
             ui_listCellWidth(cellWidth);
         }
-        ui_listCellContentWidth(ui_listCellWidth() - 2 * ui_listCellContentPadding());
+        ui_listCellContentWidth(ui_listCellWidth() - 2 * ui_listCellPadding());
 
-        ui_listCellContentHeight(ui_listCellWidth() / 8 * 5);
-        ui_listCellHeight(ui_listCellContentHeight() + 60);
+        ui_listCellContentCoverHeight(ui_listCellWidth() / 8 * 5);
+        ui_listCellContentHeight(ui_listCellContentCoverHeight() + 60);
+        ui_listCellHeight(ui_listCellContentHeight() + 2 * ui_listCellPadding());
     }
 }

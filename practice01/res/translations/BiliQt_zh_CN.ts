@@ -91,27 +91,27 @@
         <translation>请使用哔哩哔哩手机客户端扫描登陆</translation>
     </message>
     <message id="login_qrcode_loading">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="115"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="120"/>
         <source></source>
         <translation>正在获取二维码...</translation>
     </message>
     <message id="login_qrcode_doing">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="124"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="129"/>
         <source></source>
         <translation>正在登录</translation>
     </message>
     <message id="login_qrcode_error">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="128"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="133"/>
         <source></source>
         <translation>出错了：%s</translation>
     </message>
     <message id="login_qrcode_confirm">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="132"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="137"/>
         <source></source>
         <translation>已扫描，请在客户端中确认登录</translation>
     </message>
     <message id="login_qrcode_expire">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="136"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="141"/>
         <source></source>
         <translation>二维码已过期</translation>
     </message>

@@ -3,6 +3,11 @@
 //
 
 #include "model/window_login_viewmodel.h"
+
+#ifdef Q_OS_MACOS
+#include <unistd.h>
+#endif
+
 #include "core/api/dto/passport_dto.h"
 #include "core/api/bili_sign_object.h"
 #include "core/module/setting_module.h"
