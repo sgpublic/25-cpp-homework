@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
+#include "core/module/image_cache_module.h"
 #include "core/module/setting_module.h"
 #include "core/module/resource_module.h"
 
@@ -26,6 +27,8 @@ int main(int argc, char *argv[]) {
     QQmlApplicationEngine engine;
 
     TranslateModule::getInstance()->init(&engine);
+    ImageCacheModule::getInstance()->init(&engine);
+
     engine.rootContext()->setContextProperty("ResourceModule", ResourceModule::getInstance());
     engine.rootContext()->setContextProperty("SettingModule", SettingModule::getInstance());
     engine.rootContext()->setContextProperty("TranslateModule", TranslateModule::getInstance());

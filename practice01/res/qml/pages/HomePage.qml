@@ -62,7 +62,7 @@ FluPage {
 
                         Image {
                             anchors.fill: parent
-                            source: model.cover
+                            source: ResourceModule.getRemoteDrawable(model.cover)
                             asynchronous: true
                             fillMode: Image.PreserveAspectCrop
                         }
@@ -75,27 +75,47 @@ FluPage {
         model: viewModel.bangumiList
         delegateModelAccess: DelegateModel.ReadOnly
         delegate: Component {
-            Item {
+            Column {
                 anchors.margins: viewModel.ui_listCellPadding
+                width: viewModel.ui_listCellContentWidth
+                height: viewModel.ui_listCellContentHeight
 
                 FluClip {
                     radius: [8, 8, 8, 8]
-                    width: viewModel.ui_listCellContentWidth
+                    width: parent.width
                     height: viewModel.ui_listCellContentCoverHeight
 
                     Image {
-                        source: modelData.cover
+                        source: ResourceModule.getRemoteDrawable(modelData.cover)
                         cache: true
                         asynchronous: true
                         retainWhileLoading: true
                         mipmap: true
                         sourceSize {
-                            width: viewModel.ui_listCellContentWidth
-                            height: viewModel.ui_listCellContentCoverHeight
+                            width: parent.width
+                            height: parent.height
                         }
 
                         fillMode: Image.PreserveAspectCrop
                     }
+                }
+
+                Text {
+                    text: modelData.title
+                    width: parent.width
+                    wrapMode: Text.Wrap
+                    elide: Text.ElideRight
+                    maximumLineCount: 2
+                    font.pointSize: 12
+                    font.bold: true
+                }
+                Text {
+                    text: modelData.desc
+                    width: parent.width
+                    elide: Text.ElideRight
+                    maximumLineCount: 1
+                    font.pointSize: 8
+                    color: "gray"
                 }
             }
         }

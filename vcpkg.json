@@ -7,6 +7,7 @@
     "openssl",
     "boost-url",
     "nlohmann-json",
+    "curl",
     "protobuf"
   ],
   "builtin-baseline": "0804e3b55b7e435c593707071052363fa876f170",
@@ -30,6 +31,10 @@
     {
       "name": "nlohmann-json",
       "version": "3.12.0#1"
+    },
+    {
+      "name": "curl",
+      "version": "8.17.0"
     },
     {
       "name": "protobuf",

@@ -6,27 +6,27 @@
     <message id="app_name">
         <location filename="../qml/window/AboutWindow.qml" line="28"/>
         <location filename="../qml/window/MainWindow.qml" line="12"/>
-        <location filename="../qml/window/MainWindow.qml" line="34"/>
+        <location filename="../qml/window/MainWindow.qml" line="35"/>
         <source></source>
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="42"/>
+        <location filename="../qml/window/MainWindow.qml" line="43"/>
         <source></source>
         <translation>Home</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="51"/>
+        <location filename="../qml/window/MainWindow.qml" line="52"/>
         <source></source>
         <translation>My Watchlist</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="63"/>
+        <location filename="../qml/window/MainWindow.qml" line="64"/>
         <source></source>
         <translation>Login</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="93"/>
+        <location filename="../qml/window/MainWindow.qml" line="94"/>
         <source></source>
         <translation>About</translation>
     </message>
@@ -66,7 +66,7 @@
         <translation>Language</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="101"/>
+        <location filename="../qml/window/MainWindow.qml" line="102"/>
         <source></source>
         <translation>Settings</translation>
     </message>

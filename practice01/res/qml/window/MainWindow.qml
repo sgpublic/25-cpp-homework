@@ -11,6 +11,7 @@ FluWindow {
     minimumWidth: 1300
     title: qsTrId("app_name")
     visible: true
+    fitsAppBarWindows: true
     launchMode: FluWindowType.SingleTask
 
     FluWindowResultLauncher {
@@ -75,10 +76,10 @@ FluWindow {
                     width: 24
                     height: 24
 
-                    FluImage {
-                        width: 24
-                        height: 24
-                        source: viewModel.avatarUrl
+                    Image {
+                        sourceSize.width: 24
+                        sourceSize.height: 24
+                        source: ResourceModule.getRemoteDrawable(viewModel.avatarUrl)
                     }
                 }
                 iconDelegate: viewModel.avatarUrl === "" ? null : avatarImg

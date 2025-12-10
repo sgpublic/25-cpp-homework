@@ -73,7 +73,7 @@ namespace biliqt::model {
         ui_listCellContentWidth(ui_listCellWidth() - 2 * ui_listCellPadding());
 
         ui_listCellContentCoverHeight(ui_listCellWidth() / 8 * 5);
-        ui_listCellContentHeight(ui_listCellContentCoverHeight() + 60);
+        ui_listCellContentHeight(ui_listCellContentCoverHeight() + 45);
         ui_listCellHeight(ui_listCellContentHeight() + 2 * ui_listCellPadding());
     }
 }

@@ -18,5 +18,7 @@ namespace biliqt::utils {
 
     std::string md5(const std::string &str);
 
+    std::string sha256(const std::string &str);
+
     std::string concat(const std::string &str, const std::string &sep);
 }

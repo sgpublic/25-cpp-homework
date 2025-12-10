@@ -4,6 +4,7 @@
 #include "utils/string.h"
 
 #include <iomanip>
+#include <QCryptographicHash>
 #include <QString>
 #include <sstream>
 #include <boost/url/encode.hpp>
@@ -41,38 +42,14 @@ namespace biliqt::utils {
         return strVal;
     }
 
-    std::string md5(const std::string& input) {
-        unsigned char digest[EVP_MAX_MD_SIZE];
-        unsigned int length = 0;
+    std::string md5(const std::string& str) {
+        QByteArray hash = QCryptographicHash::hash(str, QCryptographicHash::Md5);
+        return hash.toHex().toStdString();
+    }
 
-        EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
-        if (mdctx == nullptr) {
-            throw std::runtime_error("Failed to create EVP_MD_CTX");
-        }
-
-        if (EVP_DigestInit_ex(mdctx, EVP_md5(), nullptr) != 1) {
-            EVP_MD_CTX_free(mdctx);
-            throw std::runtime_error("Failed to initialize digest context");
-        }
-
-        if (EVP_DigestUpdate(mdctx, input.c_str(), input.length()) != 1) {
-            EVP_MD_CTX_free(mdctx);
-            throw std::runtime_error("Failed to update digest context");
-        }
-
-        if (EVP_DigestFinal_ex(mdctx, digest, &length) != 1) {
-            EVP_MD_CTX_free(mdctx);
-            throw std::runtime_error("Failed to finalize digest context");
-        }
-
-        EVP_MD_CTX_free(mdctx);
-
-        std::ostringstream oss;
-        for (unsigned int i = 0; i < length; ++i) {
-            oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(digest[i]);
-        }
-
-        return oss.str();
+    std::string sha256(const std::string &str) {
+        QByteArray hash = QCryptographicHash::hash(str, QCryptographicHash::Sha256);
+        return hash.toHex().toStdString();
     }
 
     std::string concat(const std::string &str, const std::string &sep) {

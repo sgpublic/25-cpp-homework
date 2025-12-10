@@ -17,6 +17,7 @@ namespace biliqt::core::module {
         Q_INVOKABLE QString get(const QString& path);
         Q_INVOKABLE QString getQml(const QString& path);
         Q_INVOKABLE QString getDrawable(const QString& path);
+        Q_INVOKABLE QString getRemoteDrawable(const QString& path);
     private:
         explicit ResourceModule(QObject *parent = nullptr);
     };

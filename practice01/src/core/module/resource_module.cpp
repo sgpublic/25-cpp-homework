@@ -4,6 +4,8 @@
 
 #include "core/module/resource_module.h"
 
+#include "core/module/image_cache_module.h"
+
 namespace biliqt::core::module {
 
     ResourceModule::ResourceModule(QObject *parent) : QObject(parent) {
@@ -21,4 +23,7 @@ namespace biliqt::core::module {
         return get("/drawable" + path);
     }
 
+    QString ResourceModule::getRemoteDrawable(const QString &path) {
+        return ImageCacheModule::getInstance()->prefix() + "/" + path;
+    }
 }
