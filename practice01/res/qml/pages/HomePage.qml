@@ -106,7 +106,7 @@ FluPage {
                     wrapMode: Text.Wrap
                     elide: Text.ElideRight
                     maximumLineCount: 2
-                    font.pointSize: 12
+                    font.pointSize: 14
                     font.bold: true
                 }
                 Text {
@@ -114,7 +114,7 @@ FluPage {
                     width: parent.width
                     elide: Text.ElideRight
                     maximumLineCount: 1
-                    font.pointSize: 8
+                    font.pointSize: 10
                     color: "gray"
                 }
             }
