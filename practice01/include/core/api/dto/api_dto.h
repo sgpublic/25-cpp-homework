@@ -29,7 +29,7 @@ namespace biliqt::core::api::dto {
     class PgcPageBangumiReq : public oatpp::DTO {
         BILI_SIGN_API_REQUEST_DTO(PgcPageBangumiReq)
         DTO_FIELD(String, access_key);
-        DTO_FIELD(Int32, cursor);
+        DTO_FIELD(String, cursor);
         DTO_FIELD(Int32, is_refresh);
     };
 

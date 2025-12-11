@@ -42,10 +42,14 @@ namespace biliqt::model {
     }
 
     void HomePageViewModel::onLoadBangumiList(const QVariantMap &args) {
+        if (!_bangumiListHasNext || _isLoadBangumiList) {
+            return;
+        }
+        _isLoadBangumiList = true;
         const int isRefresh = args.value("is_refresh").toBool() ? 1 : 0;
         const auto dto = PgcPageBangumiReq::createShared();
         dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
-        dto->cursor = _cursor;
+        dto->cursor = _bangumiListCursor;
         dto->is_refresh = isRefresh;
         const auto result = _apiClient->pgc_page_bangumi(dto->asSignedParams());
         const auto body = readRespBody(result);
@@ -53,11 +57,20 @@ namespace biliqt::model {
         const std::string message = body["message"];
         qDebug() << "onLoadBangumiList" << "code:" << code << ", messasge:" << message;
         if (code != 0) {
+            _isLoadBangumiList = false;
             return;
         }
         const auto& list = findModules<PgcPageBangumiResp::ModuleItems>(body, "double_feed");
+        _bangumiListCursor = body["result"]["next_cursor"];
+        _bangumiListHasNext = body["result"]["has_next"] == 1;
         qDebug() << "bangumi item count:" << list->size();
-        bangumiList(*list);
+        auto newList = QVariantList();
+        if (!isRefresh) {
+            newList += bangumiList();
+        }
+        newList += *list;
+        bangumiList(newList);
+        _isLoadBangumiList = false;
     }
 
     void HomePageViewModel::onPageWidthChanged(const double width) {
@@ -73,7 +86,7 @@ namespace biliqt::model {
         ui_listCellContentWidth(ui_listCellWidth() - 2 * ui_listCellPadding());
 
         ui_listCellContentCoverHeight(ui_listCellWidth() / 8 * 5);
-        ui_listCellContentHeight(ui_listCellContentCoverHeight() + 45);
+        ui_listCellContentHeight(ui_listCellContentCoverHeight() + 40);
         ui_listCellHeight(ui_listCellContentHeight() + 2 * ui_listCellPadding());
     }
 }

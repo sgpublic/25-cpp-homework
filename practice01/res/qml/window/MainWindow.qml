@@ -5,10 +5,10 @@ FluWindow {
     id: window_main
     property var viewModel
 
-    height: 900
-    width: 1500
+    height: 800
+    width: 1200
     minimumHeight: 700
-    minimumWidth: 1300
+    minimumWidth: 1100
     title: qsTrId("app_name")
     visible: true
     fitsAppBarWindows: true

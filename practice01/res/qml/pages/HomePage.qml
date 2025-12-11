@@ -31,93 +31,133 @@ FluPage {
         }
     }
 
-    GridView {
-        id: bangumi_list
+    Item {
         width: viewModel.ui_listWidth
         height: parent.height
-        anchors.horizontalCenter: parent.horizontalCenter
-        cellWidth: viewModel.ui_listCellWidth
-        cellHeight: viewModel.ui_listCellHeight
 
-        header: Item {
-            width: viewModel.ui_listWidth
-            height: 230
+        GridView {
+            id: bangumi_list
+            width: parent.width
+            height: parent.height
+            anchors.horizontalCenter: parent.horizontalCenter
+            cellWidth: viewModel.ui_listCellWidth
+            cellHeight: viewModel.ui_listCellHeight
 
-            FluCarousel {
-                id: banner_carousel
-                width: 680
-                height: 200
-                anchors.centerIn: parent
+            header: Item {
+                width: viewModel.ui_listWidth
+                height: 230
 
-                model: [...viewModel.bannerData]
+                FluCarousel {
+                    id: banner_carousel
+                    width: 680
+                    height: 200
+                    anchors.centerIn: parent
 
-                orientation: Qt.Horizontal
-                indicatorGravity: Qt.AlignBottom | Qt.AlignHCenter
-                autoPlay: true
-                loopTime: 5000
-                delegate: Component {
+                    model: [...viewModel.bannerData]
+
+                    orientation: Qt.Horizontal
+                    indicatorGravity: Qt.AlignBottom | Qt.AlignHCenter
+                    autoPlay: true
+                    loopTime: 5000
+                    delegate: Component {
+                        FluClip {
+                            radius: [12, 12, 12, 12]
+                            anchors.fill: parent
+
+                            Image {
+                                anchors.fill: parent
+                                source: ResourceModule.getRemoteDrawable(model.cover)
+                                asynchronous: true
+                                fillMode: Image.PreserveAspectCrop
+                            }
+                        }
+                    }
+                }
+            }
+
+            boundsBehavior: Flickable.StopAtBounds
+            highlightFollowsCurrentItem: false
+            model: viewModel.bangumiList
+            delegateModelAccess: DelegateModel.ReadOnly
+            delegate: Component {
+                Column {
+                    anchors.margins: viewModel.ui_listCellPadding
+                    width: viewModel.ui_listCellContentWidth
+                    height: viewModel.ui_listCellContentHeight
+
                     FluClip {
-                        radius: [12, 12, 12, 12]
-                        anchors.fill: parent
+                        radius: [8, 8, 8, 8]
+                        width: parent.width
+                        height: viewModel.ui_listCellContentCoverHeight
 
                         Image {
-                            anchors.fill: parent
-                            source: ResourceModule.getRemoteDrawable(model.cover)
+                            source: ResourceModule.getRemoteDrawable(modelData.cover)
+                            cache: true
                             asynchronous: true
+                            retainWhileLoading: true
+                            mipmap: true
+                            sourceSize {
+                                width: parent.width
+                                height: parent.height
+                            }
+
                             fillMode: Image.PreserveAspectCrop
                         }
                     }
+
+                    Text {
+                        id: bangumi_item_title
+                        text: modelData.title
+                        width: parent.width
+                        wrapMode: Text.Wrap
+                        elide: Text.ElideRight
+                        maximumLineCount: 1
+
+                        font.pointSize: 11
+                        font.bold: true
+                        color: "black"
+                    }
+                    Text {
+                        text: modelData.desc
+                        width: parent.width
+                        elide: Text.ElideRight
+                        maximumLineCount: 1
+                        font.pointSize: 8
+                        color: "gray"
+                    }
+
+                    HoverHandler {
+                        id: bangumi_item_hoverHandler
+                        onHoveredChanged: function () {
+                            if (bangumi_item_hoverHandler.hovered) {
+                                bangumi_item_title.color = "#20b0e3"
+                            } else {
+                                bangumi_item_title.color = "black"
+                            }
+                        }
+                    }
+
+                    TapHandler {
+                        id: bangumi_item_tapHandler
+                        onTapped: function () {
+
+                        }
+                    }
                 }
+            }
+
+            onContentYChanged: {
+                const currentY = contentY;
+                if (contentY + height + 280 < contentHeight) {
+                    return
+                }
+                viewModel.requestLoadBangumiList({is_refresh: false})
+                contentY = currentY
             }
         }
 
-        highlightFollowsCurrentItem: false
-        model: viewModel.bangumiList
-        delegateModelAccess: DelegateModel.ReadOnly
-        delegate: Component {
-            Column {
-                anchors.margins: viewModel.ui_listCellPadding
-                width: viewModel.ui_listCellContentWidth
-                height: viewModel.ui_listCellContentHeight
+        Column {
 
-                FluClip {
-                    radius: [8, 8, 8, 8]
-                    width: parent.width
-                    height: viewModel.ui_listCellContentCoverHeight
-
-                    Image {
-                        source: ResourceModule.getRemoteDrawable(modelData.cover)
-                        cache: true
-                        asynchronous: true
-                        retainWhileLoading: true
-                        mipmap: true
-                        sourceSize {
-                            width: parent.width
-                            height: parent.height
-                        }
-
-                        fillMode: Image.PreserveAspectCrop
-                    }
-                }
-
-                Text {
-                    text: modelData.title
-                    width: parent.width
-                    wrapMode: Text.Wrap
-                    elide: Text.ElideRight
-                    maximumLineCount: 2
-                    font.pointSize: 12
-                    font.bold: true
-                }
-                Text {
-                    text: modelData.desc
-                    width: parent.width
-                    elide: Text.ElideRight
-                    maximumLineCount: 1
-                    font.pointSize: 8
-                    color: "gray"
-                }
-            }
         }
     }
 

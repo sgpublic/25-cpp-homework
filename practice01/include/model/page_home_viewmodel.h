@@ -17,7 +17,9 @@ namespace biliqt::model {
         Q_PROPERTY_READONLY_AUTO(QVariantList, bangumiList);
     private:
         std::shared_ptr<core::api::client::ApiClient> _apiClient;
-        int _cursor = 0;
+        std::string _bangumiListCursor = "0";
+        bool _bangumiListHasNext = true;
+        bool _isLoadBangumiList = false;
     public:
         explicit HomePageViewModel(QObject *parent = nullptr);
         VIEW_MODEL_COROUTINE_TASK(LoadSearchSuggest)
@@ -26,6 +28,7 @@ namespace biliqt::model {
 
     public:
         Q_PROPERTY_READONLY_AUTO(double, ui_listWidth) = 0;
+        Q_PROPERTY_READONLY_AUTO(double, ui_listHeaderHeight) = 230;
 
         Q_PROPERTY_READONLY_AUTO(double, ui_listCellHeight) = 100;
         Q_PROPERTY_READONLY_AUTO(double, ui_listCellWidth) = 100;
