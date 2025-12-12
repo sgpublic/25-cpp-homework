@@ -160,9 +160,9 @@ FluPage {
         viewModel.clearBangumiList.connect(() => bangumi_list_data.clear())
         page_home.widthChanged.connect(() => viewModel.onPageWidthChanged(page_home.width))
 
-        GlobalSignalModule.loginSuccess.connect(function () {
-            viewModel.requestLoginSucceed()
+        GlobalSignalModule.loginStatusChanged.connect(function (isLogin) {
             viewModel.requestLoadBannerData()
+            viewModel.requestLoadBangumiList({"is_refresh": true});
         })
 
         viewModel.requestLoadBannerData();

@@ -42,7 +42,7 @@ namespace biliqt::core::api {
             return modules;
         }
 
-        auto propertyMap = T::getProperties()->getMap();
+        auto propertyMap = T::createShared()->getProperties()->getMap();
         for (const auto& module : body["modules"]) {
             if (module.contains("style")) {
                 if (const std::string& moduleStyle = module["style"]; moduleStyle != style) {
@@ -88,7 +88,7 @@ namespace biliqt::core::api {
         std::shared_ptr<QVariantMap>
     >::type
     dto2qmap(const std::shared_ptr<T>& dto) {
-        auto propertyMap = T::getProperties()->getMap();
+        auto propertyMap = T::createShared()->getProperties()->getMap();
         auto result = QVariantMap();
         for (const auto &[keyRef, valueRef]: propertyMap) {
             auto key = QString::fromStdString(keyRef);

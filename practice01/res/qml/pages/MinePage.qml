@@ -84,24 +84,10 @@ FluPage {
     }
 
     FluPivot {
+        id: page_mine_follows
         anchors.fill: parent
         font {
             pointSize: 22
-        }
-
-        FluPivotItem {
-            title: qsTrId("mine_want")
-            contentItem: FollowPage {
-                listWidth: viewModel.ui_listWidth
-                cellWidth: viewModel.ui_listCellWidth
-                cellHeight: viewModel.ui_listCellHeight
-
-                model: mine_follow_list_want
-                delegate: mine_follow_list_delegate
-                onRequestLoading: function (isRefresh) {
-                    viewModel.requestLoadWant({is_refresh: isRefresh})
-                }
-            }
         }
 
         FluPivotItem {
@@ -114,7 +100,22 @@ FluPage {
                 model: mine_follow_list_watching
                 delegate: mine_follow_list_delegate
                 onRequestLoading: function (isRefresh) {
-                    viewModel.requestLoadWatching({is_refresh: isRefresh})
+                    viewModel.requestLoadFollowWatching({is_refresh: isRefresh})
+                }
+            }
+        }
+
+        FluPivotItem {
+            title: qsTrId("mine_want")
+            contentItem: FollowPage {
+                listWidth: viewModel.ui_listWidth
+                cellWidth: viewModel.ui_listCellWidth
+                cellHeight: viewModel.ui_listCellHeight
+
+                model: mine_follow_list_want
+                delegate: mine_follow_list_delegate
+                onRequestLoading: function (isRefresh) {
+                    viewModel.requestLoadFollowWant({is_refresh: isRefresh})
                 }
             }
         }
@@ -129,14 +130,14 @@ FluPage {
                 model: mine_follow_list_watched
                 delegate: mine_follow_list_delegate
                 onRequestLoading: function (isRefresh) {
-                    viewModel.requestLoadWatched({is_refresh: isRefresh})
+                    viewModel.requestLoadFollowWatched({is_refresh: isRefresh})
                 }
             }
         }
     }
 
     Component.onCompleted: {
-        page_mine.widthChanged.connect(() => viewModel.onPageWidthChanged(page_mine.width))
+        page_mine_follows.widthChanged.connect(() => viewModel.onPageWidthChanged(page_mine_follows.width))
 
         viewModel.clearFollowWant.connect(() => mine_follow_list_want.clear())
         viewModel.addFollowWant.connect((data) => mine_follow_list_want.append(data))

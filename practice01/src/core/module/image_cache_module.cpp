@@ -27,11 +27,15 @@ namespace biliqt::core::module {
 
     QImage ImageCacheModule::requestImage(const QString &id, QSize *size, const QSize &requestedSize) {
         try {
+            if (id.isEmpty()) {
+                return {};
+            }
+
             const auto cached = cachedFile(id);
             if (const QString cachePath = cached.filePath(); QFile::exists(cachePath)) {
                 QImage img(cachePath);
                 if (requestedSize.isValid()) {
-                    img = img.scaled(requestedSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+                    img = img.scaled(requestedSize, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
                 }
                 if (size) *size = img.size();
                 return img;

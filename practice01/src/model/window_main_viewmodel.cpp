@@ -6,6 +6,7 @@
 
 #include "core/api/dto/app_dto.h"
 #include "core/api/dto/api_dto.h"
+#include "core/module/global_signal_model.h"
 #include "core/module/setting_module.h"
 #include "utils/string.h"
 
@@ -47,6 +48,14 @@ namespace biliqt::model {
 
     void MainWindowViewModel::onLogout(const QVariantMap& args) {
         SettingModule::getInstance()->login(false);
+        SettingModule::getInstance()->accessToken("");
+        SettingModule::getInstance()->refreshToken("");
+        SettingModule::getInstance()->cookie_BiliJct("");
+        SettingModule::getInstance()->cookie_DedeUserID("");
+        SettingModule::getInstance()->cookie_DedeUserID__ckMd5("");
+        SettingModule::getInstance()->cookie_SESSDATA("");
+        SettingModule::getInstance()->cookie_sid("");
         hasLogin(false);
+        emit GlobalSignalModule::getInstance()->loginStatusChanged(false);
     }
 }

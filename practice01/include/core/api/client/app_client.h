@@ -8,14 +8,9 @@
 #include <oatpp/codegen/ApiClient_define.hpp>
 
 #include "_base_client.h"
-#include "core/api/bili_sign_client.h"
-#include "core/api/bili_sign_object.h"
-#include "utils/string.h"
 
 #include OATPP_CODEGEN_BEGIN(ApiClient)
-
-class QrcodeResp;
-
+∂∂
 namespace biliqt::core::api::client {
 
     class AppClient : public BaseApiClient {

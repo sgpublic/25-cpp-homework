@@ -19,7 +19,7 @@ namespace biliqt::model {
         requestLoadCurrentWatching();
         requestLoadFollowWant();
         requestLoadFollowWatched();
-        requestLoadCurrentWatching();
+        requestLoadFollowWatching();
     }
 
     void MinePageViewModel::onLoadCurrentWatching(const QVariantMap &args) {
@@ -118,7 +118,7 @@ namespace biliqt::model {
         ui_listCellContentWidth(ui_listCellWidth() - 2 * ui_listCellPadding());
 
         ui_listCellContentCoverHeight(ui_listCellContentWidth() / 3 * 4);
-        ui_listCellContentHeight(ui_listCellContentCoverHeight() + 40);
+        ui_listCellContentHeight(ui_listCellContentCoverHeight() + 20);
         ui_listCellHeight(ui_listCellContentHeight() + 2 * ui_listCellPadding());
     }
 }

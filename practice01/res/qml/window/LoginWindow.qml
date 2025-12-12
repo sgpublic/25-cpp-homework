@@ -55,7 +55,7 @@ FluWindow {
 
     Component.onCompleted: {
         viewModel.closeWindowSignal.connect(function () {
-            GlobalSignalModule.loginSuccess()
+            GlobalSignalModule.loginStatusChanged(true)
             window_login.close();
         })
 

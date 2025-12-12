@@ -26,9 +26,9 @@ namespace biliqt::model {
             bool hasNext;
         };
 
+        PageState followWantState = {1, 0, false, true};
         PageState followWatchingState = {2, 0, false, true};
         PageState followWatchedState = {3, 0, false, true};
-        PageState followWantState = {1, 0, false, true};
     public:
         explicit MinePageViewModel(QObject *parent = nullptr);
         VIEW_MODEL_COROUTINE_TASK(LoadCurrentWatching)

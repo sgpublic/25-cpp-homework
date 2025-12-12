@@ -51,7 +51,7 @@ Column {
         id: bangumi_item_title
         width: parent.width
 
-        text: cellTitle
+        text: cellTitle ?? ""
         wrapMode: Text.Wrap
         elide: Text.ElideRight
         maximumLineCount: 1
@@ -67,7 +67,7 @@ Column {
         width: parent.width
     }
     FluText {
-        text: cellDesc
+        text: cellDesc ?? ""
         width: parent.width
 
         elide: Text.ElideRight

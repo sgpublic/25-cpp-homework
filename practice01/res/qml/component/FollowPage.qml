@@ -6,6 +6,7 @@ import FluentUI 1.0
 Item {
     width: parent.width
     height: parent.height
+    clip: true
 
     property alias model: list.model
     property alias delegate: list.delegate

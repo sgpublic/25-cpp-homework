@@ -29,8 +29,6 @@ FluWindow {
         title: qsTrId("app_name")
         topPadding: FluTools.isMacos() ? 20 : 0
 
-        buttonBack.visible: false
-
         items: FluObject {
             FluPaneItem {
                 id: home_navView_item_setting
@@ -50,7 +48,7 @@ FluWindow {
                     if (viewModel.hasLogin) {
                         home_navView.push(url)
                     } else {
-                        login_resultLauncher.launch()
+                        FluRouter.navigate("/login")
                     }
                 }
             }
@@ -127,8 +125,10 @@ FluWindow {
         window_main.setHitTestVisible(home_navView.buttonBack);
         window_main.setHitTestVisible(home_navView.imageLogo);
 
-        GlobalSignalModule.loginSuccess.connect(function () {
-            viewModel.requestLoginSucceed()
+        GlobalSignalModule.loginStatusChanged.connect(function (isLogin) {
+            if (isLogin) {
+                viewModel.requestLoginSucceed()
+            }
         })
     }
 }
