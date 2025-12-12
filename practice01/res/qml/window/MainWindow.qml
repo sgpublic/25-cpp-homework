@@ -3,37 +3,31 @@ import FluentUI 1.0
 
 FluWindow {
     id: window_main
-    property var viewModel
+    title: qsTrId("app_name")
+    property var viewModel: ViewModelModule.createViewModel("window_main", window_main)
 
-    height: 800
+    height: 750
     width: 1200
     minimumHeight: 700
     minimumWidth: 1100
-    title: qsTrId("app_name")
-    visible: true
     fitsAppBarWindows: true
     launchMode: FluWindowType.SingleTask
 
-    FluWindowResultLauncher {
-        id: loginResultLauncher
-        path: "/login"
-        onResult: (data) => {
-            if (data.loginSucceed) {
-                viewModel.requestLoginSucceed()
-                viewModel.requestLoadBannerData()
-            }
-        }
+    appBar: FluAppBar {
+        height: 30
+        showStayTop: false
+        z: 7
     }
 
     FluNavigationView {
         id: home_navView
 
         displayMode: FluNavigationViewType.Open
-        height: parent.height
+        anchors.fill: parent
         logo: ResourceModule.getDrawable("/app_logo.svg")
         pageMode: FluNavigationViewType.Stack
         title: qsTrId("app_name")
-        width: parent.width
+        topPadding: FluTools.isMacos() ? 20 : 0
 
         buttonBack.visible: false
 
@@ -53,7 +47,11 @@ FluWindow {
                 icon: FluentIcons.People
                 url: ResourceModule.getQml("/pages/MinePage.qml")
                 onTap: {
-                    home_navView.push(url)
+                    if (viewModel.hasLogin) {
+                        home_navView.push(url)
+                    } else {
+                        login_resultLauncher.launch()
+                    }
                 }
             }
         }
@@ -64,9 +62,20 @@ FluWindow {
                 title: qsTrId("home_navView_footer_login")
                 icon: FluentIcons.Contact
                 onTapListener: function () {
-                    loginResultLauncher.launch()
+                    FluRouter.navigate("/login")
                 }
                 visible: !viewModel.hasLogin
+            }
+            FluContentDialog{
+                id: home_navView_logout_dialog
+                title: qsTrId("home_logout_title")
+                message: qsTrId("home_logout_msg")
+                negativeText: qsTrId("home_logout_cancel")
+                positiveText: qsTrId("home_logout_ok")
+                buttonFlags: FluContentDialogType.NegativeButton | FluContentDialogType.PositiveButton
+                onPositiveClicked: {
+                    viewModel.requestLogout()
+                }
             }
             FluPaneItem {
                 id: home_navView_footer_user
@@ -85,7 +94,7 @@ FluWindow {
                 iconDelegate: viewModel.avatarUrl === "" ? null : avatarImg
                 title: viewModel.nick
                 onTapListener: function () {
-
+                    home_navView_logout_dialog.open()
                 }
                 visible: viewModel.hasLogin
             }
@@ -109,12 +118,17 @@ FluWindow {
         }
 
         Component.onCompleted: {
-            viewModel = ViewModelModule.createViewModel("window_main", window_main)
-
-            window_main.setHitTestVisible(home_navView.buttonMenu);
-            window_main.setHitTestVisible(home_navView.buttonBack);
-            window_main.setHitTestVisible(home_navView.imageLogo);
             setCurrentIndex(0);
         }
+    }
+
+    Component.onCompleted: {
+        window_main.setHitTestVisible(home_navView.buttonMenu);
+        window_main.setHitTestVisible(home_navView.buttonBack);
+        window_main.setHitTestVisible(home_navView.imageLogo);
+
+        GlobalSignalModule.loginSuccess.connect(function () {
+            viewModel.requestLoginSucceed()
+        })
     }
 }

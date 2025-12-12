@@ -38,12 +38,12 @@ namespace biliqt::core::api {
     findModules(const nlohmann::json& body, const std::string& style) {
         const auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared();
         const auto& modules = std::make_shared<QVariantList>();
-        if (!body.contains("result") || !body["result"].contains("modules")) {
+        if (!body.contains("modules")) {
             return modules;
         }
 
-        auto propertyMap = T::createShared()->getProperties()->getMap();
-        for (const auto& module : body["result"]["modules"]) {
+        auto propertyMap = T::getProperties()->getMap();
+        for (const auto& module : body["modules"]) {
             if (module.contains("style")) {
                 if (const std::string& moduleStyle = module["style"]; moduleStyle != style) {
                     continue;
@@ -73,13 +73,39 @@ namespace biliqt::core::api {
                         const float& value = item[keyRef];
                         result[key] = QVariant(value);
                     } else {
-                        qDebug() << "unsupported type of key:" << key;
+                        qDebug() << "unsupported type of key:" << key << ", type:" << valueRef->type;
                     }
                 }
                 modules->append(result);
             }
         }
         return modules;
+    }
+
+    template<typename T>
+    typename std::enable_if<
+        std::is_base_of<oatpp::DTO, T>::value,
+        std::shared_ptr<QVariantMap>
+    >::type
+    dto2qmap(const std::shared_ptr<T>& dto) {
+        auto propertyMap = T::getProperties()->getMap();
+        auto result = QVariantMap();
+        for (const auto &[keyRef, valueRef]: propertyMap) {
+            auto key = QString::fromStdString(keyRef);
+            oatpp::data::mapping::type::Void value = valueRef->get(dto.get());
+            if (valueRef->type == oatpp::String::Class::getType()) {
+                result[key] = QString::fromStdString(value.cast<oatpp::data::mapping::type::String>());
+            } else if (valueRef->type == oatpp::Int32::Class::getType()) {
+                result[key] = QVariant(value.cast<oatpp::data::mapping::type::Int32>());
+            } else if (valueRef->type == oatpp::Boolean::Class::getType()) {
+                result[key] = QVariant(value.cast<oatpp::data::mapping::type::Boolean>());
+            } else if (valueRef->type == oatpp::Float32::Class::getType()) {
+                result[key] = QVariant(value.cast<oatpp::data::mapping::type::Float32>());
+            } else {
+                qDebug() << "unsupported type of key:" << key << ", type:" << valueRef->type;
+            }
+        }
+        return std::make_shared<QVariantMap>(result);
     }
 
     std::string calculateSignValue(const std::unordered_map<std::string, std::string>& params, const std::string& apiSecret);
@@ -143,6 +169,10 @@ public:                                                                         
     DTO_FIELD(Int32, code);                                                                                     \
     DTO_FIELD(String, message);
 
-#define BILI_RESP_DTO(TYPE, DATA_TYPE)                                                                          \
+#define BILI_RESP_DATA_DTO(TYPE, DATA_TYPE)                                                                          \
     BILI_RESP_SAMPLE_DTO(TYPE)                                                                                  \
     DTO_FIELD(Object<DATA_TYPE>, data);
+
+#define BILI_RESP_RESULT_DTO(TYPE, DATA_TYPE)                                                                   \
+    BILI_RESP_SAMPLE_DTO(TYPE)                                                                                  \
+    DTO_FIELD(Object<DATA_TYPE>, result);

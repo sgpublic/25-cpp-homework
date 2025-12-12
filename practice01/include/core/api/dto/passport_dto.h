@@ -25,7 +25,7 @@ namespace biliqt::core::api::dto {
             DTO_FIELD(String, url);
             DTO_FIELD(String, auth_code);
         };
-        BILI_RESP_DTO(LoginQrcodeTvResp, Data)
+        BILI_RESP_DATA_DTO(LoginQrcodeTvResp, Data)
     };
 
     class LoginQrcodeTvPollReq final : public oatpp::DTO {
@@ -66,7 +66,7 @@ namespace biliqt::core::api::dto {
             };
             DTO_FIELD(Object<CookieInfo>, cookie_info);
         };
-        BILI_RESP_DTO(LoginQrcodeTvPollResp, Data)
+        BILI_RESP_DATA_DTO(LoginQrcodeTvPollResp, Data)
     };
 
 }

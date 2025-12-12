@@ -24,7 +24,7 @@ namespace biliqt::core::api::dto {
             DTO_FIELD(String, name);
             DTO_FIELD(String, face);
         };
-        BILI_RESP_DTO(MyinfoResp, Data)
+        BILI_RESP_DATA_DTO(MyinfoResp, Data)
     };
 
 }

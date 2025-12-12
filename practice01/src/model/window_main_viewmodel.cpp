@@ -44,4 +44,9 @@ namespace biliqt::model {
             avatarUrl(body->data->face->data());
         }
     }
+
+    void MainWindowViewModel::onLogout(const QVariantMap& args) {
+        SettingModule::getInstance()->login(false);
+        hasLogin(false);
+    }
 }

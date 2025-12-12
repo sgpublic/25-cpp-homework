@@ -25,7 +25,7 @@ namespace biliqt::core::module {
         QString applicationPath = QString::fromStdString(argv[0]);
         const QFileInfo fileInfo(applicationPath);
         const QString iniFileName = fileInfo.completeBaseName() + ".ini";
-        const QString iniFilePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/" + iniFileName;
+        const QString iniFilePath = fileInfo.path() + "/" + iniFileName;
         m_settings.reset(new QSettings(iniFilePath, QSettings::IniFormat));
     }
 

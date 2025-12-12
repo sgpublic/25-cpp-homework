@@ -5,13 +5,15 @@ import BiliQt.ViewModel.LoginWindow 1.0
 
 FluWindow {
     id: window_login
-    property var viewModel
+    property var viewModel: ViewModelModule.createViewModel("window_login", window_login)
 
     title: qsTrId("login_title")
     width: 320
     height: 280
     fixSize: true
     launchMode: FluWindowType.SingleTask
+    modality: Qt.ApplicationModal
+    showMinimize: false
 
     ColumnLayout {
         width: parent.width
@@ -52,10 +54,8 @@ FluWindow {
     }
 
     Component.onCompleted: {
-        viewModel = ViewModelModule.createViewModel("window_login", window_login)
-
-        viewModel.closeWindowSignal.connect(function() {
-            setResult({loginSucceed: true})
+        viewModel.closeWindowSignal.connect(function () {
+            GlobalSignalModule.loginSuccess()
             window_login.close();
         })
 

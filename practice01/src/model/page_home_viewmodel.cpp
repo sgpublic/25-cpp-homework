@@ -1,10 +1,8 @@
 //
 // Created by coder on 12/4/25.
 //
-#include "model/base_viewmodel.h"
 #include "model/page_home_viewmodel.h"
 
-#include "../../../cmake-build-debug/_deps/fluentui-src/src/qmlcustomplot/RealTimePlot.h"
 #include "core/api/dto/api_dto.h"
 #include "core/module/setting_module.h"
 
@@ -18,8 +16,6 @@ namespace biliqt::model {
 
     HomePageViewModel::HomePageViewModel(QObject *parent): ViewModel(parent) {
         _apiClient = ApiClient::createShared();
-        requestLoadBannerData();
-        requestLoadBangumiList({{"is_refresh", false}});
     }
 
     void HomePageViewModel::onLoadSearchSuggest(const QVariantMap& args) {
@@ -36,7 +32,7 @@ namespace biliqt::model {
         if (code != 0) {
             return;
         }
-        const auto& banner = findModules<PgcPageResp::ModuleItems>(body, "topic");
+        const auto& banner = findModules<PgcPageResp::ModuleItems>(body["result"], "topic");
         qDebug() << "banner image count:" << banner->size();
         bannerData(*banner);
     }
@@ -60,16 +56,17 @@ namespace biliqt::model {
             _isLoadBangumiList = false;
             return;
         }
-        const auto& list = findModules<PgcPageBangumiResp::ModuleItems>(body, "double_feed");
+        const auto& list = findModules<PgcPageBangumiResp::ModuleItems>(body["result"], "double_feed");
         _bangumiListCursor = body["result"]["next_cursor"];
         _bangumiListHasNext = body["result"]["has_next"] == 1;
         qDebug() << "bangumi item count:" << list->size();
-        auto newList = QVariantList();
-        if (!isRefresh) {
-            newList += bangumiList();
+        if (isRefresh) {
+            emit clearBangumiList();
         }
-        newList += *list;
-        bangumiList(newList);
+        for (const auto& item : *list) {
+            const auto& map = qvariant_cast<QVariantMap>(item);
+            emit addBangumiData(map);
+        }
         _isLoadBangumiList = false;
     }
 
@@ -85,7 +82,7 @@ namespace biliqt::model {
         }
         ui_listCellContentWidth(ui_listCellWidth() - 2 * ui_listCellPadding());
 
-        ui_listCellContentCoverHeight(ui_listCellWidth() / 8 * 5);
+        ui_listCellContentCoverHeight(ui_listCellContentWidth() / 8 * 5);
         ui_listCellContentHeight(ui_listCellContentCoverHeight() + 40);
         ui_listCellHeight(ui_listCellContentHeight() + 2 * ui_listCellPadding());
     }

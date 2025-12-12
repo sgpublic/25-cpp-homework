@@ -1,15 +1,15 @@
-pragma Singleton
-
 import QtQuick 2.15
 import QtQuick.Layouts 2.15
+import QtQuick.Controls.Basic 2.15
 import FluentUI 1.0
+import "../component"
 
 FluPage {
     id: page_home
 
-    property var viewModel
+    property var viewModel: ViewModelModule.createViewModel("page_home", page_home)
 
-    launchMode: FluPageType.SingleTask
+    launchMode: FluPageType.SingleInstance
 
     header: Item {
         width: parent.width
@@ -32,12 +32,16 @@ FluPage {
     }
 
     Item {
-        width: viewModel.ui_listWidth
+        width: parent.width
         height: parent.height
+
+        ListModel {
+            id: bangumi_list_data
+        }
 
         GridView {
             id: bangumi_list
-            width: parent.width
+            width: viewModel.ui_listWidth
             height: parent.height
             anchors.horizontalCenter: parent.horizontalCenter
             cellWidth: viewModel.ui_listCellWidth
@@ -77,72 +81,27 @@ FluPage {
 
             boundsBehavior: Flickable.StopAtBounds
             highlightFollowsCurrentItem: false
-            model: viewModel.bangumiList
+            model: bangumi_list_data
             delegateModelAccess: DelegateModel.ReadOnly
-            delegate: Component {
-                Column {
-                    anchors.margins: viewModel.ui_listCellPadding
-                    width: viewModel.ui_listCellContentWidth
-                    height: viewModel.ui_listCellContentHeight
+            delegate: BangumiItem {
+                cellPadding: viewModel.ui_listCellPadding
+                cellContentWidth: viewModel.ui_listCellContentWidth
+                cellContentHeight: viewModel.ui_listCellContentHeight
+                cellContentCoverHeight: viewModel.ui_listCellContentCoverHeight
+                cellCover: model.cover
+                cellTitle: model.title
+                cellDesc: model.desc
 
-                    FluClip {
-                        radius: [8, 8, 8, 8]
-                        width: parent.width
-                        height: viewModel.ui_listCellContentCoverHeight
-
-                        Image {
-                            source: ResourceModule.getRemoteDrawable(modelData.cover)
-                            cache: true
-                            asynchronous: true
-                            retainWhileLoading: true
-                            mipmap: true
-                            sourceSize {
-                                width: parent.width
-                                height: parent.height
-                            }
-
-                            fillMode: Image.PreserveAspectCrop
-                        }
+                onBangumiItemTapped: function () {
+                    if (!SettingModule.login()) {
+                        FluRouter.navigate("/login")
+                        return
                     }
-
-                    Text {
-                        id: bangumi_item_title
-                        text: modelData.title
-                        width: parent.width
-                        wrapMode: Text.Wrap
-                        elide: Text.ElideRight
-                        maximumLineCount: 1
-
-                        font.pointSize: 11
-                        font.bold: true
-                        color: "black"
-                    }
-                    Text {
-                        text: modelData.desc
-                        width: parent.width
-                        elide: Text.ElideRight
-                        maximumLineCount: 1
-                        font.pointSize: 8
-                        color: "gray"
-                    }
-
-                    HoverHandler {
-                        id: bangumi_item_hoverHandler
-                        onHoveredChanged: function () {
-                            if (bangumi_item_hoverHandler.hovered) {
-                                bangumi_item_title.color = "#20b0e3"
-                            } else {
-                                bangumi_item_title.color = "black"
-                            }
-                        }
-                    }
-
-                    TapHandler {
-                        id: bangumi_item_tapHandler
-                        onTapped: function () {
-
-                        }
-                    }
+                    FluRouter.navigate("/bangumi")
+                    GlobalSignalModule.requestBangumiInfo({
+                        season_id: model.season_id,
+                        episode_id: model.episode_id
+                    })
                 }
             }
 
@@ -157,12 +116,56 @@ FluPage {
         }
 
         Column {
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.bottomMargin: 16
+            anchors.rightMargin: 16
 
+            spacing: 10
+
+            FluFrame {
+                radius: 16
+                padding: 6
+                FluIconButton {
+                    iconSource: FluentIcons.Refresh
+                    iconSize: 18
+                    radius: 12
+                    onClicked: {
+                        bangumi_list.positionViewAtBeginning()
+                        viewModel.requestLoadBangumiList({"is_refresh": true});
+                    }
+                }
+            }
+            FluFrame {
+                id: home_backToTop
+                radius: 16
+                padding: 6
+                FluIconButton {
+                    iconSource: FluentIcons.Up
+                    iconSize: 18
+                    radius: 12
+                    onClicked: {
+                        bangumi_list.positionViewAtBeginning()
+                    }
+                }
+            }
         }
+
     }
 
     Component.onCompleted: {
-        viewModel = ViewModelModule.createViewModel("page_home", page_home)
+        viewModel.addBangumiData.connect(function (data) {
+            bangumi_list_data.append(data)
+        })
+        viewModel.clearBangumiList.connect(() => bangumi_list_data.clear())
         page_home.widthChanged.connect(() => viewModel.onPageWidthChanged(page_home.width))
+
+        GlobalSignalModule.loginSuccess.connect(function () {
+            viewModel.requestLoginSucceed()
+            viewModel.requestLoadBannerData()
+        })
+
+        viewModel.requestLoadBannerData();
+        viewModel.requestLoadBangumiList({"is_refresh": false});
     }
 }

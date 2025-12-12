@@ -14,7 +14,6 @@ namespace biliqt::model {
     public:
         Q_PROPERTY_AUTO(QString, searchText);
         Q_PROPERTY_READONLY_AUTO(QVariantList, bannerData);
-        Q_PROPERTY_READONLY_AUTO(QVariantList, bangumiList);
     private:
         std::shared_ptr<core::api::client::ApiClient> _apiClient;
         std::string _bangumiListCursor = "0";
@@ -39,6 +38,9 @@ namespace biliqt::model {
         Q_PROPERTY_READONLY_AUTO(int, ui_listCellContentCoverHeight) = 100;
     public:
         Q_INVOKABLE void onPageWidthChanged(double width);
+    signals:
+        void clearBangumiList();
+        void addBangumiData(const QVariantMap& data);
     };
 
 }

@@ -13,8 +13,6 @@
 
 #include OATPP_CODEGEN_BEGIN(ApiClient)
 
-class QrcodeResp;
-
 namespace biliqt::core::api::client {
 
     class ApiClient : public BaseApiClient {
@@ -34,6 +32,20 @@ namespace biliqt::core::api::client {
             QUERY(String, queries)
         )
         BILI_SIGN_GET(pgc_page_bangumi)
+
+        API_CALL(
+            "GET", "/pgc/page/pc/bangumi/tab",
+            pgc_page_pc_bangumi_tab,
+            QUERY(String, queries)
+        )
+        BILI_SIGN_GET(pgc_page_pc_bangumi_tab)
+
+        API_CALL(
+            "GET", "/pgc/app/follow/v2/bangumi",
+            pgc_follow_bangumi,
+            QUERY(String, queries)
+        )
+        BILI_SIGN_GET(pgc_follow_bangumi)
 
     };
 

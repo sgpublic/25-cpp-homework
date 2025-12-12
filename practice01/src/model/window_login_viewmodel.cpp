@@ -91,7 +91,7 @@ namespace biliqt::model {
         setting->refreshToken(data->token_info->refresh_token->data());
         const auto& cookies = data->cookie_info->cookies;
         for (const auto& cookieItem : *cookies) {
-            const auto& value = cookieItem->name->data();
+            const auto& value = cookieItem->value->data();
             if (cookieItem->name == "bili_jct") {
                 setting->cookie_BiliJct(value);
             } else if (cookieItem->name == "DedeUserID") {

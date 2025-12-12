@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
+#include "core/module/global_signal_model.h"
 #include "core/module/image_cache_module.h"
 #include "core/module/setting_module.h"
 #include "core/module/resource_module.h"
@@ -29,10 +30,15 @@ int main(int argc, char *argv[]) {
     TranslateModule::getInstance()->init(&engine);
     ImageCacheModule::getInstance()->init(&engine);
 
+    QApplication::setOrganizationName("sgpublic");
+    QApplication::setApplicationName("BiliQt");
+    QApplication::setApplicationDisplayName(qtTrId("app_name"));
+
     engine.rootContext()->setContextProperty("ResourceModule", ResourceModule::getInstance());
     engine.rootContext()->setContextProperty("SettingModule", SettingModule::getInstance());
     engine.rootContext()->setContextProperty("TranslateModule", TranslateModule::getInstance());
     engine.rootContext()->setContextProperty("ViewModelModule", ViewModelModule::getInstance());
+    engine.rootContext()->setContextProperty("GlobalSignalModule", GlobalSignalModule::getInstance());
 
     engine.load(ResourceModule::getInstance()->getQml("/App.qml"));
 

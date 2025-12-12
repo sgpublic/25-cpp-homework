@@ -23,6 +23,7 @@ namespace biliqt::model {
 
         VIEW_MODEL_COROUTINE_TASK(LoginSucceed)
         VIEW_MODEL_COROUTINE_TASK(LoadUserInfo)
+        VIEW_MODEL_COROUTINE_TASK(Logout)
     };
 
 }
