@@ -7,8 +7,7 @@
 #include <QtConcurrentRun>
 
 #include "base_viewmodel.h"
-#include "oatpp/Types.hpp"
-
+#include <oatpp/core/Types.hpp>
 namespace biliqt::model {
 
     class ViewModel : public QObject {

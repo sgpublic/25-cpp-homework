@@ -4,7 +4,7 @@
 
 #pragma once
 #include <string>
-#include <oatpp/json/ObjectMapper.hpp>
+#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <oatpp/web/client/ApiClient.hpp>
 
 #include "core/api/bili_sign_executor.h"
@@ -13,7 +13,7 @@ namespace biliqt::core::api::client {
     class BaseApiClient: public oatpp::web::client::ApiClient {
     public:
         BaseApiClient(const std::string& baseUrl, const bool& useHttps) : ApiClient(nullptr, nullptr) {
-            m_objectMapper = std::make_shared<oatpp::json::ObjectMapper>();
+            m_objectMapper = std::make_shared<oatpp::parser::json::mapping::ObjectMapper>();
             m_requestExecutor = std::make_shared<BiliApiExecutor>(baseUrl, useHttps);
         }
     };

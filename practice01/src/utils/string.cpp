@@ -3,7 +3,6 @@
 //
 #include "utils/string.h"
 
-#include <iomanip>
 #include <QCryptographicHash>
 #include <QString>
 #include <sstream>
@@ -11,10 +10,10 @@
 #include <boost/url/rfc/pchars.hpp>
 #include <openssl/evp.h>
 
-#include <oatpp/json/ObjectMapper.hpp>
+#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 
 using namespace oatpp;
-using namespace oatpp::json;
+using namespace oatpp::parser::json::mapping;
 
 namespace biliqt::utils {
 

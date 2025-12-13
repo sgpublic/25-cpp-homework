@@ -6,9 +6,9 @@
 
 #include <QDebug>
 #include <QQmlListProperty>
-#include <oatpp/Types.hpp>
+#include <oatpp/core/Types.hpp>
 #include <oatpp/web/protocol/http/incoming/Response.hpp>
-#include <oatpp/json/ObjectMapper.hpp>
+#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <nlohmann/json.hpp>
 
 #include "utils/string.h"
@@ -21,7 +21,7 @@ namespace biliqt::core::api {
         std::shared_ptr<T>
     >::type
     readRespBody(const std::shared_ptr<oatpp::web::protocol::http::incoming::Response>& body) {
-        const auto objectMapper = std::make_shared<oatpp::json::ObjectMapper>();
+        const auto objectMapper = std::make_shared<oatpp::parser::json::mapping::ObjectMapper>();
         const auto bodyStr = body->readBodyToString();
         const auto dto = objectMapper->readFromString<oatpp::Object<T>>(bodyStr);
         return dto.getPtr();
@@ -35,7 +35,7 @@ namespace biliqt::core::api {
         std::shared_ptr<QVariantList>
     >::type
     findModules(const nlohmann::json& body, const std::string& style) {
-        const auto objectMapper = std::make_shared<oatpp::json::ObjectMapper>();
+        const auto objectMapper = std::make_shared<oatpp::parser::json::mapping::ObjectMapper>();
         const auto& modules = std::make_shared<QVariantList>();
         if (!body.contains("modules")) {
             return modules;

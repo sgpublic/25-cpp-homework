@@ -4,7 +4,7 @@
 #pragma once
 
 #include <oatpp/web/client/ApiClient.hpp>
-#include <oatpp/macro/codegen.hpp>
+#include <oatpp/core/macro/codegen.hpp>
 #include <oatpp/codegen/ApiClient_define.hpp>
 
 #include "_base_client.h"
