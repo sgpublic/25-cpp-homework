@@ -29,6 +29,32 @@ FluWindow {
         title: qsTrId("app_name")
         topPadding: FluTools.isMacos() ? 20 : 0
 
+        autoSuggestBox: FluAutoSuggestBox {
+            id: home_searchBox
+
+            iconSource: FluentIcons.Search
+            placeholderText: qsTrId("home_search_hint")
+            text: viewModel.searchText
+            items: [...viewModel.searchSuggest]
+            filter: function (item) { return true }
+            onTextChanged: {
+                viewModel.searchText = text
+            }
+            onItemClicked: function (data) {
+                viewModel.requestSearch(data)
+            }
+            function handleEnterReturn() {
+                viewModel.requestSearch({title: text})
+                home_searchBox.focus = false
+            }
+            Keys.onEnterPressed: {
+                handleEnterReturn()
+            }
+            Keys.onReturnPressed: {
+                handleEnterReturn()
+            }
+        }
+
         items: FluObject {
             FluPaneItem {
                 id: home_navView_item_setting
@@ -129,6 +155,9 @@ FluWindow {
             if (isLogin) {
                 viewModel.requestLoginSucceed()
             }
+        })
+        viewModel.searchSuggestChanged.connect(function (data) {
+            home_searchBox.showSuggest()
         })
     }
 }

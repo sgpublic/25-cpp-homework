@@ -5,9 +5,9 @@
 #pragma once
 
 #include <QtConcurrentRun>
-#include <oatpp/core/Types.hpp>
 
 #include "base_viewmodel.h"
+#include "oatpp/Types.hpp"
 
 namespace biliqt::model {
 

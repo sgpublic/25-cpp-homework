@@ -10,6 +10,7 @@ namespace biliqt::core::api {
     class BiliApiExecutor: public oatpp::web::client::RequestExecutor {
     private:
         std::shared_ptr<oatpp::web::client::HttpRequestExecutor> _inner;
+        const bool& useHttps;
     public:
         BiliApiExecutor(const std::string& baseUrl, const bool& useHttps, const std::shared_ptr<oatpp::web::client::RetryPolicy>& retryPolicy = nullptr);
 
@@ -30,7 +31,7 @@ namespace biliqt::core::api {
     private:
         static void printRequestDetails(const String &method, const String &path, const Headers &headers);
 
-        static oatpp::String signedPath(const String& method, const String& path);
+        oatpp::String signedPath(const String& method, const String& path);
 
         oatpp::async::CoroutineStarterForResult<const std::shared_ptr<Response> &> executeOnceAsyncReal(
             const int& redirectTime, const String &method, const String &path, const Headers &headers, const std::shared_ptr<Body> &body,

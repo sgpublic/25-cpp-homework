@@ -5,9 +5,9 @@ import FluentUI 1.0
 import "../component"
 
 FluPage {
-    id: page_home
+    id: page_search
 
-    property var viewModel: ViewModelModule.createViewModel("page_home", page_home)
+    property var viewModel: ViewModelModule.createViewModel("page_search", page_search)
 
     launchMode: FluPageType.SingleInstance
 
@@ -16,11 +16,11 @@ FluPage {
         height: parent.height
 
         ListModel {
-            id: bangumi_list_data
+            id: search_list_data
         }
 
         GridView {
-            id: bangumi_list
+            id: search_list
             width: viewModel.ui_listWidth
             height: parent.height
             anchors.horizontalCenter: parent.horizontalCenter
@@ -29,39 +29,13 @@ FluPage {
 
             header: Item {
                 width: viewModel.ui_listWidth
-                height: 230
+                height: 60
 
-                FluCarousel {
-                    id: banner_carousel
-                    width: 680
-                    height: 200
-                    anchors.centerIn: parent
-
-                    model: [...viewModel.bannerData]
-
-                    orientation: Qt.Horizontal
-                    indicatorGravity: Qt.AlignBottom | Qt.AlignHCenter
-                    autoPlay: true
-                    loopTime: 5000
-                    delegate: Component {
-                        FluClip {
-                            radius: [12, 12, 12, 12]
-                            anchors.fill: parent
-
-                            Image {
-                                anchors.fill: parent
-                                source: ResourceModule.getRemoteDrawable(model.cover)
-                                asynchronous: true
-                                fillMode: Image.PreserveAspectCrop
-                            }
-                        }
-                    }
-                }
             }
 
             boundsBehavior: Flickable.StopAtBounds
             highlightFollowsCurrentItem: false
-            model: bangumi_list_data
+            model: search_list_data
             delegateModelAccess: DelegateModel.ReadOnly
             delegate: BangumiItem {
                 cellPadding: viewModel.ui_listCellPadding
@@ -103,19 +77,6 @@ FluPage {
 
             spacing: 10
 
-            FluFrame {
-                radius: 16
-                padding: 6
-                FluIconButton {
-                    iconSource: FluentIcons.Refresh
-                    iconSize: 18
-                    radius: 12
-                    onClicked: {
-                        bangumi_list.positionViewAtBeginning()
-                        viewModel.requestLoadBangumiList({"is_refresh": true});
-                    }
-                }
-            }
             FluFrame {
                 id: home_backToTop
                 radius: 16

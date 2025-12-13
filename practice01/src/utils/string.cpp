@@ -9,12 +9,12 @@
 #include <sstream>
 #include <boost/url/encode.hpp>
 #include <boost/url/rfc/pchars.hpp>
-#include <oatpp/core/data/mapping/type/Primitive.hpp>
-#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <openssl/evp.h>
 
-using namespace oatpp::data::mapping::type;
-using namespace oatpp::parser::json::mapping;
+#include <oatpp/json/ObjectMapper.hpp>
+
+using namespace oatpp;
+using namespace oatpp::json;
 
 namespace biliqt::utils {
 
@@ -23,7 +23,7 @@ namespace biliqt::utils {
             const String& str = value.cast<String>();
             return str.getPtr();
         }
-        const std::shared_ptr<ObjectMapper> objMapper = ObjectMapper::createShared();
+        const std::shared_ptr<ObjectMapper> objMapper = std::make_shared<ObjectMapper>();
         const String& str = objMapper->writeToString(value);
         return str.getPtr();
     }

@@ -58,8 +58,9 @@ namespace biliqt::core::module {
     QFileInfo ImageCacheModule::cachedFile(const QString &id) {
         const QString exeDir = QCoreApplication::applicationDirPath();
 
+        const std::string cacheId = utils::sha256(id.toStdString());
         const QString filePath = QDir(exeDir).filePath(
-            QString("cache/images/%1.png").arg(utils::sha256(id.toStdString()))
+            QString("cache/images/%1.png").arg(cacheId)
         );
 
         return QFileInfo(filePath);

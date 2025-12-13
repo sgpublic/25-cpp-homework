@@ -18,10 +18,6 @@ namespace biliqt::model {
         _apiClient = ApiClient::createShared();
     }
 
-    void HomePageViewModel::onLoadSearchSuggest(const QVariantMap& args) {
-
-    }
-
     void HomePageViewModel::onLoadBannerData(const QVariantMap& args) {
         const auto dto = PgcPageReq::createShared();
         dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());

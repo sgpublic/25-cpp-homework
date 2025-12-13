@@ -5,12 +5,11 @@
 
 #include <QString>
 #include <string>
-#include <oatpp/core/Types.hpp>
-#include <oatpp/core/data/mapping/type/Type.hpp>
+#include <oatpp/Types.hpp>
 
 namespace biliqt::utils {
 
-    std::shared_ptr<std::string> void_to_string(const oatpp::data::mapping::type::Void& value);
+    std::shared_ptr<std::string> void_to_string(const oatpp::Void& value);
 
     oatpp::String qstr_to_oatstr(const QString& str);
 

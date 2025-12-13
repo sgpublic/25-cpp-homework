@@ -5,15 +5,14 @@
 #include <oatpp/network/Address.hpp>
 #include <oatpp/network/Url.hpp>
 #include <oatpp/network/tcp/client/ConnectionProvider.hpp>
-#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 #include <oatpp-openssl/client/ConnectionProvider.hpp>
+#include <oatpp/base/Log.hpp>
 
 #include "core/api/bili_sign_executor.h"
 
 #include "core/api/bili_sign_client.h"
 #include "core/api/bili_sign_object.h"
 
-using namespace oatpp::parser::json::mapping;
 using namespace oatpp::web::client;
 using namespace oatpp::network;
 
@@ -38,26 +37,35 @@ namespace biliqt::core::api {
     }
 
     void BiliApiExecutor::printRequestDetails(const String &method, const String &path, const Headers &headers) {
-        OATPP_LOGD("BiliApiExecutor", " %s %s", method->c_str(), path->c_str());
+        OATPP_LOGd("BiliApiExecutor", " {} /{}", method->c_str(), path->c_str());
         for (const auto&[key, value] : headers.getAll()) {
-            OATPP_LOGD("BiliApiExecutor", "   %s: %s", key.std_str().c_str(), value.std_str().c_str());
+            OATPP_LOGd("BiliApiExecutor", "   {}: {}", key.std_str().c_str(), value.std_str().c_str());
         }
     }
 
     oatpp::String BiliApiExecutor::signedPath(const String &method, const String &path) {
-        if (method != "GET") {
-            return path;
+        String newPath;
+        if (path->starts_with('/')) {
+            newPath = path->substr(1);
+        } else {
+            newPath = path;
         }
-        const int queryMark = path->find('?');
+        if (method != "GET") {
+            return newPath;
+        }
+        const int queryMark = newPath->find('?');
         if (queryMark < 0) {
-            return path;
+            return newPath;
         }
         const Url& url = Url::Parser::parseUrl(path);
-        const std::string queriesStr = path->substr(queryMark + 9);
-        return url.path + "?" + queriesStr;
+        if (url.queryParams.get("queries") == nullptr) {
+            return newPath;
+        }
+        const std::string queriesStr = newPath->substr(queryMark + 9);
+        return url.path->substr(1) + "?" + queriesStr;
     }
 
-    BiliApiExecutor::BiliApiExecutor(const std::string& baseUrl, const bool& useHttps, const std::shared_ptr<RetryPolicy>& retryPolicy) : RequestExecutor(retryPolicy) {
+    BiliApiExecutor::BiliApiExecutor(const std::string& baseUrl, const bool& useHttps, const std::shared_ptr<RetryPolicy>& retryPolicy) : RequestExecutor(retryPolicy), useHttps(useHttps) {
         const auto address = Address(baseUrl, 443);
         std::shared_ptr<ClientConnectionProvider> connectionProvider = nullptr;
         if (useHttps) {

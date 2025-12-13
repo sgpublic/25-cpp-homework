@@ -5,7 +5,7 @@
 #include "model/window_main_viewmodel.h"
 
 #include "core/api/dto/app_dto.h"
-#include "core/api/dto/api_dto.h"
+#include "core/api/dto/search_dto.h"
 #include "core/module/global_signal_model.h"
 #include "core/module/setting_module.h"
 #include "utils/string.h"
@@ -20,6 +20,10 @@ namespace biliqt::model {
 
     MainWindowViewModel::MainWindowViewModel(QObject *parent) : ViewModel(parent) {
         _appClient = AppClient::createShared();
+        _searchClient = SearchClient::createShared();
+        connect(this, &MainWindowViewModel::searchTextChanged, this, [this] {
+            requestLoadSearchSuggest({{ "search_text", searchText() }});
+        });
         hasLogin(SettingModule::getInstance()->login());
         if (_hasLogin) {
             requestLoadUserInfo();
@@ -57,5 +61,31 @@ namespace biliqt::model {
         SettingModule::getInstance()->cookie_sid("");
         hasLogin(false);
         emit GlobalSignalModule::getInstance()->loginStatusChanged(false);
+    }
+
+    void MainWindowViewModel::onLoadSearchSuggest(const QVariantMap& args) {
+        const std::string searchText = args.value("search_text").toString().toStdString();
+        const auto dto = SearchSuggestReq::createShared();
+        dto->term = searchText;
+        const auto result = _searchClient->suggest(dto->asSignedParams());
+        // const auto result = _searchClient->suggest(searchText);
+        const auto body = readRespBody<SearchSuggestResp>(result);
+        qDebug() << "onLoadSearchSuggest" << "code:" << body->code;
+        if (body->code != 0) {
+            return;
+        }
+        auto suggests = QVariantList();
+        for (const auto& item : *body->result->tag) {
+            auto suggestItem = QVariantMap();
+            suggestItem["title"] = QString::fromStdString(item->value->data());
+            suggests.append(suggestItem);
+        }
+        qDebug() << "seearch suggests:" << suggests;
+        searchSuggest(suggests);
+    }
+
+    void MainWindowViewModel::onSearch(const QVariantMap& args) {
+        const auto& searchText = args.value("title").toString();
+        qDebug() << "onSearch" << searchText;
     }
 }

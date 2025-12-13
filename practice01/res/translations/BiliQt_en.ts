@@ -7,47 +7,47 @@
         <location filename="../qml/window/AboutWindow.qml" line="28"/>
         <location filename="../qml/window/MainWindow.qml" line="6"/>
         <location filename="../qml/window/MainWindow.qml" line="29"/>
-        <location filename="../../src/main.cpp" line="35"/>
+        <location filename="../../src/main.cpp" line="33"/>
         <source></source>
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="35"/>
+        <location filename="../qml/window/MainWindow.qml" line="61"/>
         <source></source>
         <translation>Home</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="44"/>
+        <location filename="../qml/window/MainWindow.qml" line="70"/>
         <source></source>
         <translation>My Watchlist</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="60"/>
+        <location filename="../qml/window/MainWindow.qml" line="86"/>
         <source></source>
         <translation>Login</translation>
     </message>
     <message id="home_logout_title">
-        <location filename="../qml/window/MainWindow.qml" line="69"/>
+        <location filename="../qml/window/MainWindow.qml" line="95"/>
         <source></source>
         <translation>Logout</translation>
     </message>
     <message id="home_logout_msg">
-        <location filename="../qml/window/MainWindow.qml" line="70"/>
+        <location filename="../qml/window/MainWindow.qml" line="96"/>
         <source></source>
         <translation>Are you sure you want to logout?</translation>
     </message>
     <message id="home_logout_cancel">
-        <location filename="../qml/window/MainWindow.qml" line="71"/>
+        <location filename="../qml/window/MainWindow.qml" line="97"/>
         <source></source>
         <translation>No</translation>
     </message>
     <message id="home_logout_ok">
-        <location filename="../qml/window/MainWindow.qml" line="72"/>
+        <location filename="../qml/window/MainWindow.qml" line="98"/>
         <source></source>
         <translation>Yes</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="101"/>
+        <location filename="../qml/window/MainWindow.qml" line="127"/>
         <source></source>
         <translation>About</translation>
     </message>
@@ -87,7 +87,7 @@
         <translation>Language</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="109"/>
+        <location filename="../qml/window/MainWindow.qml" line="135"/>
         <source></source>
         <translation>Settings</translation>
     </message>
@@ -136,12 +136,12 @@
         <translation>The QR code has expired.</translation>
     </message>
     <message id="main_nick_unknown">
-        <location filename="../../src/model/window_main_viewmodel.cpp" line="41"/>
+        <location filename="../../src/model/window_main_viewmodel.cpp" line="45"/>
         <source></source>
         <translation>Unknown User</translation>
     </message>
     <message id="home_search_hint">
-        <location filename="../qml/pages/HomePage.qml" line="26"/>
+        <location filename="../qml/window/MainWindow.qml" line="36"/>
         <source></source>
         <translation>Type to search</translation>
     </message>
