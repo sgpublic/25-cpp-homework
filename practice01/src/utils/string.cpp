@@ -27,8 +27,8 @@ namespace biliqt::utils {
         return str.getPtr();
     }
 
-    oatpp::String qstr_to_oatstr(const QString& str) {
-        oatpp::String result = str.toStdString();
+    String qstr_to_oatstr(const QString& str) {
+        String result = str.toStdString();
         return result;
     }
 
@@ -54,4 +54,10 @@ namespace biliqt::utils {
     std::string concat(const std::string &str, const std::string &sep) {
         return str + sep;
     }
+
+    QString url_to_wbi_key(const String &url) {
+        const auto& key = url->substr(url->length() - 32 - 4, 32);
+        return QString::fromStdString(key);
+    }
+
 }

@@ -40,18 +40,25 @@ FluWindow {
             onTextChanged: {
                 viewModel.searchText = text
             }
-            onItemClicked: function (data) {
-                viewModel.requestSearch(data)
-            }
-            function handleEnterReturn() {
-                viewModel.requestSearch({title: text})
+            function handelSearch() {
                 home_searchBox.focus = false
+                home_navView.push(ResourceModule.getQml("/pages/SearchPage.qml"))
+                GlobalSignalModule.requestSearch(text)
+            }
+            onItemClicked: function (data) {
+                handelSearch()
             }
             Keys.onEnterPressed: {
-                handleEnterReturn()
+                handelSearch()
             }
             Keys.onReturnPressed: {
-                handleEnterReturn()
+                handelSearch()
+            }
+
+            Component.onCompleted: {
+                viewModel.searchSuggestChanged.connect(function (data) {
+                    home_searchBox.showSuggest()
+                })
             }
         }
 
@@ -155,9 +162,6 @@ FluWindow {
             if (isLogin) {
                 viewModel.requestLoginSucceed()
             }
-        })
-        viewModel.searchSuggestChanged.connect(function (data) {
-            home_searchBox.showSuggest()
         })
     }
 }

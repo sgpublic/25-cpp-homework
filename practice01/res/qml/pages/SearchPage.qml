@@ -21,51 +21,34 @@ FluPage {
 
         GridView {
             id: search_list
-            width: viewModel.ui_listWidth
+            width: parent.width
             height: parent.height
             anchors.horizontalCenter: parent.horizontalCenter
-            cellWidth: viewModel.ui_listCellWidth
-            cellHeight: viewModel.ui_listCellHeight
+            cellWidth: width / 2
+            cellHeight: 160
+            contentHeight: 1600
 
             header: Item {
-                width: viewModel.ui_listWidth
+                width: parent.width
                 height: 60
 
+                FluText {
+                    text: qsTrId("search_title").arg(viewModel.searchText)
+                    font {
+                        pointSize: 24
+                        bold: true
+                    }
+                }
             }
 
             boundsBehavior: Flickable.StopAtBounds
             highlightFollowsCurrentItem: false
             model: search_list_data
             delegateModelAccess: DelegateModel.ReadOnly
-            delegate: BangumiItem {
-                cellPadding: viewModel.ui_listCellPadding
-                cellContentWidth: viewModel.ui_listCellContentWidth
-                cellContentHeight: viewModel.ui_listCellContentHeight
-                cellContentCoverHeight: viewModel.ui_listCellContentCoverHeight
-                cellCover: model.cover
-                cellTitle: model.title
-                cellDesc: model.desc
+            delegate: Component {
+                Text {
 
-                onBangumiItemTapped: function () {
-                    if (!SettingModule.login()) {
-                        FluRouter.navigate("/login")
-                        return
-                    }
-                    FluRouter.navigate("/bangumi")
-                    GlobalSignalModule.requestBangumiInfo({
-                        season_id: model.season_id,
-                        episode_id: model.episode_id
-                    })
                 }
-            }
-
-            onContentYChanged: {
-                const currentY = contentY;
-                if (contentY + height + 280 < contentHeight) {
-                    return
-                }
-                viewModel.requestLoadBangumiList({is_refresh: false})
-                contentY = currentY
             }
         }
 
@@ -95,18 +78,9 @@ FluPage {
     }
 
     Component.onCompleted: {
-        viewModel.addBangumiData.connect(function (data) {
-            bangumi_list_data.append(data)
+        GlobalSignalModule.requestSearch.connect(function (searchText) {
+            viewModel.searchText = searchText
+            viewModel.requestLoadSearchResult({search_text: searchText})
         })
-        viewModel.clearBangumiList.connect(() => bangumi_list_data.clear())
-        page_home.widthChanged.connect(() => viewModel.onPageWidthChanged(page_home.width))
-
-        GlobalSignalModule.loginStatusChanged.connect(function (isLogin) {
-            viewModel.requestLoadBannerData()
-            viewModel.requestLoadBangumiList({"is_refresh": true});
-        })
-
-        viewModel.requestLoadBannerData();
-        viewModel.requestLoadBangumiList({"is_refresh": false});
     }
 }

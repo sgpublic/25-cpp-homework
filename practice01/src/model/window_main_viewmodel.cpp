@@ -4,7 +4,7 @@
 
 #include "model/window_main_viewmodel.h"
 
-#include "core/api/dto/app_dto.h"
+#include "core/api/dto/api_dto.h"
 #include "core/api/dto/search_dto.h"
 #include "core/module/global_signal_model.h"
 #include "core/module/setting_module.h"
@@ -19,7 +19,7 @@ using namespace biliqt::core::api::dto;
 namespace biliqt::model {
 
     MainWindowViewModel::MainWindowViewModel(QObject *parent) : ViewModel(parent) {
-        _appClient = AppClient::createShared();
+        _apiClient = ApiClient::createShared();
         _searchClient = SearchClient::createShared();
         connect(this, &MainWindowViewModel::searchTextChanged, this, [this] {
             requestLoadSearchSuggest({{ "search_text", searchText() }});
@@ -36,17 +36,19 @@ namespace biliqt::model {
     }
 
     void MainWindowViewModel::onLoadUserInfo(const QVariantMap& args) {
-        const auto dto = MyinfoReq::createShared();
-        dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
-        const auto result = _appClient->myinfo(dto->asSignedParams());
-        const auto body = core::api::readRespBody<MyinfoResp>(result);
+        const auto result = _apiClient->web_nav();
+        const auto body = core::api::readRespBody<WebNavResp>(result);
         qDebug() << "code:" << body->code << "message:" << body->message->data();
         if (body->code != 0) {
             nick(qtTrId("main_nick_unknown"));
             avatarUrl(nullptr);
+            SettingModule::getInstance()->wbi_img_key("");
+            SettingModule::getInstance()->wbi_sub_key("");
         } else {
-            nick(body->data->name->data());
+            nick(body->data->uname->data());
             avatarUrl(body->data->face->data());
+            SettingModule::getInstance()->wbi_img_key(url_to_wbi_key(body->data->wbi_img->img_url));
+            SettingModule::getInstance()->wbi_sub_key(url_to_wbi_key(body->data->wbi_img->sub_url));
         }
     }
 
@@ -59,6 +61,8 @@ namespace biliqt::model {
         SettingModule::getInstance()->cookie_DedeUserID__ckMd5("");
         SettingModule::getInstance()->cookie_SESSDATA("");
         SettingModule::getInstance()->cookie_sid("");
+        SettingModule::getInstance()->wbi_img_key("");
+        SettingModule::getInstance()->wbi_sub_key("");
         hasLogin(false);
         emit GlobalSignalModule::getInstance()->loginStatusChanged(false);
     }
@@ -84,8 +88,4 @@ namespace biliqt::model {
         searchSuggest(suggests);
     }
 
-    void MainWindowViewModel::onSearch(const QVariantMap& args) {
-        const auto& searchText = args.value("title").toString();
-        qDebug() << "onSearch" << searchText;
-    }
 }

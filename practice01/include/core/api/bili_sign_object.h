@@ -114,7 +114,7 @@ namespace biliqt::core::api {
         std::is_base_of<oatpp::DTO, T>::value,
         oatpp::String
     >::type
-    doSignForPostDto(T* body, const std::string& apiSecret) {
+    doSignForPostDto(T* body, const std::string& apiSecret, const std::string& signKeyName = "sign") {
         auto map = T::getProperties()->getMap();
         auto params = std::unordered_map<std::string, std::string>();
         for (const auto &[key, valueRef]: map) {
@@ -132,7 +132,7 @@ namespace biliqt::core::api {
             }
             paramsOutput << key << "=" << utils::url_encode(value);
         }
-        paramsOutput << "&" << "sign=" << sign;
+        paramsOutput << "&" << signKeyName << "=" << sign;
         return paramsOutput.str();
     }
 

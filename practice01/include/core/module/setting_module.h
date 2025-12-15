@@ -36,10 +36,14 @@ namespace biliqt::core::module {
         SETTING_MEMBER(username, QString, String, "")
         SETTING_MEMBER(accessToken, QString, String, "")
         SETTING_MEMBER(refreshToken, QString, String, "")
+
         SETTING_MEMBER(cookie_BiliJct, QString, String, "")
         SETTING_MEMBER(cookie_DedeUserID, QString, String, "")
         SETTING_MEMBER(cookie_DedeUserID__ckMd5, QString, String, "")
         SETTING_MEMBER(cookie_sid, QString, String, "")
         SETTING_MEMBER(cookie_SESSDATA, QString, String, "")
+
+        SETTING_MEMBER(wbi_img_key, QString, String, "")
+        SETTING_MEMBER(wbi_sub_key, QString, String, "")
     };
 }

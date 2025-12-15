@@ -32,6 +32,7 @@ namespace biliqt::core::api {
             secretCalculate << key << "=" << utils::url_encode(params.at(key));
         }
         secretCalculate << apiSecret;
+        qDebug() << "sign calculated by:" << secretCalculate.str();
         return utils::md5(secretCalculate.str());
     }
 }

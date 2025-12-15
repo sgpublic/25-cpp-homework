@@ -20,4 +20,7 @@ namespace biliqt::utils {
     std::string sha256(const std::string &str);
 
     std::string concat(const std::string &str, const std::string &sep);
+
+    QString url_to_wbi_key(const oatpp::String& url);
+
 }

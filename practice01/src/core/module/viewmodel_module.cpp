@@ -8,6 +8,7 @@
 
 #include "model/page_home_viewmodel.h"
 #include "model/page_mine_viewmodel.h"
+#include "model/page_search_viewmodel.h"
 #include "model/window_bangumi_viewmodel.h"
 #include "model/window_login_viewmodel.h"
 #include "model/window_main_viewmodel.h"
@@ -22,6 +23,9 @@ namespace biliqt::core::module {
         };
         viewModelRegistry["page_mine"] = [](QObject *parent) -> QObject * {
             return new MinePageViewModel(parent);
+        };
+        viewModelRegistry["page_search"] = [](QObject *parent) -> QObject * {
+            return new SearchPageViewModel(parent);
         };
         viewModelRegistry["window_main"] = [](QObject *parent) -> QObject* {
             return new MainWindowViewModel(parent);

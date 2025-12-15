@@ -18,6 +18,7 @@ namespace biliqt::core::module {
     signals:
         void requestBangumiInfo(const QVariantMap& args);
         void loginStatusChanged(const bool& isLogin);
+        void requestSearch(const QString& searchText);
     };
 
 }

@@ -12,42 +12,42 @@
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="61"/>
+        <location filename="../qml/window/MainWindow.qml" line="68"/>
         <source></source>
         <translation>主页</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="70"/>
+        <location filename="../qml/window/MainWindow.qml" line="77"/>
         <source></source>
         <translation>我的追番</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="86"/>
+        <location filename="../qml/window/MainWindow.qml" line="93"/>
         <source></source>
         <translation>登陆</translation>
     </message>
     <message id="home_logout_title">
-        <location filename="../qml/window/MainWindow.qml" line="95"/>
+        <location filename="../qml/window/MainWindow.qml" line="102"/>
         <source></source>
         <translation>退出登陆</translation>
     </message>
     <message id="home_logout_msg">
-        <location filename="../qml/window/MainWindow.qml" line="96"/>
+        <location filename="../qml/window/MainWindow.qml" line="103"/>
         <source></source>
         <translation>确定退出当前账号吗？</translation>
     </message>
     <message id="home_logout_cancel">
-        <location filename="../qml/window/MainWindow.qml" line="97"/>
+        <location filename="../qml/window/MainWindow.qml" line="104"/>
         <source></source>
         <translation>手滑了</translation>
     </message>
     <message id="home_logout_ok">
-        <location filename="../qml/window/MainWindow.qml" line="98"/>
+        <location filename="../qml/window/MainWindow.qml" line="105"/>
         <source></source>
         <translation>确定</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="127"/>
+        <location filename="../qml/window/MainWindow.qml" line="134"/>
         <source></source>
         <translation>关于</translation>
     </message>
@@ -87,7 +87,7 @@
         <translation>语言</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="135"/>
+        <location filename="../qml/window/MainWindow.qml" line="142"/>
         <source></source>
         <translation>设置</translation>
     </message>
@@ -136,7 +136,7 @@
         <translation>二维码已过期</translation>
     </message>
     <message id="main_nick_unknown">
-        <location filename="../../src/model/window_main_viewmodel.cpp" line="45"/>
+        <location filename="../../src/model/window_main_viewmodel.cpp" line="43"/>
         <source></source>
         <translation>未知用户</translation>
     </message>
@@ -169,6 +169,11 @@
         <location filename="../qml/pages/MinePage.qml" line="124"/>
         <source></source>
         <translation>看过</translation>
+    </message>
+    <message id="search_title">
+        <location filename="../qml/pages/SearchPage.qml" line="36"/>
+        <source></source>
+        <translation>“%1”的搜索结果：</translation>
     </message>
 </context>
 </TS>
