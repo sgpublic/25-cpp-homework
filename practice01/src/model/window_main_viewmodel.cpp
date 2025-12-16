@@ -6,7 +6,7 @@
 
 #include "core/api/dto/api_dto.h"
 #include "core/api/dto/search_dto.h"
-#include "core/module/global_signal_model.h"
+#include "core/module/global_signal_module.h"
 #include "core/module/setting_module.h"
 #include "utils/string.h"
 
@@ -84,7 +84,7 @@ namespace biliqt::model {
             suggestItem["title"] = QString::fromStdString(item->value->data());
             suggests.append(suggestItem);
         }
-        qDebug() << "seearch suggests:" << suggests;
+        qDebug() << "seearch suggests count:" << suggests.size();
         searchSuggest(suggests);
     }
 

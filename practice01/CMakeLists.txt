@@ -93,6 +93,47 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         fluentuiplugin
 )
 
+# Oat++
+#set(OATPP_BUILD_TESTS OFF)
+#set(OATPP_LINK_TEST_LIBRARY OFF)
+#FetchContent_Declare(
+#        oatpp
+#        GIT_REPOSITORY https://github.com/oatpp/oatpp.git
+#        GIT_TAG        f83d648fd82dc222ef88aabbafb68efbd7d7bf50
+#)
+#FetchContent_MakeAvailable(oatpp)
+#target_link_libraries(${PROJECT_NAME} PRIVATE
+#        oatpp
+#)
+# Oat++ OpenSSL
+#set(OATPP_MODULES_LOCATION CUSTOM)
+#set(OATPP_DIR_SRC ${oatpp_SOURCE_DIR})
+#set(OATPP_DIR_LIB ${oatpp_SOURCE_DIR})
+#FetchContent_Declare(
+#        oatpp-openssl
+#        GIT_REPOSITORY https://github.com/oatpp/oatpp-openssl.git
+#        GIT_TAG        32c6ff8b59406470dbdff6dd65a21b671052abad
+#)
+#FetchContent_MakeAvailable(oatpp-openssl)
+#target_link_libraries(${PROJECT_NAME} PRIVATE
+#        oatpp-openssl
+#)
+
+#FetchContent_Declare(
+#        mpv
+#        GIT_REPOSITORY https://github.com/mpv-player/mpv.git
+#        GIT_TAG        v0.40.0
+#)
+#FetchContent_MakeAvailable(mpv)
+#
+#set(BUILD_EXAMPLES OFF)
+#FetchContent_Declare(
+#        MpvQt
+#        GIT_REPOSITORY https://github.com/KDE/mpvqt.git
+#        GIT_TAG        v1.1.1
+#)
+#FetchContent_MakeAvailable(MpvQt)
+
 
 # ================================
 # 其他依赖
@@ -108,9 +149,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         OpenSSL::SSL
         oatpp::oatpp-openssl
 )
-
-find_package(Boost REQUIRED COMPONENTS url)
-target_link_libraries(${PROJECT_NAME} PRIVATE Boost::url)
 
 find_package(nlohmann_json CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)

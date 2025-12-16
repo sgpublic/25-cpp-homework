@@ -17,16 +17,43 @@ namespace biliqt::model {
     }
 
     void SearchPageViewModel::onLoadSearchResult(const QVariantMap &args) {
-        const std::string searchText = args.value("search_text").toString().toStdString();
+        auto resultList = QVariantList();
+        searchResultList(resultList);
+
+        const std::string searchText = (args.contains("search_text") ? args.value("search_text").toString() : this->searchText()).toStdString();
+        const int page = args.contains("page") ? args.value("page").toInt() : 1;
         const auto& dto = WebSearchTypeReq::createShared();
         dto->keyword = searchText;
-        dto->page = currentPage();
+        dto->page = page;
         const auto& result = _apiClient->web_search_type(dto->asWbiParams());
         const auto& body = readRespBody<WebSearchTypeResp>(result);
         qDebug() << "code:" << body->code << "message:" << body->message->data();
-        if (body->code != 0) {
+        if (body->code != 0 || body->data->v_voucher != nullptr) {
             return;
         }
+
+        qDebug() << "search result count:" << body->data->result->size();
+
+        for (const auto& item : *body->data->result) {
+            const auto& resultItem = dto_to_qmap(item.getPtr());
+            resultList.append(*resultItem);
+        }
+        searchResultList(resultList);
+        pageCount(body->data->numPages);
+        currentPage(body->data->page);
+        numResults(body->data->numResults);
+        pagesize(body->data->pagesize);
+
+        qDebug() << "search page count:" << pageCount();
+    }
+
+    QString SearchPageViewModel::timeFromTimestamp(long long timestamp) {
+        const std::chrono::system_clock::time_point now_time_t = std::chrono::system_clock::from_time_t(timestamp);
+        const std::time_t time_t_val = std::chrono::system_clock::to_time_t(now_time_t);
+        const std::tm tm = *std::localtime(&time_t_val);
+        std::ostringstream oss;
+        oss << std::put_time(&tm, "%Y-%m-%d");
+        return oss.str().data();
     }
 
 }

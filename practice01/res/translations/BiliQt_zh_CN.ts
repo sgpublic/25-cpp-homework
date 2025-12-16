@@ -146,7 +146,7 @@
         <translation>搜索你感兴趣的番剧</translation>
     </message>
     <message id="bangumi_title">
-        <location filename="../qml/window/BangumiWindow.qml" line="8"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="9"/>
         <source></source>
         <translation>番剧</translation>
     </message>
@@ -171,9 +171,19 @@
         <translation>看过</translation>
     </message>
     <message id="search_title">
-        <location filename="../qml/pages/SearchPage.qml" line="36"/>
+        <location filename="../qml/pages/SearchPage.qml" line="31"/>
         <source></source>
         <translation>“%1”的搜索结果：</translation>
+    </message>
+    <message id="search_pre">
+        <location filename="../qml/pages/SearchPage.qml" line="173"/>
+        <source></source>
+        <translation>上一页</translation>
+    </message>
+    <message id="search_next">
+        <location filename="../qml/pages/SearchPage.qml" line="174"/>
+        <source></source>
+        <translation>下一页</translation>
     </message>
 </context>
 </TS>

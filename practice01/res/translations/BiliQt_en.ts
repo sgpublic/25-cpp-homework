@@ -146,7 +146,7 @@
         <translation>Type to search</translation>
     </message>
     <message id="bangumi_title">
-        <location filename="../qml/window/BangumiWindow.qml" line="8"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="9"/>
         <source></source>
         <translation>Bangumi</translation>
     </message>
@@ -171,9 +171,19 @@
         <translation>Watched</translation>
     </message>
     <message id="search_title">
-        <location filename="../qml/pages/SearchPage.qml" line="36"/>
+        <location filename="../qml/pages/SearchPage.qml" line="31"/>
         <source></source>
         <translation>Search result of &quot;%1&quot;:</translation>
+    </message>
+    <message id="search_pre">
+        <location filename="../qml/pages/SearchPage.qml" line="173"/>
+        <source></source>
+        <translation>Previous</translation>
+    </message>
+    <message id="search_next">
+        <location filename="../qml/pages/SearchPage.qml" line="174"/>
+        <source></source>
+        <translation>Next</translation>
     </message>
 </context>
 </TS>

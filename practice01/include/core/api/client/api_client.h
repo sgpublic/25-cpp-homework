@@ -65,6 +65,13 @@ namespace biliqt::core::api::client {
             BILI_WBI_COOKIE_SESSDATA
             headers.putOrReplace("Referer", "https://search.bilibili.com");
         }
+
+        API_CALL(
+            "GET", "/pgc/view/v2/app/season",
+            pgc_season,
+            QUERY(String, queries)
+        )
+        BILI_SIGN_GET(pgc_season)
     };
 
 }

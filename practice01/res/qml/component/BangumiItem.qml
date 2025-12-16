@@ -82,11 +82,17 @@ Column {
         id: bangumi_item_hoverHandler
         onHoveredChanged: function () {
             if (bangumi_item_hoverHandler.hovered && bangumi_item_title.enabled) {
-                bangumi_item_title.color = cellTitleHeighlightColor
+                bangumi_item_title.textColor = cellTitleHeighlightColor
             } else {
-                bangumi_item_title.color = bangumi_item_title.textColor
+                bangumi_item_title.textColor = FluTheme.fontPrimaryColor
             }
         }
+    }
+
+    Component.onCompleted: {
+        FluTheme.darkChanged.connect(function () {
+            bangumi_item_title.textColor = FluTheme.fontPrimaryColor
+        })
     }
 
     signal bangumiItemTapped()

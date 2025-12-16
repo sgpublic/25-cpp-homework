@@ -22,8 +22,7 @@ namespace biliqt::core::api {
     >::type
     readRespBody(const std::shared_ptr<oatpp::web::protocol::http::incoming::Response>& body) {
         const auto objectMapper = std::make_shared<oatpp::parser::json::mapping::ObjectMapper>();
-        const auto bodyStr = body->readBodyToString();
-        const auto dto = objectMapper->readFromString<oatpp::Object<T>>(bodyStr);
+        const auto dto = body->readBodyToDto<oatpp::Object<T>>(objectMapper);
         return dto.getPtr();
     }
 
@@ -65,6 +64,9 @@ namespace biliqt::core::api {
                     } else if (valueRef->type == oatpp::Int32::Class::getType()) {
                         const int& value = item[keyRef];
                         result[key] = QVariant(value);
+                    } else if (valueRef->type == oatpp::Int64::Class::getType()) {
+                        const long long& value = item[keyRef];
+                        result[key] = QVariant(value);
                     } else if (valueRef->type == oatpp::Boolean::Class::getType()) {
                         const bool& value = item[keyRef];
                         result[key] = QVariant(value);
@@ -86,25 +88,27 @@ namespace biliqt::core::api {
         std::is_base_of<oatpp::DTO, T>::value,
         std::shared_ptr<QVariantMap>
     >::type
-    dto2qmap(const std::shared_ptr<T>& dto) {
+    dto_to_qmap(const std::shared_ptr<T>& dto) {
         auto propertyMap = T::createShared()->getProperties()->getMap();
-        auto result = QVariantMap();
+        auto result = std::make_shared<QVariantMap>();
         for (const auto &[keyRef, valueRef]: propertyMap) {
             auto key = QString::fromStdString(keyRef);
             oatpp::Void value = valueRef->get(dto.get());
             if (valueRef->type == oatpp::String::Class::getType()) {
-                result[key] = QString::fromStdString(value.cast<oatpp::String>());
+                (*result)[key] = QString::fromStdString(value.cast<oatpp::String>());
             } else if (valueRef->type == oatpp::Int32::Class::getType()) {
-                result[key] = QVariant(value.cast<oatpp::Int32>());
+                (*result)[key] = QVariant(value.cast<oatpp::Int32>());
+            } else if (valueRef->type == oatpp::Int64::Class::getType()) {
+                (*result)[key] = QVariant(value.cast<oatpp::Int64>());
             } else if (valueRef->type == oatpp::Boolean::Class::getType()) {
-                result[key] = QVariant(value.cast<oatpp::Boolean>());
+                (*result)[key] = QVariant(value.cast<oatpp::Boolean>());
             } else if (valueRef->type == oatpp::Float32::Class::getType()) {
-                result[key] = QVariant(value.cast<oatpp::Float32>());
+                (*result)[key] = QVariant(value.cast<oatpp::Float32>());
             } else {
                 qDebug() << "unsupported type of key:" << key << ", type:" << valueRef->type;
             }
         }
-        return std::make_shared<QVariantMap>(result);
+        return result;
     }
 
     std::string calculateSignValue(const std::unordered_map<std::string, std::string>& params, const std::string& apiSecret);
@@ -154,7 +158,7 @@ namespace biliqt::core::api {
     DTO_FIELD(String, appkey) = API_KEY;                                                                        \
     DTO_FIELD(String, mobi_app) = MOBI_APP;                                                                     \
     DTO_FIELD(String, platform) = PLATFORM;                                                                     \
-    DTO_FIELD(Int32, ts) = std::time(nullptr);                                                                  \
+    DTO_FIELD(Int64, ts) = std::time(nullptr);                                                                  \
     DTO_FIELD(Int32, build) = BUILD;
 
 #define BILI_SIGN_PASSPORT_REQUEST_DTO(TYPE) \

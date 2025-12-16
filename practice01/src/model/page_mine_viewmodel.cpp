@@ -98,7 +98,7 @@ namespace biliqt::model {
             clearSignal();
         }
         for (const auto& item : *body->result->follow_list) {
-            addSignal(*dto2qmap<PgcFollowBangumiResp::Data::Item>(item.getPtr()));
+            addSignal(*dto_to_qmap<PgcFollowBangumiResp::Data::Item>(item.getPtr()));
         }
         state.currentPage = dto->pn;
         state.hasNext = body->result->has_next;

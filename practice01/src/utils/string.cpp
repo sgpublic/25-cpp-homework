@@ -6,13 +6,12 @@
 #include <QCryptographicHash>
 #include <QString>
 #include <sstream>
-#include <boost/url/encode.hpp>
-#include <boost/url/rfc/pchars.hpp>
-#include <openssl/evp.h>
+#include <oatpp/encoding/Url.hpp>
 
 #include <oatpp/parser/json/mapping/ObjectMapper.hpp>
 
 using namespace oatpp;
+using namespace oatpp::encoding;
 using namespace oatpp::parser::json::mapping;
 
 namespace biliqt::utils {
@@ -33,21 +32,18 @@ namespace biliqt::utils {
     }
 
     std::string url_encode(const std::string &str) {
-        std::string strVal = str;
-        const unsigned long bufferSize = strVal.length() * 3;
-        char buf[bufferSize];
-        std::size_t size = boost::urls::encode(buf, bufferSize, strVal, boost::urls::pchars);
-        buf[size] = '\0';
-        return strVal;
+        const Url::Config config;
+        const String strVal = str;
+        return Url::encode(strVal, config);
     }
 
     std::string md5(const std::string& str) {
-        QByteArray hash = QCryptographicHash::hash(str, QCryptographicHash::Md5);
+        const QByteArray hash = QCryptographicHash::hash(str, QCryptographicHash::Md5);
         return hash.toHex().toStdString();
     }
 
     std::string sha256(const std::string &str) {
-        QByteArray hash = QCryptographicHash::hash(str, QCryptographicHash::Sha256);
+        const QByteArray hash = QCryptographicHash::hash(str, QCryptographicHash::Sha256);
         return hash.toHex().toStdString();
     }
 

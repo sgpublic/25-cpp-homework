@@ -21,7 +21,7 @@ namespace biliqt::core::api {
 
 #define _BILI_WBI_REQUEST_DTO_DEFAULT(TYPE)                                                                     \
     EXPOSE_PROPERTY_DTO(TYPE)                                                                                   \
-    DTO_FIELD(Int32, wts) = std::time(nullptr);
+    DTO_FIELD(Int64, wts) = std::time(nullptr);
 
 #define BILI_WBI_REQUEST_DTO(TYPE)                                                                              \
     public:                                                                                                     \

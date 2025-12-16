@@ -128,23 +128,95 @@ namespace biliqt::core::api::dto {
 
             DTO_FIELD(Int32, page);
             DTO_FIELD(Int32, numPages);
+            DTO_FIELD(Int32, numResults);
+            DTO_FIELD(Int32, pagesize);
 
             class Result: public oatpp::DTO {
-                DTO_INIT(Result, DTO)
+                EXPOSE_PROPERTY_DTO(Result)
 
                 DTO_FIELD(Int32, season_id);
                 DTO_FIELD(String, title);
                 DTO_FIELD(String, desc);
-                DTO_FIELD(String, pubtime);
+                DTO_FIELD(String, cover);
+                DTO_FIELD(String, styles);
+                DTO_FIELD(Int64, pubtime);
+                DTO_FIELD(String, index_show);
+
+                class MediaScore: public oatpp::DTO {
+                    DTO_INIT(MediaScore, DTO)
+
+                    DTO_FIELD(Float32, score);
+                    DTO_FIELD(Int32, user_count);
+                };
+                // DTO_FIELD(Object<MediaScore>, media_score);
             };
             DTO_FIELD(List<Object<Result>>, result);
 
             class VVoucher: public oatpp::DTO {
                 DTO_INIT(VVoucher, DTO)
             };
-            DTO_FIELD(Object<VVoucher>, v_voucher);
+            DTO_FIELD(Object<VVoucher>, v_voucher) = nullptr;
         };
         BILI_RESP_DATA_DTO(WebSearchTypeResp, Data)
+    };
+
+    class PgcSeasonReq: public oatpp::DTO {
+        BILI_SIGN_API_REQUEST_DTO(PgcSeasonReq)
+        DTO_FIELD(Int64, season_id);
+        DTO_FIELD(String, access_key);
+    };
+
+    class PgcSeasonResp: public oatpp::DTO {
+    public:
+        class Data: public oatpp::DTO {
+            DTO_INIT(Data, DTO)
+            DTO_FIELD(String, evaluate);
+
+            class NewEp: public oatpp::DTO {
+                DTO_INIT(NewEp, DTO)
+                DTO_FIELD(String, desc);
+            };
+            DTO_FIELD(Object<NewEp>, new_ep);
+            DTO_FIELD(String, origin_name);
+            class Publish: public oatpp::DTO {
+                DTO_INIT(Publish, DTO)
+                DTO_FIELD(Int32, is_finish);
+                DTO_FIELD(Int32, is_started);
+                DTO_FIELD(String, release_date_show);
+                DTO_FIELD(String, time_length_show);
+            };
+            DTO_FIELD(Object<Publish>, publish);
+            class Rating: public oatpp::DTO {
+                DTO_INIT(Rating, DTO)
+                DTO_FIELD(Float32, score);
+            };
+            DTO_FIELD(Object<Rating>, rating);
+            DTO_FIELD(String, refine_cover);
+            DTO_FIELD(String, season_title);
+            class Stat: public oatpp::DTO {
+                DTO_INIT(Stat, DTO)
+                DTO_FIELD(String, followers);
+                DTO_FIELD(String, play);
+            };
+            DTO_FIELD(Object<Stat>, stat);
+            class Style: public oatpp::DTO {
+                DTO_INIT(Style, DTO)
+                DTO_FIELD(String, name);
+            };
+            DTO_FIELD(Object<Style>, styles);
+            DTO_FIELD(Int32, total);
+            class UserStatus: public oatpp::DTO {
+                DTO_INIT(UserStatus, DTO)
+                class Progress: public oatpp::DTO {
+                    DTO_INIT(Progress, DTO)
+                    DTO_FIELD(Int32, last_ep_id);
+                    DTO_FIELD(Int64, last_time);
+                };
+                DTO_FIELD(Object<Progress>, progress);
+            };
+            DTO_FIELD(Object<UserStatus>, user_status);
+        };
+        BILI_RESP_DATA_DTO(PgcSeasonResp, Data)
     };
 
 }

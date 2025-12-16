@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "core/module/global_signal_model.h"
+#include "core/module/global_signal_module.h"
 #include "core/module/image_cache_module.h"
 #include "core/module/setting_module.h"
 #include "core/module/resource_module.h"

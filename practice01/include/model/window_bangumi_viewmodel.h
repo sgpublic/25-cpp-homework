@@ -6,6 +6,7 @@
 
 #include "base_viewmodel.h"
 #include "core/api/client/api_client.h"
+#include "utils/stdafx.h"
 
 namespace biliqt::model {
     class BangumiWindowViewModel: public ViewModel {
@@ -14,7 +15,8 @@ namespace biliqt::model {
         std::shared_ptr<core::api::client::ApiClient> _apiClient;
     public:
         explicit BangumiWindowViewModel(QObject *parent = nullptr);
-
+        Q_PROPERTY_READONLY_AUTO(QString, title);
+    public:
         VIEW_MODEL_COROUTINE_TASK(LoadBangumi)
     private slots:
         void onLoadBangumiSignal(const QVariantMap &args);

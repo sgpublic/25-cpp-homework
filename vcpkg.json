@@ -5,7 +5,6 @@
     "oatpp",
     "oatpp-openssl",
     "openssl",
-    "boost-url",
     "nlohmann-json",
     "curl",
     "protobuf"
@@ -23,10 +22,6 @@
     {
       "name": "openssl",
       "version": "3.6.0#3"
-    },
-    {
-      "name": "boost-url",
-      "version": "1.89.0"
     },
     {
       "name": "nlohmann-json",
