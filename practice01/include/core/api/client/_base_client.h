@@ -4,7 +4,7 @@
 
 #pragma once
 #include <string>
-#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
+#include <oatpp/json/ObjectMapper.hpp>
 #include <oatpp/web/client/ApiClient.hpp>
 
 #include "core/api/bili_sign_executor.h"
@@ -13,7 +13,7 @@ namespace biliqt::core::api::client {
     class BaseApiClient: public oatpp::web::client::ApiClient {
     public:
         BaseApiClient(const std::string& baseUrl, const bool& useHttps) : ApiClient(nullptr, nullptr) {
-            m_objectMapper = std::make_shared<oatpp::parser::json::mapping::ObjectMapper>();
+            m_objectMapper = std::make_shared<oatpp::json::ObjectMapper>();
             m_requestExecutor = std::make_shared<BiliApiExecutor>(baseUrl, useHttps);
         }
     };
@@ -37,23 +37,23 @@ private:                                                                        
     }
 
 
-#define BILI_SIGN_DEFAULT_HEADERS                                                                  \
-    headers.putOrReplace("User-Agent", "Mozilla/5.0 BiliDroid/7.1.1 (sgpublic2002@gmail.com)");    \
+#define BILI_SIGN_DEFAULT_HEADERS                                                                       \
+    headers.putOrReplace("User-Agent", "Mozilla/5.0 BiliDroid/7.1.1 (sgpublic2002@gmail.com)");         \
     headers.putOrReplace("Host", ___HEADER_KEY_HOST());
 
 
-#define BILI_SIGN_DEFAULT_POST_HEADERS                                                             \
-    BILI_SIGN_DEFAULT_HEADERS                                                                      \
+#define BILI_SIGN_DEFAULT_POST_HEADERS                                                                  \
+    BILI_SIGN_DEFAULT_HEADERS                                                                           \
     headers.putOrReplace("Content-Type", "application/x-www-form-urlencoded");
 
 
-#define BILI_SIGN_POST(NAME)                                                                       \
-    API_CALL_HEADERS(NAME) {                                                                       \
-        BILI_SIGN_DEFAULT_POST_HEADERS                                                             \
+#define BILI_SIGN_POST(NAME)                                                                            \
+    API_CALL_HEADERS(NAME) {                                                                            \
+        BILI_SIGN_DEFAULT_POST_HEADERS                                                                  \
     }
 
 
-#define BILI_SIGN_GET(NAME)                                                                        \
-    API_CALL_HEADERS(NAME) {                                                                       \
-        BILI_SIGN_DEFAULT_HEADERS                                                                  \
+#define BILI_SIGN_GET(NAME)                                                                             \
+    API_CALL_HEADERS(NAME) {                                                                            \
+        BILI_SIGN_DEFAULT_HEADERS                                                                       \
     }

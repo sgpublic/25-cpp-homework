@@ -8,11 +8,11 @@
 #include <sstream>
 #include <oatpp/encoding/Url.hpp>
 
-#include <oatpp/parser/json/mapping/ObjectMapper.hpp>
+#include <oatpp/json/ObjectMapper.hpp>
 
 using namespace oatpp;
 using namespace oatpp::encoding;
-using namespace oatpp::parser::json::mapping;
+using namespace oatpp::json;
 
 namespace biliqt::utils {
 

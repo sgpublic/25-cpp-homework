@@ -4,7 +4,7 @@
 #pragma once
 
 #include <oatpp/web/client/ApiClient.hpp>
-#include <oatpp/core/macro/codegen.hpp>
+#include <oatpp/macro/codegen.hpp>
 
 #include "_base_client.h"
 #include "core/api/bili_wbi_object.h"

@@ -15,7 +15,7 @@ using namespace biliqt::utils;
 using namespace biliqt::core::module;
 
 int main(int argc, char *argv[]) {
-    oatpp::base::Environment::init();
+    oatpp::Environment::init();
 
     SettingModule::getInstance()->init(argv);
 
@@ -42,6 +42,6 @@ int main(int argc, char *argv[]) {
 
     const int exitCode = QApplication::exec();
 
-    oatpp::base::Environment::destroy();
+    oatpp::Environment::destroy();
     return exitCode;
 }

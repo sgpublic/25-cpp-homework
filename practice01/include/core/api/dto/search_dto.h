@@ -3,9 +3,8 @@
 //
 #pragma once
 
-#include <oatpp/codegen/dto/base_define.hpp>
-#include <oatpp/core/Types.hpp>
-#include <oatpp/core/macro/codegen.hpp>
+#include <oatpp/Types.hpp>
+#include <oatpp/macro/codegen.hpp>
 #include "core/api/bili_sign_object.h"
 
 #include OATPP_CODEGEN_BEGIN(DTO)

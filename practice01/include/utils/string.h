@@ -5,7 +5,7 @@
 
 #include <QString>
 #include <string>
-#include <oatpp/core/Types.hpp>
+#include <oatpp/Types.hpp>
 
 namespace biliqt::utils {
 

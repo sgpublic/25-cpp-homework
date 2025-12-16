@@ -6,10 +6,10 @@
 #include <oatpp/network/Url.hpp>
 #include <oatpp/network/tcp/client/ConnectionProvider.hpp>
 #include <oatpp-openssl/client/ConnectionProvider.hpp>
+#include <oatpp/base/Log.hpp>
 
 #include "core/api/bili_sign_executor.h"
 
-#include "core/api/bili_sign_client.h"
 #include "core/api/bili_sign_object.h"
 
 using namespace oatpp::web::client;
@@ -36,9 +36,9 @@ namespace biliqt::core::api {
     }
 
     void BiliApiExecutor::printRequestDetails(const String &method, const String &path, const Headers &headers) {
-        OATPP_LOGD("BiliApiExecutor", " %s /%s", method->c_str(), path->c_str());
+        OATPP_LOGd("BiliApiExecutor", " {} /{}", method->c_str(), path->c_str());
         for (const auto&[key, value] : headers.getAll()) {
-            OATPP_LOGD("BiliApiExecutor", "   %s: %s", key.std_str().c_str(), value.std_str().c_str());
+            OATPP_LOGd("BiliApiExecutor", "   {}: {}", key.std_str().c_str(), value.std_str().c_str());
         }
     }
 
