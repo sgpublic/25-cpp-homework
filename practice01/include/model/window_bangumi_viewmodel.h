@@ -16,6 +16,15 @@ namespace biliqt::model {
     public:
         explicit BangumiWindowViewModel(QObject *parent = nullptr);
         Q_PROPERTY_READONLY_AUTO(QString, title);
+        Q_PROPERTY_READONLY_AUTO(QString, cover);
+        Q_PROPERTY_READONLY_AUTO(int, totalPlay);
+        Q_PROPERTY_READONLY_AUTO(int, followers);
+        Q_PROPERTY_READONLY_AUTO(int, danmakus);
+        Q_PROPERTY_READONLY_AUTO(QString, pubtime);
+        Q_PROPERTY_READONLY_AUTO(QString, timeLength);
+        Q_PROPERTY_READONLY_AUTO(QString, desc);
+        Q_PROPERTY_READONLY_AUTO(float, score);
+        Q_PROPERTY_READONLY_AUTO(int, ratingCount);
     public:
         VIEW_MODEL_COROUTINE_TASK(LoadBangumi)
     private slots:

@@ -7,6 +7,7 @@
 #include <oatpp/macro/codegen.hpp>
 #include "core/api/bili_sign_object.h"
 #include "core/api/bili_wbi_object.h"
+#include "oatpp/codegen/dto/base_define.hpp"
 
 #include OATPP_CODEGEN_BEGIN(DTO)
 
@@ -169,8 +170,14 @@ namespace biliqt::core::api::dto {
     public:
         class Data: public oatpp::DTO {
             DTO_INIT(Data, DTO)
+            class Celebrity: public oatpp::DTO {
+                DTO_INIT(Celebrity, DTO)
+                DTO_FIELD(String, avatar);
+                DTO_FIELD(String, desc);
+                DTO_FIELD(String, name);
+            };
+            DTO_FIELD(List<Object<Celebrity>>, celebrity);
             DTO_FIELD(String, evaluate);
-
             class NewEp: public oatpp::DTO {
                 DTO_INIT(NewEp, DTO)
                 DTO_FIELD(String, desc);
@@ -187,6 +194,7 @@ namespace biliqt::core::api::dto {
             DTO_FIELD(Object<Publish>, publish);
             class Rating: public oatpp::DTO {
                 DTO_INIT(Rating, DTO)
+                DTO_FIELD(Int32, count);
                 DTO_FIELD(Float32, score);
             };
             DTO_FIELD(Object<Rating>, rating);
@@ -194,15 +202,16 @@ namespace biliqt::core::api::dto {
             DTO_FIELD(String, season_title);
             class Stat: public oatpp::DTO {
                 DTO_INIT(Stat, DTO)
-                DTO_FIELD(String, followers);
-                DTO_FIELD(String, play);
+                DTO_FIELD(Int32, danmakus);
+                DTO_FIELD(Int32, favorite);
+                DTO_FIELD(Int32, views);
             };
             DTO_FIELD(Object<Stat>, stat);
             class Style: public oatpp::DTO {
                 DTO_INIT(Style, DTO)
                 DTO_FIELD(String, name);
             };
-            DTO_FIELD(Object<Style>, styles);
+            DTO_FIELD(List<Object<Style>>, styles);
             DTO_FIELD(Int32, total);
             class UserStatus: public oatpp::DTO {
                 DTO_INIT(UserStatus, DTO)
@@ -211,10 +220,16 @@ namespace biliqt::core::api::dto {
                     DTO_FIELD(Int32, last_ep_id);
                     DTO_FIELD(Int64, last_time);
                 };
-                DTO_FIELD(Object<Progress>, progress);
+                DTO_FIELD(Object<Progress>, progress) = nullptr;
             };
             DTO_FIELD(Object<UserStatus>, user_status);
         };
+
+        DTO_FIELD(Tree, modules);
+        class SeasonModule: public oatpp::DTO {
+            DTO_INIT(SeasonModule, DTO)
+        };
+
         BILI_RESP_DATA_DTO(PgcSeasonResp, Data)
     };
 

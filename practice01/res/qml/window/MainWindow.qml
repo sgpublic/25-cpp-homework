@@ -12,12 +12,7 @@ FluWindow {
     minimumWidth: 1100
     fitsAppBarWindows: true
     launchMode: FluWindowType.SingleTask
-
-    appBar: FluAppBar {
-        height: 30
-        showStayTop: false
-        z: 7
-    }
+    showStayTop: false
 
     FluNavigationView {
         id: home_navView

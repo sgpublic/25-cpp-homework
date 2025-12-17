@@ -6,48 +6,48 @@
     <message id="app_name">
         <location filename="../qml/window/AboutWindow.qml" line="28"/>
         <location filename="../qml/window/MainWindow.qml" line="6"/>
-        <location filename="../qml/window/MainWindow.qml" line="29"/>
+        <location filename="../qml/window/MainWindow.qml" line="24"/>
         <location filename="../../src/main.cpp" line="33"/>
         <source></source>
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="68"/>
+        <location filename="../qml/window/MainWindow.qml" line="63"/>
         <source></source>
         <translation>主页</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="77"/>
+        <location filename="../qml/window/MainWindow.qml" line="72"/>
         <source></source>
         <translation>我的追番</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="93"/>
+        <location filename="../qml/window/MainWindow.qml" line="88"/>
         <source></source>
         <translation>登陆</translation>
     </message>
     <message id="home_logout_title">
-        <location filename="../qml/window/MainWindow.qml" line="102"/>
+        <location filename="../qml/window/MainWindow.qml" line="97"/>
         <source></source>
         <translation>退出登陆</translation>
     </message>
     <message id="home_logout_msg">
-        <location filename="../qml/window/MainWindow.qml" line="103"/>
+        <location filename="../qml/window/MainWindow.qml" line="98"/>
         <source></source>
         <translation>确定退出当前账号吗？</translation>
     </message>
     <message id="home_logout_cancel">
-        <location filename="../qml/window/MainWindow.qml" line="104"/>
+        <location filename="../qml/window/MainWindow.qml" line="99"/>
         <source></source>
         <translation>手滑了</translation>
     </message>
     <message id="home_logout_ok">
-        <location filename="../qml/window/MainWindow.qml" line="105"/>
+        <location filename="../qml/window/MainWindow.qml" line="100"/>
         <source></source>
         <translation>确定</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="134"/>
+        <location filename="../qml/window/MainWindow.qml" line="129"/>
         <source></source>
         <translation>关于</translation>
     </message>
@@ -87,7 +87,7 @@
         <translation>语言</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="142"/>
+        <location filename="../qml/window/MainWindow.qml" line="137"/>
         <source></source>
         <translation>设置</translation>
     </message>
@@ -141,14 +141,39 @@
         <translation>未知用户</translation>
     </message>
     <message id="home_search_hint">
-        <location filename="../qml/window/MainWindow.qml" line="36"/>
+        <location filename="../qml/window/MainWindow.qml" line="31"/>
         <source></source>
         <translation>搜索你感兴趣的番剧</translation>
     </message>
     <message id="bangumi_title">
-        <location filename="../qml/window/BangumiWindow.qml" line="9"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="10"/>
         <source></source>
         <translation>番剧</translation>
+    </message>
+    <message id="bangumi_total_play">
+        <location filename="../qml/window/BangumiWindow.qml" line="108"/>
+        <source></source>
+        <translation>总播放</translation>
+    </message>
+    <message id="bangumi_followers">
+        <location filename="../qml/window/BangumiWindow.qml" line="134"/>
+        <source></source>
+        <translation>追番人数</translation>
+    </message>
+    <message id="bangumi_danmakus">
+        <location filename="../qml/window/BangumiWindow.qml" line="160"/>
+        <source></source>
+        <translation>弹幕总数</translation>
+    </message>
+    <message id="bangumi_rank_count">
+        <location filename="../qml/window/BangumiWindow.qml" line="216"/>
+        <source></source>
+        <translation>%1 人评分</translation>
+    </message>
+    <message id="bangumi_">
+        <location filename="../qml/window/BangumiWindow.qml" line="280"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="mine_current_watching">
         <location filename="../qml/pages/MinePage.qml" line="16"/>

@@ -83,10 +83,15 @@ include(FetchContent)
 # FluentUI
 set(FLUENTUI_BUILD_EXAMPLES OFF)
 set(FLUENTUI_BUILD_STATIC_LIB OFF)
+#FetchContent_Declare(
+#        FluentUI
+#        GIT_REPOSITORY https://github.com/zhuzichu520/FluentUI.git
+#        GIT_TAG        0cd0b83a10ae67aab9fbe06dcd205c08e7be4383
+#)
 FetchContent_Declare(
         FluentUI
-        GIT_REPOSITORY https://github.com/zhuzichu520/FluentUI.git
-        GIT_TAG        0cd0b83a10ae67aab9fbe06dcd205c08e7be4383
+        GIT_REPOSITORY https://github.com/sgpublic-forks/FluentUI.git
+        GIT_TAG        9f9b831004c47539bf807c96043f90a74d551525
 )
 FetchContent_MakeAvailable(FluentUI)
 target_link_libraries(${PROJECT_NAME} PRIVATE

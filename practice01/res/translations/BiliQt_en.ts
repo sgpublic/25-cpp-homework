@@ -6,48 +6,48 @@
     <message id="app_name">
         <location filename="../qml/window/AboutWindow.qml" line="28"/>
         <location filename="../qml/window/MainWindow.qml" line="6"/>
-        <location filename="../qml/window/MainWindow.qml" line="29"/>
+        <location filename="../qml/window/MainWindow.qml" line="24"/>
         <location filename="../../src/main.cpp" line="33"/>
         <source></source>
         <translation>BiliQt</translation>
     </message>
     <message id="home_navView_item_home">
-        <location filename="../qml/window/MainWindow.qml" line="68"/>
+        <location filename="../qml/window/MainWindow.qml" line="63"/>
         <source></source>
         <translation>Home</translation>
     </message>
     <message id="home_navView_item_mine">
-        <location filename="../qml/window/MainWindow.qml" line="77"/>
+        <location filename="../qml/window/MainWindow.qml" line="72"/>
         <source></source>
         <translation>My Watchlist</translation>
     </message>
     <message id="home_navView_footer_login">
-        <location filename="../qml/window/MainWindow.qml" line="93"/>
+        <location filename="../qml/window/MainWindow.qml" line="88"/>
         <source></source>
         <translation>Login</translation>
     </message>
     <message id="home_logout_title">
-        <location filename="../qml/window/MainWindow.qml" line="102"/>
+        <location filename="../qml/window/MainWindow.qml" line="97"/>
         <source></source>
         <translation>Logout</translation>
     </message>
     <message id="home_logout_msg">
-        <location filename="../qml/window/MainWindow.qml" line="103"/>
+        <location filename="../qml/window/MainWindow.qml" line="98"/>
         <source></source>
         <translation>Are you sure you want to logout?</translation>
     </message>
     <message id="home_logout_cancel">
-        <location filename="../qml/window/MainWindow.qml" line="104"/>
+        <location filename="../qml/window/MainWindow.qml" line="99"/>
         <source></source>
         <translation>No</translation>
     </message>
     <message id="home_logout_ok">
-        <location filename="../qml/window/MainWindow.qml" line="105"/>
+        <location filename="../qml/window/MainWindow.qml" line="100"/>
         <source></source>
         <translation>Yes</translation>
     </message>
     <message id="home_navView_footer_about">
-        <location filename="../qml/window/MainWindow.qml" line="134"/>
+        <location filename="../qml/window/MainWindow.qml" line="129"/>
         <source></source>
         <translation>About</translation>
     </message>
@@ -87,7 +87,7 @@
         <translation>Language</translation>
     </message>
     <message id="home_navView_footer_setting">
-        <location filename="../qml/window/MainWindow.qml" line="142"/>
+        <location filename="../qml/window/MainWindow.qml" line="137"/>
         <source></source>
         <translation>Settings</translation>
     </message>
@@ -123,7 +123,7 @@
     <message id="login_qrcode_error">
         <location filename="../../src/model/window_login_viewmodel.cpp" line="133"/>
         <source></source>
-        <translation>Error occurred: %s</translation>
+        <translation>Error occurred: %1</translation>
     </message>
     <message id="login_qrcode_confirm">
         <location filename="../../src/model/window_login_viewmodel.cpp" line="137"/>
@@ -141,14 +141,39 @@
         <translation>Unknown User</translation>
     </message>
     <message id="home_search_hint">
-        <location filename="../qml/window/MainWindow.qml" line="36"/>
+        <location filename="../qml/window/MainWindow.qml" line="31"/>
         <source></source>
         <translation>Type to search</translation>
     </message>
     <message id="bangumi_title">
-        <location filename="../qml/window/BangumiWindow.qml" line="9"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="10"/>
         <source></source>
         <translation>Bangumi</translation>
+    </message>
+    <message id="bangumi_total_play">
+        <location filename="../qml/window/BangumiWindow.qml" line="108"/>
+        <source></source>
+        <translation>Total Play</translation>
+    </message>
+    <message id="bangumi_followers">
+        <location filename="../qml/window/BangumiWindow.qml" line="134"/>
+        <source></source>
+        <translation>Followers</translation>
+    </message>
+    <message id="bangumi_danmakus">
+        <location filename="../qml/window/BangumiWindow.qml" line="160"/>
+        <source></source>
+        <translation>Danmaku</translation>
+    </message>
+    <message id="bangumi_rank_count">
+        <location filename="../qml/window/BangumiWindow.qml" line="216"/>
+        <source></source>
+        <translation>%1 ratings</translation>
+    </message>
+    <message id="bangumi_">
+        <location filename="../qml/window/BangumiWindow.qml" line="280"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="mine_current_watching">
         <location filename="../qml/pages/MinePage.qml" line="16"/>
