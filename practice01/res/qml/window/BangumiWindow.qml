@@ -7,7 +7,7 @@ import FluentUI 1.0
 FluWindow {
     id: window_bangumi
     property var viewModel: ViewModelModule.createViewModel("window_bangumi", window_bangumi)
-    title: viewModel.title === "" ? qsTrId("bangumi_title") : ""
+    title: viewModel.title === "" ? qsTrId("bangumi_title") : viewModel.title
 
     height: 750
     width: 1200
@@ -15,11 +15,7 @@ FluWindow {
     minimumWidth: 1100
     fitsAppBarWindows: true
     launchMode: FluWindowType.SingleTask
-
-    appBar: FluAppBar {
-        height: 30
-        showStayTop: false
-    }
+    showStayTop: false
 
     Flickable {
         id: bangumi_container

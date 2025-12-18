@@ -5,6 +5,7 @@
 
 #include "core/api/dto/api_dto.h"
 #include "core/module/setting_module.h"
+#include "utils/oatpp_dto.h"
 
 using namespace biliqt::utils;
 using namespace biliqt::core::module;
@@ -22,15 +23,15 @@ namespace biliqt::model {
         const auto dto = PgcPageReq::createShared();
         dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
         const auto result = _apiClient->pgc_page(dto->asSignedParams());
-        const auto body = readRespBody(result);
-        const int code = body["code"];
-        const std::string message = body["message"];
-        if (code != 0) {
+        const auto body = readRespBody<PgcPageResp>(result);
+        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        if (body->code != 0) {
             return;
         }
-        const auto& banner = findModules<PgcPageResp::ModuleItems>(body["result"], "topic");
-        qDebug() << "banner image count:" << banner->size();
-        bannerData(*banner);
+        const auto& moduleData = body->result->findModules<PgcPageResp::Result::TopicModule>();
+        const auto& bannerDataList = dtoToQVariant(*moduleData);
+        qDebug() << "banner image count:" << bannerDataList.size();
+        bannerData(bannerDataList);
     }
 
     void HomePageViewModel::onLoadBangumiList(const QVariantMap &args) {
@@ -44,23 +45,24 @@ namespace biliqt::model {
         dto->cursor = _bangumiListCursor;
         dto->is_refresh = isRefresh;
         const auto result = _apiClient->pgc_page_bangumi(dto->asSignedParams());
-        const auto body = readRespBody(result);
-        const int code = body["code"];
-        const std::string message = body["message"];
-        qDebug() << "onLoadBangumiList" << "code:" << code << ", messasge:" << message;
-        if (code != 0) {
+        const auto body = readRespBody<PgcPageBangumiResp>(result);
+        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        if (body->code != 0) {
+            return;
+        }
+        if (body->code != 0) {
             _isLoadBangumiList = false;
             return;
         }
-        const auto& list = findModules<PgcPageBangumiResp::ModuleItems>(body["result"], "double_feed");
-        _bangumiListCursor = body["result"]["next_cursor"];
-        _bangumiListHasNext = body["result"]["has_next"] == 1;
+        const auto& list = body->result->findModules<PgcPageBangumiResp::Result::DoubleFeedModule>();
+        _bangumiListCursor = body->result->next_cursor;
+        _bangumiListHasNext = body->result->has_next == 1;
         qDebug() << "bangumi item count:" << list->size();
         if (isRefresh) {
             emit clearBangumiList();
         }
         for (const auto& item : *list) {
-            const auto& map = qvariant_cast<QVariantMap>(item);
+            const auto& map = dtoToQVariant(item);
             emit addBangumiData(map);
         }
         _isLoadBangumiList = false;

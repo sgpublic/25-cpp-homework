@@ -151,27 +151,27 @@
         <translation>Bangumi</translation>
     </message>
     <message id="bangumi_total_play">
-        <location filename="../qml/window/BangumiWindow.qml" line="108"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="104"/>
         <source></source>
         <translation>Total Play</translation>
     </message>
     <message id="bangumi_followers">
-        <location filename="../qml/window/BangumiWindow.qml" line="134"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="130"/>
         <source></source>
         <translation>Followers</translation>
     </message>
     <message id="bangumi_danmakus">
-        <location filename="../qml/window/BangumiWindow.qml" line="160"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="156"/>
         <source></source>
         <translation>Danmaku</translation>
     </message>
     <message id="bangumi_rank_count">
-        <location filename="../qml/window/BangumiWindow.qml" line="216"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="212"/>
         <source></source>
         <translation>%1 ratings</translation>
     </message>
     <message id="bangumi_">
-        <location filename="../qml/window/BangumiWindow.qml" line="280"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="276"/>
         <source></source>
         <translation type="unfinished"></translation>
     </message>

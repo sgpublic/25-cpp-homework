@@ -5,6 +5,7 @@
 
 #include "core/api/dto/api_dto.h"
 #include "core/module/setting_module.h"
+#include "utils/oatpp_dto.h"
 
 using namespace biliqt::core::api::client;
 using namespace biliqt::core::api::dto;
@@ -26,15 +27,14 @@ namespace biliqt::model {
         const auto dto = PgcPagePcBangumiTabReq::createShared();
         dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
         const auto result = _apiClient->pgc_page_pc_bangumi_tab(dto->asSignedParams());
-        const auto body = readRespBody(result);
-        const int code = body["code"];
-        const std::string message = body["message"];
-        if (code != 0) {
+        const auto body = readRespBody<PgcPagePcBangumiTabResp>(result);
+        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        if (body->code != 0) {
             return;
         }
-        const auto follow = findModules<PgcPagePcBangumiTabResp::ModuleItems>(body["data"], "follow");
+        const auto follow = body->data->findModules<PgcPagePcBangumiTabResp::Data::FollowModule>();
         qDebug() << "current watching count:" << follow->size();
-        currentWatching(*follow);
+        currentWatching(dtoToQVariant(*follow));
     }
 
     void MinePageViewModel::onLoadFollowWatching(const QVariantMap &args) {
@@ -98,7 +98,7 @@ namespace biliqt::model {
             clearSignal();
         }
         for (const auto& item : *body->result->follow_list) {
-            addSignal(*dto_to_qmap<PgcFollowBangumiResp::Data::Item>(item.getPtr()));
+            addSignal(dtoToQVariant(item));
         }
         state.currentPage = dto->pn;
         state.hasNext = body->result->has_next;

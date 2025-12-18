@@ -4,6 +4,7 @@
 #include "model/page_search_viewmodel.h"
 
 #include "core/api/dto/api_dto.h"
+#include "utils/oatpp_dto.h"
 
 using namespace biliqt::core::module;
 using namespace biliqt::core::api;
@@ -17,8 +18,7 @@ namespace biliqt::model {
     }
 
     void SearchPageViewModel::onLoadSearchResult(const QVariantMap &args) {
-        auto resultList = QVariantList();
-        searchResultList(resultList);
+        searchResultList(QVariantList());
 
         const std::string searchText = (args.contains("search_text") ? args.value("search_text").toString() : this->searchText()).toStdString();
         const int page = args.contains("page") ? args.value("page").toInt() : 1;
@@ -34,11 +34,7 @@ namespace biliqt::model {
 
         qDebug() << "search result count:" << body->data->result->size();
 
-        for (const auto& item : *body->data->result) {
-            const auto& resultItem = dto_to_qmap(item.getPtr());
-            resultList.append(*resultItem);
-        }
-        searchResultList(resultList);
+        searchResultList(utils::dtoToQVariant(*body->data->result));
         pageCount(body->data->numPages);
         currentPage(body->data->page);
         numResults(body->data->numResults);

@@ -43,6 +43,7 @@ FluPage {
                     indicatorGravity: Qt.AlignBottom | Qt.AlignHCenter
                     autoPlay: true
                     loopTime: 5000
+
                     delegate: Component {
                         FluClip {
                             radius: [12, 12, 12, 12]
@@ -133,6 +134,11 @@ FluPage {
 
     }
 
+    function postLoadBangumiData(isRefresh) {
+        viewModel.requestLoadBannerData();
+        viewModel.requestLoadBangumiList({"is_refresh": isRefresh})
+    }
+
     Component.onCompleted: {
         viewModel.addBangumiData.connect(function (data) {
             bangumi_list_data.append(data)
@@ -141,11 +147,9 @@ FluPage {
         page_home.widthChanged.connect(() => viewModel.onPageWidthChanged(page_home.width))
 
         GlobalSignalModule.loginStatusChanged.connect(function (isLogin) {
-            viewModel.requestLoadBannerData()
-            viewModel.requestLoadBangumiList({"is_refresh": true});
+            postLoadBangumiData(true)
         })
 
-        viewModel.requestLoadBannerData();
-        viewModel.requestLoadBangumiList({"is_refresh": false});
+        postLoadBangumiData(true)
     }
 }

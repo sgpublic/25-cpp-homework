@@ -5,9 +5,9 @@
 
 #include <oatpp/Types.hpp>
 #include <oatpp/macro/codegen.hpp>
+
 #include "core/api/bili_sign_object.h"
 #include "core/api/bili_wbi_object.h"
-#include "oatpp/codegen/dto/base_define.hpp"
 
 #include OATPP_CODEGEN_BEGIN(DTO)
 
@@ -20,12 +20,17 @@ namespace biliqt::core::api::dto {
     };
 
     class PgcPageResp : public oatpp::DTO {
-        BILI_RESP_SAMPLE_DTO(PgcPageResp)
-        class ModuleItems: public oatpp::DTO {
-            EXPOSE_PROPERTY_DTO(ModuleItems)
-            DTO_FIELD(String, cover);
-            DTO_FIELD(String, title);
+    public:
+        class Result: public oatpp::DTO {
+            BILI_RESP_MODULE_DTO(Result)
+
+            class TopicModule: public oatpp::DTO {
+                BILI_RESP_MODULE_ITEM_DTO(TopicModule, "topic")
+                DTO_FIELD(String, cover);
+                DTO_FIELD(String, title);
+            };
         };
+        BILI_RESP_RESULT_DTO(PgcPageResp, Result)
     };
 
     class PgcPageBangumiReq : public oatpp::DTO {
@@ -36,17 +41,24 @@ namespace biliqt::core::api::dto {
     };
 
     class PgcPageBangumiResp : public oatpp::DTO {
-        BILI_RESP_SAMPLE_DTO(PgcPageBangumiResp)
-        class ModuleItems: public oatpp::DTO {
-            EXPOSE_PROPERTY_DTO(ModuleItems)
-            DTO_FIELD(Int32, season_id);
-            DTO_FIELD(Int32, episode_id);
+    public:
+        class Result: public oatpp::DTO {
+            BILI_RESP_MODULE_DTO(Result)
+            DTO_FIELD(String, next_cursor);
+            DTO_FIELD(Int32, has_next);
 
-            DTO_FIELD(String, cover);
-            DTO_FIELD(String, title);
-            DTO_FIELD(String, desc);
-            DTO_FIELD(String, type);
+            class DoubleFeedModule: public oatpp::DTO {
+                BILI_RESP_MODULE_ITEM_DTO(DoubleFeedModule, "double_feed")
+                DTO_FIELD(Int32, season_id);
+                DTO_FIELD(Int32, episode_id);
+
+                DTO_FIELD(String, cover);
+                DTO_FIELD(String, title);
+                DTO_FIELD(String, desc);
+                DTO_FIELD(String, type);
+            };
         };
+        BILI_RESP_RESULT_DTO(PgcPageBangumiResp, Result)
     };
 
     class PgcPagePcBangumiTabReq : public oatpp::DTO {
@@ -55,16 +67,21 @@ namespace biliqt::core::api::dto {
     };
 
     class PgcPagePcBangumiTabResp : public oatpp::DTO {
-        BILI_RESP_SAMPLE_DTO(PgcPagePcBangumiTabResp)
-        class ModuleItems: public oatpp::DTO {
-            EXPOSE_PROPERTY_DTO(ModuleItems)
+    public:
+        class Data: public oatpp::DTO {
+            BILI_RESP_MODULE_DTO(Data)
 
-            DTO_FIELD(Int32, season_id);
+            class FollowModule: public oatpp::DTO {
+                BILI_RESP_MODULE_ITEM_DTO(FollowModule, "follow")
 
-            DTO_FIELD(String, cover);
-            DTO_FIELD(String, title);
-            DTO_FIELD(String, desc);
+                DTO_FIELD(Int32, season_id);
+
+                DTO_FIELD(String, cover);
+                DTO_FIELD(String, title);
+                DTO_FIELD(String, desc);
+            };
         };
+        BILI_RESP_DATA_DTO(PgcPagePcBangumiTabResp, Data)
     };
 
     class PgcFollowBangumiReq : public oatpp::DTO {
@@ -77,8 +94,8 @@ namespace biliqt::core::api::dto {
 
     class PgcFollowBangumiResp : public oatpp::DTO {
     public:
-        class Data: public oatpp::DTO {
-            DTO_INIT(Data, DTO)
+        class Result: public oatpp::DTO {
+            DTO_INIT(Result, DTO)
 
             DTO_FIELD(Int32, has_next);
 
@@ -93,7 +110,7 @@ namespace biliqt::core::api::dto {
 
             DTO_FIELD(List<Object<Item>>, follow_list);
         };
-        BILI_RESP_RESULT_DTO(PgcFollowBangumiResp, Data)
+        BILI_RESP_RESULT_DTO(PgcFollowBangumiResp, Result)
     };
 
     class WebNavResp: public oatpp::DTO {

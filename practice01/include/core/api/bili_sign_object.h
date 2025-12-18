@@ -5,12 +5,13 @@
 #pragma once
 
 #include <QDebug>
-#include <QQmlListProperty>
 #include <oatpp/Types.hpp>
 #include <oatpp/web/protocol/http/incoming/Response.hpp>
 #include <oatpp/json/ObjectMapper.hpp>
+#include <oatpp/data/mapping/ObjectRemapper.hpp>
 #include <nlohmann/json.hpp>
 
+#include "utils/oatpp_dto.h"
 #include "utils/string.h"
 
 namespace biliqt::core::api {
@@ -28,88 +29,79 @@ namespace biliqt::core::api {
 
     nlohmann::json readRespBody(const std::shared_ptr<oatpp::web::protocol::http::incoming::Response>& body);
 
-    template<typename T>
+    template<typename ModuleItemT>
     typename std::enable_if<
-        std::is_base_of<oatpp::DTO, T>::value,
-        std::shared_ptr<QVariantList>
+        std::is_base_of<oatpp::DTO, ModuleItemT>::value,
+        std::shared_ptr<std::list<oatpp::Object<ModuleItemT>>>
     >::type
-    findModules(const nlohmann::json& body, const std::string& style) {
-        const auto objectMapper = std::make_shared<oatpp::json::ObjectMapper>();
-        const auto& modules = std::make_shared<QVariantList>();
-        if (!body.contains("modules")) {
-            return modules;
-        }
-
-        auto propertyMap = T::createShared()->getProperties()->getMap();
-        for (const auto& module : body["modules"]) {
-            if (module.contains("style")) {
-                if (const std::string& moduleStyle = module["style"]; moduleStyle != style) {
-                    continue;
-                }
-            }
-            if (!module.contains("items")) {
+    findModules(const oatpp::List<oatpp::Tree> &modules, const std::string &style = "") {
+        const auto& result = oatpp::List<oatpp::Object<ModuleItemT>>::createShared();
+        for (const auto& module : *modules) {
+            const auto& remapper = utils::createRemapper();
+            if (!style.empty() && (!module["style"].isString() || module["style"].getString() != style)) {
                 continue;
             }
-            for (const auto& item : module["items"]) {
-                auto result = QVariantMap();
-                for (const auto &[keyRef, valueRef]: propertyMap) {
-                    const auto& key = QString::fromStdString(keyRef);
-                    if (!item.contains(key)) {
-                        qDebug() << "key" << key << "not exist in json";
-                        continue;
-                    }
-                    if (valueRef->type == oatpp::String::Class::getType()) {
-                        const std::string& value = item[keyRef];
-                        result[key] = QString::fromStdString(value);
-                    } else if (valueRef->type == oatpp::Int32::Class::getType()) {
-                        const int& value = item[keyRef];
-                        result[key] = QVariant(value);
-                    } else if (valueRef->type == oatpp::Int64::Class::getType()) {
-                        const long long& value = item[keyRef];
-                        result[key] = QVariant(value);
-                    } else if (valueRef->type == oatpp::Boolean::Class::getType()) {
-                        const bool& value = item[keyRef];
-                        result[key] = QVariant(value);
-                    } else if (valueRef->type == oatpp::Float32::Class::getType()) {
-                        const float& value = item[keyRef];
-                        result[key] = QVariant(value);
-                    } else {
-                        qDebug() << "unsupported type of key:" << key << ", type:" << valueRef->type;
-                    }
-                }
-                modules->append(result);
+            for (const auto& items = module["items"].getVector(); const auto& item : items) {
+                result->emplace_back(remapper.remap<oatpp::Object<ModuleItemT>>(item));
             }
         }
-        return modules;
+        return result.getPtr();
     }
 
-    template<typename T>
-    typename std::enable_if<
-        std::is_base_of<oatpp::DTO, T>::value,
-        std::shared_ptr<QVariantMap>
-    >::type
-    dto_to_qmap(const std::shared_ptr<T>& dto) {
-        auto propertyMap = T::createShared()->getProperties()->getMap();
-        auto result = std::make_shared<QVariantMap>();
-        for (const auto &[keyRef, valueRef]: propertyMap) {
-            auto key = QString::fromStdString(keyRef);
-            oatpp::Void value = valueRef->get(dto.get());
-            if (valueRef->type == oatpp::String::Class::getType()) {
-                (*result)[key] = QString::fromStdString(value.cast<oatpp::String>());
-            } else if (valueRef->type == oatpp::Int32::Class::getType()) {
-                (*result)[key] = QVariant(value.cast<oatpp::Int32>());
-            } else if (valueRef->type == oatpp::Int64::Class::getType()) {
-                (*result)[key] = QVariant(value.cast<oatpp::Int64>());
-            } else if (valueRef->type == oatpp::Boolean::Class::getType()) {
-                (*result)[key] = QVariant(value.cast<oatpp::Boolean>());
-            } else if (valueRef->type == oatpp::Float32::Class::getType()) {
-                (*result)[key] = QVariant(value.cast<oatpp::Float32>());
-            } else {
-                qDebug() << "unsupported type of key:" << key << ", type:" << valueRef->type;
-            }
-        }
-        return result;
-    }
+    // template<typename T>
+    // typename std::enable_if<
+    //     std::is_base_of<oatpp::DTO, T>::value,
+    //     std::shared_ptr<QVariantList>
+    // >::type
+    // findModules(const nlohmann::json& body, const std::string& style) {
+    //     const auto objectMapper = std::make_shared<oatpp::json::ObjectMapper>();
+    //     const auto& modules = std::make_shared<QVariantList>();
+    //     if (!body.contains("modules")) {
+    //         return modules;
+    //     }
+    //
+    //     auto propertyMap = T::createShared()->getProperties()->getMap();
+    //     for (const auto& module : body["modules"]) {
+    //         if (module.contains("style")) {
+    //             if (const std::string& moduleStyle = module["style"]; moduleStyle != style) {
+    //                 continue;
+    //             }
+    //         }
+    //         if (!module.contains("items")) {
+    //             continue;
+    //         }
+    //         for (const auto& item : module["items"]) {
+    //             auto result = QVariantList();
+    //             for (const auto &[keyRef, valueRef]: propertyMap) {
+    //                 const auto& key = QString::fromStdString(keyRef);
+    //                 if (!item.contains(key)) {
+    //                     qDebug() << "key" << key << "not exist in json";
+    //                     continue;
+    //                 }
+    //                 if (valueRef->type == oatpp::String::Class::getType()) {
+    //                     const std::string& value = item[keyRef];
+    //                     result[key] = QString::fromStdString(value);
+    //                 } else if (valueRef->type == oatpp::Int32::Class::getType()) {
+    //                     const int& value = item[keyRef];
+    //                     result[key] = QVariant(value);
+    //                 } else if (valueRef->type == oatpp::Int64::Class::getType()) {
+    //                     const long long& value = item[keyRef];
+    //                     result[key] = QVariant(value);
+    //                 } else if (valueRef->type == oatpp::Boolean::Class::getType()) {
+    //                     const bool& value = item[keyRef];
+    //                     result[key] = QVariant(value);
+    //                 } else if (valueRef->type == oatpp::Float32::Class::getType()) {
+    //                     const float& value = item[keyRef];
+    //                     result[key] = QVariant(value);
+    //                 } else {
+    //                     qDebug() << "unsupported type of key:" << key << ", type:" << valueRef->type;
+    //                 }
+    //             }
+    //             modules->append(result);
+    //         }
+    //     }
+    //     return modules;
+    // }
 
     std::string calculateSignValue(const std::unordered_map<std::string, std::string>& params, const std::string& apiSecret);
 
@@ -183,3 +175,21 @@ public:                                                                         
 #define BILI_RESP_RESULT_DTO(TYPE, DATA_TYPE)                                                                   \
     BILI_RESP_SAMPLE_DTO(TYPE)                                                                                  \
     DTO_FIELD(Object<DATA_TYPE>, result);
+
+#define BILI_RESP_MODULE_DTO(TYPE)                                                                              \
+    DTO_INIT(TYPE, DTO)                                                                                         \
+    DTO_FIELD(List<Tree>, modules);                                                                             \
+    public:                                                                                                     \
+        template<typename T>                                                                                    \
+        typename std::enable_if<                                                                                \
+            std::is_base_of<oatpp::DTO, T>::value,                                                              \
+            std::shared_ptr<std::list<oatpp::Object<T>>>                                                        \
+        >::type                                                                                                 \
+        findModules() {                                                                                         \
+            return biliqt::core::api::findModules<T>(modules, T::_MODULE_STYLE());                              \
+        }
+
+#define BILI_RESP_MODULE_ITEM_DTO(TYPE, NAME)                                                                   \
+    EXPOSE_PROPERTY_DTO(TYPE)                                                                                   \
+    public:                                                                                                     \
+        static std::string _MODULE_STYLE() { return NAME; }
