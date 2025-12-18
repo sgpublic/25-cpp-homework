@@ -24,13 +24,13 @@ namespace biliqt::model {
         dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
         const auto result = _apiClient->pgc_page(dto->asSignedParams());
         const auto body = readRespBody<PgcPageResp>(result);
-        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        OATPP_LOGd("HomePageViewModel::onLoadBannerData", "code: {}, message: {}", body->code, body->message);
         if (body->code != 0) {
             return;
         }
         const auto& moduleData = body->result->findModules<PgcPageResp::Result::TopicModule>();
         const auto& bannerDataList = dtoToQVariant(*moduleData);
-        qDebug() << "banner image count:" << bannerDataList.size();
+        OATPP_LOGd("HomePageViewModel::onLoadBannerData", "banner image count: {}", bannerDataList.size());
         bannerData(bannerDataList);
     }
 
@@ -46,7 +46,7 @@ namespace biliqt::model {
         dto->is_refresh = isRefresh;
         const auto result = _apiClient->pgc_page_bangumi(dto->asSignedParams());
         const auto body = readRespBody<PgcPageBangumiResp>(result);
-        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        OATPP_LOGd("HomePageViewModel::onLoadBangumiList", "code: {}, message: {}", body->code, body->message);
         if (body->code != 0) {
             return;
         }
@@ -57,7 +57,7 @@ namespace biliqt::model {
         const auto& list = body->result->findModules<PgcPageBangumiResp::Result::DoubleFeedModule>();
         _bangumiListCursor = body->result->next_cursor;
         _bangumiListHasNext = body->result->has_next == 1;
-        qDebug() << "bangumi item count:" << list->size();
+        OATPP_LOGd("HomePageViewModel::onLoadBangumiList", "bangumi item count: {}", list->size());
         if (isRefresh) {
             emit clearBangumiList();
         }

@@ -27,12 +27,12 @@ namespace biliqt::model {
         dto->page = page;
         const auto& result = _apiClient->web_search_type(dto->asWbiParams());
         const auto& body = readRespBody<WebSearchTypeResp>(result);
-        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        OATPP_LOGd("SearchPageViewModel::onLoadSearchResult", "code: {}, message: {}", body->code, body->message);
         if (body->code != 0 || body->data->v_voucher != nullptr) {
             return;
         }
 
-        qDebug() << "search result count:" << body->data->result->size();
+        OATPP_LOGd("SearchPageViewModel::onLoadSearchResult", "search result count: {}", body->data->result->size());
 
         searchResultList(utils::dtoToQVariant(*body->data->result));
         pageCount(body->data->numPages);
@@ -40,7 +40,7 @@ namespace biliqt::model {
         numResults(body->data->numResults);
         pagesize(body->data->pagesize);
 
-        qDebug() << "search page count:" << pageCount();
+        OATPP_LOGd("SearchPageViewModel::onLoadSearchResult", "search page count: {}", pageCount());
     }
 
     QString SearchPageViewModel::timeFromTimestamp(long long timestamp) {

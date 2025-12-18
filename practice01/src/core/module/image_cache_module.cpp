@@ -9,6 +9,7 @@
 #include <QFile>
 #include <qpixmapcache.h>
 
+#include <oatpp/base/Log.hpp>
 #include "utils/remote_resources.h"
 #include "utils/string.h"
 
@@ -50,7 +51,7 @@ namespace biliqt::core::module {
             }
             return {};
         } catch (...) {
-            qDebug() << "error during request image:" << id;
+            OATPP_LOGd("requestImage", "error occurred during request image: {}", id.toStdString());
             return {};
         }
     }

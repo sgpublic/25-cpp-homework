@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <QDebug>
 #include <oatpp/Types.hpp>
 #include <oatpp/web/protocol/http/incoming/Response.hpp>
 #include <oatpp/json/ObjectMapper.hpp>
@@ -56,11 +55,11 @@ namespace biliqt::core::api {
         oatpp::String
     >::type
     doSignForPostDto(
-        T* body, const std::unordered_map<std::string, oatpp::data::type::BaseObject::Property*>& map,
+        T* body, const std::unordered_map<std::string, oatpp::data::type::BaseObject::Property*>& properties,
         const std::string& apiSecret, const std::string& signKeyName = "sign"
     ) {
         auto params = std::unordered_map<std::string, std::string>();
-        for (const auto &[key, valueRef]: map) {
+        for (const auto &[key, valueRef]: properties) {
             oatpp::Void value = valueRef->get(body);
             params[key] = *utils::void_to_string(value);
         }

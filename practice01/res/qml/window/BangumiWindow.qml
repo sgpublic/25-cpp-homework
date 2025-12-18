@@ -197,7 +197,7 @@ FluWindow {
                                                 height: 26
                                                 FluIcon {
                                                     property bool isSelected: {
-                                                        return index <= viewModel.score
+                                                        return index < Math.round(viewModel.score / 2)
                                                     }
                                                     iconSize: 18
                                                     iconSource: isSelected ? FluentIcons.FavoriteStarFill : FluentIcons.FavoriteStar

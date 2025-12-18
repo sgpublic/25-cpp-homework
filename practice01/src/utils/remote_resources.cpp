@@ -4,9 +4,10 @@
 
 #include "utils/remote_resources.h"
 
-#include <QDebug>
 #include <QFile>
 #include <curl/curl.h>
+
+#include <oatpp/base/Log.hpp>
 
 size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
     size_t written = fwrite(ptr, size, nmemb, stream);
@@ -39,7 +40,7 @@ int download_file(const std::string& url, const std::string& local_path) {
 
         throw static_cast<int>(res);
     } catch (int code) {
-        qDebug() << "download_file() failed:" << code;
+        OATPP_LOGd("download_file", "failed: {}", code);
 
         QFile file(local_path.c_str());
         file.remove();

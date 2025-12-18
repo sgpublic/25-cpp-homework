@@ -55,13 +55,11 @@ namespace biliqt::model {
             const oatpp::Object<LoginQrcodeTvPollReq>& dto = LoginQrcodeTvPollReq::createShared();
             dto->auth_code = oat_str(_qrcodeKey);
             const auto result = _passportClient->qrcodeTvPoll(dto->asSignedParams());
-            qDebug() << "statusCode:" << result->getStatusCode();
             if (result->getStatusCode() != 200) {
                 setQrcodeState(Error, "", "", result->getStatusDescription());
                 return;
             }
             const auto body = readRespBody<LoginQrcodeTvPollResp>(result);
-            qDebug() << "code:" << body->code << "message:" << body->message->data();
             switch (body->code) {
                 case 0:
                     setQrcodeState(Success, "", "", "");
@@ -111,7 +109,7 @@ namespace biliqt::model {
     void LoginWindowViewModel::setQrcodeState(
         const QrcodeState &state, const std::string &url, const std::string &authCode, const std::string &message
     ) {
-        qDebug() << "setQrcodeState:" << state << ", message:" << message;
+        OATPP_LOGd("SearchPageViewModel::onLoadSearchResult", "setQrcodeState: {}, message: {}", state, message);
         switch (state) {
             case Loading:
                 qrcodeUrl(nullptr);

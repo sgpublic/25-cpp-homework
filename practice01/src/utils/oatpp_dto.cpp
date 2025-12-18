@@ -2,9 +2,9 @@
 // Created by Haven Madray on 2025/12/17.
 //
 
-#include <QDebug>
-
 #include "utils/oatpp_dto.h"
+
+#include <oatpp/base/Log.hpp>
 
 
 namespace biliqt::utils {
@@ -74,7 +74,7 @@ namespace biliqt::utils {
             case oatpp::data::mapping::Tree::Type::PAIRS:
                 return treeToQVariant(dto->getPairs());
         }
-        qDebug() << "unknown type of Tree:" << static_cast<int>(dto->getType());
+        OATPP_LOGd("treeToQVariant", "unknown type of Tree: {}", static_cast<int>(dto->getType()));
         return {};
     }
 }

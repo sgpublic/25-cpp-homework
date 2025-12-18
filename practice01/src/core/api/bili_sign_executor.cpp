@@ -36,13 +36,14 @@ namespace biliqt::core::api {
     }
 
     void BiliApiExecutor::printRequestDetails(const String &method, const String &path, const Headers &headers) {
-        OATPP_LOGd("BiliApiExecutor", " {} /{}", method->c_str(), path->c_str());
+        OATPP_LOGd("BiliApiExecutor::printRequestDetails", " {} /{}", method->c_str(), path->c_str());
         for (const auto&[key, value] : headers.getAll()) {
-            OATPP_LOGd("BiliApiExecutor", "   {}: {}", key.std_str().c_str(), value.std_str().c_str());
+            OATPP_LOGd("BiliApiExecutor::printRequestDetails", "   {}: {}", key.std_str().c_str(), value.std_str().c_str());
         }
     }
 
     oatpp::String BiliApiExecutor::signedPath(const String &method, const String &path) {
+        OATPP_LOGd("BiliApiExecutor::signedPath", "origin path: {}", path);
         String newPath;
         if (path->starts_with('/')) {
             newPath = path->substr(1);
@@ -52,8 +53,8 @@ namespace biliqt::core::api {
         if (method != "GET") {
             return newPath;
         }
-        const int queryMark = newPath->find('?');
-        if (queryMark < 0) {
+        const size_t queryMark = std::string(newPath).find('?');
+        if (queryMark == std::string::npos) {
             return newPath;
         }
         const Url& url = Url::Parser::parseUrl(path);

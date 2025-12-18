@@ -21,14 +21,14 @@ namespace biliqt::model {
     void BangumiWindowViewModel::onLoadBangumi(const QVariantMap &args) {
         const int seasonId = args.value("season_id").toInt();
         const int episodeId = args.value("episode_id").toInt();
-        qDebug() << "seasonId:" << seasonId << "episodeId:" << episodeId;
+        OATPP_LOGd("BangumiWindowViewModel::onLoadBangumi", "seasonId: {}, episodeId: {}", seasonId, episodeId);
 
         const auto& dto = PgcSeasonReq::createShared();
         dto->season_id = seasonId;
         dto->access_key = SettingModule::getInstance()->accessToken().toStdString();
         const auto& result = _apiClient->pgc_season(dto->asSignedParams());
         const auto& body = readRespBody<PgcSeasonResp>(result);
-        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        OATPP_LOGd("BangumiWindowViewModel::onLoadBangumi", "code: {}, message: {}", body->code, body->message);
         if (body->code != 0) {
             return;
         }

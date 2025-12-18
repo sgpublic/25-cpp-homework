@@ -28,12 +28,12 @@ namespace biliqt::model {
         dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
         const auto result = _apiClient->pgc_page_pc_bangumi_tab(dto->asSignedParams());
         const auto body = readRespBody<PgcPagePcBangumiTabResp>(result);
-        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        OATPP_LOGd("MinePageViewModel::onLoadCurrentWatching", "code: {}, message: {}", body->code, body->message);
         if (body->code != 0) {
             return;
         }
         const auto follow = body->data->findModules<PgcPagePcBangumiTabResp::Data::FollowModule>();
-        qDebug() << "current watching count:" << follow->size();
+        OATPP_LOGd("MinePageViewModel::onLoadCurrentWatching", "current watching count: {}", follow->size());
         currentWatching(dtoToQVariant(*follow));
     }
 
@@ -89,7 +89,7 @@ namespace biliqt::model {
         dto->status = state.status;
         const auto result = _apiClient->pgc_follow_bangumi(dto->asSignedParams());
         const auto body = readRespBody<PgcFollowBangumiResp>(result);
-        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        OATPP_LOGd("MinePageViewModel::requestLoadFollow", "code: {}, message: {}", body->code, body->message);
         if (body->code != 0) {
             return;
         }

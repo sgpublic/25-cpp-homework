@@ -111,27 +111,27 @@
         <translation>Please scan the QR code to log in using the Bilibili mobile app.</translation>
     </message>
     <message id="login_qrcode_loading">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="120"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="118"/>
         <source></source>
         <translation>Loading qrcode...</translation>
     </message>
     <message id="login_qrcode_doing">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="129"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="127"/>
         <source></source>
         <translation>Logining in...</translation>
     </message>
     <message id="login_qrcode_error">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="133"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="131"/>
         <source></source>
         <translation>Error occurred: %1</translation>
     </message>
     <message id="login_qrcode_confirm">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="137"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="135"/>
         <source></source>
         <translation>Scanned, please confirm login in the client.</translation>
     </message>
     <message id="login_qrcode_expire">
-        <location filename="../../src/model/window_login_viewmodel.cpp" line="141"/>
+        <location filename="../../src/model/window_login_viewmodel.cpp" line="139"/>
         <source></source>
         <translation>The QR code has expired.</translation>
     </message>

@@ -38,7 +38,7 @@ namespace biliqt::model {
     void MainWindowViewModel::onLoadUserInfo(const QVariantMap& args) {
         const auto result = _apiClient->web_nav();
         const auto body = core::api::readRespBody<WebNavResp>(result);
-        qDebug() << "code:" << body->code << "message:" << body->message->data();
+        OATPP_LOGd("MainWindowViewModel::onLoadUserInfo", "code: {}, message: {}", body->code, body->message);
         if (body->code != 0) {
             nick(qtTrId("main_nick_unknown"));
             avatarUrl(nullptr);
@@ -72,9 +72,8 @@ namespace biliqt::model {
         const auto dto = SearchSuggestReq::createShared();
         dto->term = searchText;
         const auto result = _searchClient->suggest(dto->asSignedParams());
-        // const auto result = _searchClient->suggest(searchText);
         const auto body = readRespBody<SearchSuggestResp>(result);
-        qDebug() << "onLoadSearchSuggest" << "code:" << body->code;
+        OATPP_LOGd("MainWindowViewModel::onLoadSearchSuggest", "code: {}", body->code);
         if (body->code != 0) {
             return;
         }
@@ -84,7 +83,7 @@ namespace biliqt::model {
             suggestItem["title"] = QString::fromStdString(item->value->data());
             suggests.append(suggestItem);
         }
-        qDebug() << "seearch suggests count:" << suggests.size();
+        OATPP_LOGd("MainWindowViewModel::onLoadSearchSuggest", "search suggests count: {}", suggests.size());
         searchSuggest(suggests);
     }
 
