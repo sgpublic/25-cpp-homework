@@ -25,7 +25,7 @@ namespace biliqt::core::api::dto {
     };
 
     class SearchSuggestResp final : public oatpp::DTO {
-        EXPOSE_PROPERTY_DTO(SearchSuggestResp)
+        DTO_INIT(SearchSuggestResp, DTO)
         DTO_FIELD(Int32, code);
         class Data: public oatpp::DTO {
             DTO_INIT(Data, DTO)

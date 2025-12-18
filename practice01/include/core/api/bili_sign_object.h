@@ -48,61 +48,6 @@ namespace biliqt::core::api {
         return result.getPtr();
     }
 
-    // template<typename T>
-    // typename std::enable_if<
-    //     std::is_base_of<oatpp::DTO, T>::value,
-    //     std::shared_ptr<QVariantList>
-    // >::type
-    // findModules(const nlohmann::json& body, const std::string& style) {
-    //     const auto objectMapper = std::make_shared<oatpp::json::ObjectMapper>();
-    //     const auto& modules = std::make_shared<QVariantList>();
-    //     if (!body.contains("modules")) {
-    //         return modules;
-    //     }
-    //
-    //     auto propertyMap = T::createShared()->getProperties()->getMap();
-    //     for (const auto& module : body["modules"]) {
-    //         if (module.contains("style")) {
-    //             if (const std::string& moduleStyle = module["style"]; moduleStyle != style) {
-    //                 continue;
-    //             }
-    //         }
-    //         if (!module.contains("items")) {
-    //             continue;
-    //         }
-    //         for (const auto& item : module["items"]) {
-    //             auto result = QVariantList();
-    //             for (const auto &[keyRef, valueRef]: propertyMap) {
-    //                 const auto& key = QString::fromStdString(keyRef);
-    //                 if (!item.contains(key)) {
-    //                     qDebug() << "key" << key << "not exist in json";
-    //                     continue;
-    //                 }
-    //                 if (valueRef->type == oatpp::String::Class::getType()) {
-    //                     const std::string& value = item[keyRef];
-    //                     result[key] = QString::fromStdString(value);
-    //                 } else if (valueRef->type == oatpp::Int32::Class::getType()) {
-    //                     const int& value = item[keyRef];
-    //                     result[key] = QVariant(value);
-    //                 } else if (valueRef->type == oatpp::Int64::Class::getType()) {
-    //                     const long long& value = item[keyRef];
-    //                     result[key] = QVariant(value);
-    //                 } else if (valueRef->type == oatpp::Boolean::Class::getType()) {
-    //                     const bool& value = item[keyRef];
-    //                     result[key] = QVariant(value);
-    //                 } else if (valueRef->type == oatpp::Float32::Class::getType()) {
-    //                     const float& value = item[keyRef];
-    //                     result[key] = QVariant(value);
-    //                 } else {
-    //                     qDebug() << "unsupported type of key:" << key << ", type:" << valueRef->type;
-    //                 }
-    //             }
-    //             modules->append(result);
-    //         }
-    //     }
-    //     return modules;
-    // }
-
     std::string calculateSignValue(const std::unordered_map<std::string, std::string>& params, const std::string& apiSecret);
 
     template<typename T>
@@ -110,8 +55,10 @@ namespace biliqt::core::api {
         std::is_base_of<oatpp::DTO, T>::value,
         oatpp::String
     >::type
-    doSignForPostDto(T* body, const std::string& apiSecret, const std::string& signKeyName = "sign") {
-        auto map = T::getProperties()->getMap();
+    doSignForPostDto(
+        T* body, const std::unordered_map<std::string, oatpp::data::type::BaseObject::Property*>& map,
+        const std::string& apiSecret, const std::string& signKeyName = "sign"
+    ) {
         auto params = std::unordered_map<std::string, std::string>();
         for (const auto &[key, valueRef]: map) {
             oatpp::Void value = valueRef->get(body);
@@ -134,18 +81,11 @@ namespace biliqt::core::api {
 
 }
 
-#define EXPOSE_PROPERTY_DTO(TYPE)                                                                               \
+#define BILI_SIGN_REQUEST_DTO(TYPE, API_KEY, API_SECRET, MOBI_APP, PLATFORM, BUILD)                             \
     DTO_INIT(TYPE, DTO)                                                                                         \
     public:                                                                                                     \
-        static const oatpp::BaseObject::Properties* getProperties() {                                           \
-            return TYPE::Z__CLASS_GET_FIELDS_MAP();                                                             \
-        }
-
-#define BILI_SIGN_REQUEST_DTO(TYPE, API_KEY, API_SECRET, MOBI_APP, PLATFORM, BUILD)                             \
-    EXPOSE_PROPERTY_DTO(TYPE)                                                                                   \
-    public:                                                                                                     \
         const oatpp::String asSignedParams() {                                                                  \
-            return doSignForPostDto(this, API_SECRET);                                                          \
+            return doSignForPostDto(this, TYPE::Z__CLASS_GET_FIELDS_MAP()->getMap(), API_SECRET);               \
         }                                                                                                       \
     DTO_FIELD(String, appkey) = API_KEY;                                                                        \
     DTO_FIELD(String, mobi_app) = MOBI_APP;                                                                     \
@@ -159,7 +99,7 @@ namespace biliqt::core::api {
     BILI_SIGN_REQUEST_DTO(TYPE, "1d8b6e7d45233436", "560c52ccd288fed045859ed18bffd973", "android", "android", 7010300)
 
 #define BILI_RESP_SAMPLE_DTO(TYPE)                                                                              \
-    EXPOSE_PROPERTY_DTO(TYPE)                                                                                   \
+    DTO_INIT(TYPE, DTO)                                                                                         \
 public:                                                                                                         \
     DTO_FIELD(Int32, code);                                                                                     \
     DTO_FIELD(String, message);
@@ -190,6 +130,6 @@ public:                                                                         
         }
 
 #define BILI_RESP_MODULE_ITEM_DTO(TYPE, NAME)                                                                   \
-    EXPOSE_PROPERTY_DTO(TYPE)                                                                                   \
+    DTO_INIT(TYPE, DTO)                                                                                         \
     public:                                                                                                     \
         static std::string _MODULE_STYLE() { return NAME; }

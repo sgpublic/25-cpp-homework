@@ -100,7 +100,7 @@ namespace biliqt::core::api::dto {
             DTO_FIELD(Int32, has_next);
 
             class Item: public oatpp::DTO {
-                EXPOSE_PROPERTY_DTO(Item)
+                DTO_INIT(Item, DTO)
 
                 DTO_FIELD(Int32, season_id);
 
@@ -149,7 +149,7 @@ namespace biliqt::core::api::dto {
             DTO_FIELD(Int32, pagesize);
 
             class Result: public oatpp::DTO {
-                EXPOSE_PROPERTY_DTO(Result)
+                DTO_INIT(Result, DTO)
 
                 DTO_FIELD(Int32, season_id);
                 DTO_FIELD(String, title);

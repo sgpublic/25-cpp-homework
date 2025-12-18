@@ -19,26 +19,30 @@ namespace biliqt::core::api {
 
 }
 
-#define _BILI_WBI_REQUEST_DTO_DEFAULT(TYPE)                                                                     \
-    EXPOSE_PROPERTY_DTO(TYPE)                                                                                   \
+#define BILI_WBI_REQUEST_DTO_DEFAULT(TYPE)                                                                      \
+    DTO_INIT(TYPE, DTO)                                                                                         \
     DTO_FIELD(Int64, wts) = std::time(nullptr);
 
 #define BILI_WBI_REQUEST_DTO(TYPE)                                                                              \
     public:                                                                                                     \
         const oatpp::String asWbiParams() {                                                                     \
-            return doSignForPostDto(this, biliqt::core::api::mixin_key(), "w_rid");                             \
+            const auto& properties = TYPE::Z__CLASS_GET_FIELDS_MAP()->getMap();                                 \
+            const auto& secretKey = biliqt::core::api::mixin_key();                                             \
+            return doSignForPostDto(this, properties, secretKey, "w_rid");                                      \
         }                                                                                                       \
-    _BILI_WBI_REQUEST_DTO_DEFAULT(TYPE)
+    BILI_WBI_REQUEST_DTO_DEFAULT(TYPE)
 
-#define _BILI_WBI_REQUEST_DTO_CUSTOM(TYPE, IMG_KEY, SUB_KEY)                                                     \
+#define BILI_WBI_REQUEST_DTO_CUSTOM(TYPE, IMG_KEY, SUB_KEY)                                                     \
     public:                                                                                                     \
         const oatpp::String asWbiParams() {                                                                     \
-            return doSignForPostDto(this, biliqt::core::api::mixin_key(IMG_KEY, SUB_KEY), "w_rid");             \
+            const auto& properties = TYPE::Z__CLASS_GET_FIELDS_MAP()->getMap();                                 \
+            const auto& secretKey = biliqt::core::api::mixin_key(IMG_KEY, SUB_KEY);                             \
+            return doSignForPostDto(this, properties, secretKey, "w_rid");                                      \
         }                                                                                                       \
-    _BILI_WBI_REQUEST_DTO_DEFAULT(TYPE)
+    BILI_WBI_REQUEST_DTO_DEFAULT(TYPE)
 
 #define BILI_WBI_SEARCH_REQUEST_DTO(TYPE) \
-    _BILI_WBI_REQUEST_DTO_CUSTOM(TYPE, "76e91e21c4df4e16af9467fd6f3e1095", "ddfca332d157450784b807c59cd7921e")
+    BILI_WBI_REQUEST_DTO_CUSTOM(TYPE, "76e91e21c4df4e16af9467fd6f3e1095", "ddfca332d157450784b807c59cd7921e")
 
 
 #define BILI_WBI_DEFAULT_HEADERS                                                                                \
