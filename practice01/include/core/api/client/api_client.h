@@ -72,6 +72,13 @@ namespace biliqt::core::api::client {
             QUERY(String, queries)
         )
         BILI_SIGN_GET(pgc_season)
+
+        API_CALL(
+            "GET", "/pgc/season/app/related/recommend",
+            pgc_season_recommend,
+            QUERY(String, queries)
+        )
+        BILI_SIGN_GET(pgc_season_recommend)
     };
 
 }

@@ -15,16 +15,12 @@ namespace biliqt::model {
 
     BangumiWindowViewModel::BangumiWindowViewModel(QObject *parent) : ViewModel(parent) {
         _apiClient = ApiClient::createShared();
-        connect(GlobalSignalModule::getInstance(), &GlobalSignalModule::requestBangumiInfo, this, &BangumiWindowViewModel::requestLoadBangumi);
+        connect(GlobalSignalModule::getInstance(), &GlobalSignalModule::requestBangumiInfo, this, &BangumiWindowViewModel::onLoadBangumiSignal);
     }
 
     void BangumiWindowViewModel::onLoadBangumi(const QVariantMap &args) {
-        const int seasonId = args.value("season_id").toInt();
-        const int episodeId = args.value("episode_id").toInt();
-        OATPP_LOGd("BangumiWindowViewModel::onLoadBangumi", "seasonId: {}, episodeId: {}", seasonId, episodeId);
-
         const auto& dto = PgcSeasonReq::createShared();
-        dto->season_id = seasonId;
+        dto->season_id = seasonId();
         dto->access_key = SettingModule::getInstance()->accessToken().toStdString();
         const auto& result = _apiClient->pgc_season(dto->asSignedParams());
         const auto& body = readRespBody<PgcSeasonResp>(result);
@@ -43,10 +39,38 @@ namespace biliqt::model {
         desc(body->data->evaluate->data());
         score(body->data->rating->score);
         ratingCount(body->data->rating->count);
+
+        celebrity(utils::dtoToQVariant(*body->data->celebrity));
+
+        auto seasonList = QVariantList();
+        for (const auto& seasons : *body->data->findModules<PgcSeasonResp::Data::SeasonModule>()) {
+            hasSeries(true);
+            seriesTitle(seasons->title->data());
+            seasonList += utils::dtoToQVariant(*seasons->data->seasons);
+        }
+        this->seasonList(seasonList);
+
+        auto episodeList = QVariantList();
+        for (const auto& episodes : *body->data->findModules<PgcSeasonResp::Data::EpisodeModule>()) {
+            hasEpisode(true);
+            episodeList += utils::dtoToQVariant(*episodes->data->episodes);
+        }
+        this->episodeList(episodeList);
+    }
+
+    void BangumiWindowViewModel::onLoadRecommend(const QVariantMap &args) {
+        const auto& dto = PgcSeasonRecommendReq::createShared();
+        dto->season_id = seasonId();
+        dto->access_key = SettingModule::getInstance()->accessToken().toStdString();
+        const auto& result = _apiClient->pgc_season_recommend(dto->asSignedParams());
     }
 
     void BangumiWindowViewModel::onLoadBangumiSignal(const QVariantMap &args) {
-        requestLoadBangumi(args);
+        seasonId(args.value("season_id").toInt());
+        episodeId(args.value("episode_id").toInt());
+        OATPP_LOGd("BangumiWindowViewModel::onLoadBangumiSignal", "seasonId: {}, episodeId: {}", seasonId(), episodeId());
+        requestLoadBangumi();
+        requestLoadRecommend();
     }
 
 }

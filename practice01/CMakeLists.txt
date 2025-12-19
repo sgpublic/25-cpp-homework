@@ -145,8 +145,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         OpenSSL::SSL
 )
 
-find_package(nlohmann_json CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
-
 find_package(CURL CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl)

@@ -3,6 +3,8 @@
 //
 #include "model/page_search_viewmodel.h"
 
+#include <iomanip>
+
 #include "core/api/dto/api_dto.h"
 #include "utils/oatpp_dto.h"
 

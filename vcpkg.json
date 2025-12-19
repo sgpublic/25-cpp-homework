@@ -3,9 +3,7 @@
   "name": "25-cpp-homework",
   "dependencies": [
     "openssl",
-    "nlohmann-json",
-    "curl",
-    "protobuf"
+    "curl"
   ],
   "builtin-baseline": "0804e3b55b7e435c593707071052363fa876f170",
   "overrides": [
@@ -14,16 +12,8 @@
       "version": "3.6.0#3"
     },
     {
-      "name": "nlohmann-json",
-      "version": "3.12.0#1"
-    },
-    {
       "name": "curl",
       "version": "8.17.0"
-    },
-    {
-      "name": "protobuf",
-      "version": "5.29.5"
     },
 
     {

@@ -8,7 +8,6 @@
 #include <oatpp/web/protocol/http/incoming/Response.hpp>
 #include <oatpp/json/ObjectMapper.hpp>
 #include <oatpp/data/mapping/ObjectRemapper.hpp>
-#include <nlohmann/json.hpp>
 
 #include "utils/oatpp_dto.h"
 #include "utils/string.h"
@@ -26,23 +25,19 @@ namespace biliqt::core::api {
         return dto.getPtr();
     }
 
-    nlohmann::json readRespBody(const std::shared_ptr<oatpp::web::protocol::http::incoming::Response>& body);
-
-    template<typename ModuleItemT>
+    template<typename ModuleT>
     typename std::enable_if<
-        std::is_base_of<oatpp::DTO, ModuleItemT>::value,
-        std::shared_ptr<std::list<oatpp::Object<ModuleItemT>>>
+        std::is_base_of<oatpp::DTO, ModuleT>::value,
+        std::shared_ptr<std::list<oatpp::Object<ModuleT>>>
     >::type
     findModules(const oatpp::List<oatpp::Tree> &modules, const std::string &style = "") {
-        const auto& result = oatpp::List<oatpp::Object<ModuleItemT>>::createShared();
+        const auto& result = oatpp::List<oatpp::Object<ModuleT>>::createShared();
+        const auto& remapper = utils::createRemapper();
         for (const auto& module : *modules) {
-            const auto& remapper = utils::createRemapper();
             if (!style.empty() && (!module["style"].isString() || module["style"].getString() != style)) {
                 continue;
             }
-            for (const auto& items = module["items"].getVector(); const auto& item : items) {
-                result->emplace_back(remapper.remap<oatpp::Object<ModuleItemT>>(item));
-            }
+            result->emplace_back(remapper.remap<oatpp::Object<ModuleT>>(module));
         }
         return result.getPtr();
     }
@@ -115,7 +110,7 @@ public:                                                                         
     BILI_RESP_SAMPLE_DTO(TYPE)                                                                                  \
     DTO_FIELD(Object<DATA_TYPE>, result);
 
-#define BILI_RESP_MODULE_DTO(TYPE)                                                                              \
+#define BILI_RESP_MODULES_DTO(TYPE)                                                                             \
     DTO_INIT(TYPE, DTO)                                                                                         \
     DTO_FIELD(List<Tree>, modules);                                                                             \
     public:                                                                                                     \
@@ -128,7 +123,12 @@ public:                                                                         
             return biliqt::core::api::findModules<T>(modules, T::_MODULE_STYLE());                              \
         }
 
-#define BILI_RESP_MODULE_ITEM_DTO(TYPE, NAME)                                                                   \
+#define BILI_RESP_MODULE_DTO(TYPE, NAME)                                                                        \
     DTO_INIT(TYPE, DTO)                                                                                         \
     public:                                                                                                     \
         static std::string _MODULE_STYLE() { return NAME; }
+
+
+#define BILI_RESP_MODULE_ITEM_DTO(TYPE, ITEM_TYPE, NAME)                                                        \
+    BILI_RESP_MODULE_DTO(TYPE, NAME)                                                                            \
+    DTO_FIELD(List<Object<ITEM_TYPE>>, items);                                                                  \

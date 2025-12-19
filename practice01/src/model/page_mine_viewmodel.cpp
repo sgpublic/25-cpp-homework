@@ -32,9 +32,13 @@ namespace biliqt::model {
         if (body->code != 0) {
             return;
         }
-        const auto follow = body->data->findModules<PgcPagePcBangumiTabResp::Data::FollowModule>();
-        OATPP_LOGd("MinePageViewModel::onLoadCurrentWatching", "current watching count: {}", follow->size());
-        currentWatching(dtoToQVariant(*follow));
+        const auto followData = body->data->findModules<PgcPagePcBangumiTabResp::Data::FollowModule>();
+        OATPP_LOGd("MinePageViewModel::onLoadCurrentWatching", "current watching count: {}", followData->size());
+        auto follows = QVariantList();
+        for (const auto& follow : *followData) {
+            follows += dtoToQVariant(*follow->items);
+        }
+        currentWatching(follows);
     }
 
     void MinePageViewModel::onLoadFollowWatching(const QVariantMap &args) {

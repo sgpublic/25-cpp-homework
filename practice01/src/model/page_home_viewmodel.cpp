@@ -29,7 +29,10 @@ namespace biliqt::model {
             return;
         }
         const auto& moduleData = body->result->findModules<PgcPageResp::Result::TopicModule>();
-        const auto& bannerDataList = dtoToQVariant(*moduleData);
+        auto bannerDataList = QVariantList();
+        for (const auto& module : *moduleData) {
+            bannerDataList += dtoToQVariant(*module->items);
+        }
         OATPP_LOGd("HomePageViewModel::onLoadBannerData", "banner image count: {}", bannerDataList.size());
         bannerData(bannerDataList);
     }
@@ -61,9 +64,11 @@ namespace biliqt::model {
         if (isRefresh) {
             emit clearBangumiList();
         }
-        for (const auto& item : *list) {
-            const auto& map = dtoToQVariant(item);
-            emit addBangumiData(map);
+        for (const auto& module : *list) {
+            for (const auto& item : *module->items) {
+                const auto& map = dtoToQVariant(item);
+                emit addBangumiData(map);
+            }
         }
         _isLoadBangumiList = false;
     }

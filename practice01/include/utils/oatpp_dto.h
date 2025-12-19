@@ -3,14 +3,13 @@
 //
 #pragma once
 
-#include <QVariant>
 #include <QVariantMap>
-#include <QVariantList>
 #include <oatpp/Types.hpp>
 
-#include <oatpp_remapper.h>
+#include "oatpp_remapper.h"
 
 namespace biliqt::utils {
+
     QVariantMap treeToQVariant(const oatpp::data::mapping::TreeMap &dto);
 
     QVariantList treeToQVariant(const std::vector<oatpp::data::mapping::Tree> &dto);
