@@ -37,7 +37,8 @@ namespace biliqt::core::api {
             if (!style.empty() && (!module["style"].isString() || module["style"].getString() != style)) {
                 continue;
             }
-            result->emplace_back(remapper.remap<oatpp::Object<ModuleT>>(module));
+            const auto& moduleData = remapper.remap<oatpp::Object<ModuleT>>(module);
+            result->emplace_back(moduleData);
         }
         return result.getPtr();
     }

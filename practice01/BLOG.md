@@ -174,3 +174,36 @@ model: [...list] // 改为这一行
 鉴定为 FluentUI 的 BUG：[zhuzichu520/FluentUI#619](https://github.com/zhuzichu520/FluentUI/issues/619)。
 
 已提交修复 PR：[zhuzichu520/FluentUI#620](https://github.com/zhuzichu520/FluentUI/pull/620)，现已合并。
+
+### 6. shared_ptr 生命周期的问题
+
+原始代码：
+
+```c++
+        auto seasonList = QVariantList();
+        for (const auto& seasons : *body->data->findModules<PgcSeasonResp::Data::SeasonModule>()) {
+            hasSeries(true);
+            seriesTitle(seasons->title->data());
+            seasonList += utils::dtoToQVariant(*seasons->data->seasons);
+        }
+        this->seasonList(seasonList);
+```
+
+其中 `body->data->findModules` 方法返回的是一个 `std::shared_ptr`，实际运行的时候，会在 `seasons->title` 出崩溃。
+
+原因在于 range-for 并不会创建对 `std::shared_ptr` 的引用，因此循环开始时，`body->data->findModules` 方法返回的指针引用计数会立即归零，导致对象被立即释放，于是循环体中无法访问指针。
+
+解决方案：
+
+显式创建引用即可。
+
+```c++
+        const auto& seasonModules = body->data->findModules<PgcSeasonResp::Data::SeasonModule>();
+        auto seasonList = QVariantList();
+        for (const auto& seasons : *seasonModules) {
+            hasSeries(true);
+            seriesTitle(seasons->title->data());
+            seasonList += utils::dtoToQVariant(*seasons->data->seasons);
+        }
+        this->seasonList(seasonList);
+```

@@ -8,6 +8,8 @@
 
 #include "core/api/bili_sign_object.h"
 #include "core/api/bili_wbi_object.h"
+#include "oatpp/codegen/dto/base_define.hpp"
+#include "oatpp/codegen/dto/base_define.hpp"
 
 #include OATPP_CODEGEN_BEGIN(DTO)
 
@@ -220,7 +222,7 @@ namespace biliqt::core::api::dto {
             };
 
             class EpisodeModule: public oatpp::DTO {
-                BILI_RESP_MODULE_DTO(SeasonModule, "episode")
+                BILI_RESP_MODULE_DTO(EpisodeModule, "positive")
                 class Data: public oatpp::DTO {
                     DTO_INIT(Data, DTO)
                     class Episode: public oatpp::DTO {
@@ -245,7 +247,7 @@ namespace biliqt::core::api::dto {
                 DTO_FIELD(String, desc);
                 DTO_FIELD(String, name);
             };
-            DTO_FIELD(List<Object<Celebrity>>, celebrity);
+            DTO_FIELD(List<Object<Celebrity>>, celebrity) = nullptr;
             DTO_FIELD(String, evaluate);
             class NewEp: public oatpp::DTO {
                 DTO_INIT(NewEp, DTO)
@@ -305,11 +307,20 @@ namespace biliqt::core::api::dto {
 
     class PgcSeasonRecommendResp: public oatpp::DTO {
     public:
-        class Data: public oatpp::DTO {
-            DTO_INIT(Data, DTO)
+        class Result: public oatpp::DTO {
+            DTO_INIT(Result, DTO)
+
+            class Season: public oatpp::DTO {
+                DTO_INIT(Season, DTO)
+
+                DTO_FIELD(String, cover);
+                DTO_FIELD(Int32, season_id);
+                DTO_FIELD(String, title);
+            };
+            DTO_FIELD(List<Object<Season>>, season);
         };
 
-        BILI_RESP_DATA_DTO(PgcSeasonRecommendResp, Data)
+        BILI_RESP_RESULT_DTO(PgcSeasonRecommendResp, Result)
     };
 
 
