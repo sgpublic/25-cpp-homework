@@ -8,6 +8,7 @@
 #include "utils/oatpp_dto.h"
 
 using namespace biliqt::utils;
+using namespace biliqt::model;
 using namespace biliqt::core::module;
 using namespace biliqt::core::api;
 using namespace biliqt::core::api::client;
@@ -16,59 +17,39 @@ using namespace biliqt::core::api::dto;
 namespace biliqt::viewmodel {
 
     HomePageViewModel::HomePageViewModel(QObject *parent): ViewModel(parent) {
-        _apiClient = ApiClient::createShared();
+        homePageModel = std::make_shared<HomePageModel>(parent);
     }
 
     void HomePageViewModel::onLoadBannerData(const QVariantMap& args) {
-        const auto dto = PgcPageReq::createShared();
-        dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
-        const auto result = _apiClient->pgc_page(dto->asSignedParams());
-        const auto body = readRespBody<PgcPageResp>(result);
-        OATPP_LOGd("HomePageViewModel::onLoadBannerData", "code: {}, message: {}", body->code, body->message);
-        if (body->code != 0) {
-            return;
+        try {
+            const auto& bannerDataList = homePageModel->getBannerData();
+            OATPP_LOGd("HomePageViewModel::onLoadBannerData", "banner image count: {}", bannerDataList->data->size());
+            bannerData(dtoToQVariant(*bannerDataList->data));
+        } catch (std::runtime_error& e) {
+            // TODO: add error message
         }
-        const auto& moduleData = body->result->findModules<PgcPageResp::Result::TopicModule>();
-        auto bannerDataList = QVariantList();
-        for (const auto& module : *moduleData) {
-            bannerDataList += dtoToQVariant(*module->items);
-        }
-        OATPP_LOGd("HomePageViewModel::onLoadBannerData", "banner image count: {}", bannerDataList.size());
-        bannerData(bannerDataList);
     }
 
     void HomePageViewModel::onLoadBangumiList(const QVariantMap &args) {
         if (!_bangumiListHasNext || _isLoadBangumiList) {
             return;
         }
-        _isLoadBangumiList = true;
-        const int isRefresh = args.value("is_refresh").toBool() ? 1 : 0;
-        const auto dto = PgcPageBangumiReq::createShared();
-        dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
-        dto->cursor = _bangumiListCursor;
-        dto->is_refresh = isRefresh;
-        const auto result = _apiClient->pgc_page_bangumi(dto->asSignedParams());
-        const auto body = readRespBody<PgcPageBangumiResp>(result);
-        OATPP_LOGd("HomePageViewModel::onLoadBangumiList", "code: {}, message: {}", body->code, body->message);
-        if (body->code != 0) {
-            return;
-        }
-        if (body->code != 0) {
-            _isLoadBangumiList = false;
-            return;
-        }
-        const auto& list = body->result->findModules<PgcPageBangumiResp::Result::DoubleFeedModule>();
-        _bangumiListCursor = body->result->next_cursor;
-        _bangumiListHasNext = body->result->has_next == 1;
-        OATPP_LOGd("HomePageViewModel::onLoadBangumiList", "bangumi item count: {}", list->size());
-        if (isRefresh) {
-            emit clearBangumiList();
-        }
-        for (const auto& module : *list) {
-            for (const auto& item : *module->items) {
+        try {
+            _isLoadBangumiList = true;
+            const int isRefresh = args.value("is_refresh").toBool() ? 1 : 0;
+            const auto& body = homePageModel->getBangumiList(_bangumiListCursor, isRefresh);
+            _bangumiListCursor = body->next_cursor;
+            _bangumiListHasNext = body->has_next;
+            OATPP_LOGd("HomePageViewModel::onLoadBangumiList", "bangumi item count: {}", body->data->size());
+            if (isRefresh) {
+                emit clearBangumiList();
+            }
+            for (const auto& item : *body->data) {
                 const auto& map = dtoToQVariant(item);
                 emit addBangumiData(map);
             }
+        } catch (std::runtime_error& e) {
+            // TODO: add error message
         }
         _isLoadBangumiList = false;
     }

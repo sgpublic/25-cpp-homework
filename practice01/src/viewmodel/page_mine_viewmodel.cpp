@@ -12,11 +12,12 @@ using namespace biliqt::core::api::dto;
 using namespace biliqt::core::api;
 using namespace biliqt::core::module;
 using namespace biliqt::utils;
+using namespace biliqt::model;
 
 namespace biliqt::viewmodel {
 
     MinePageViewModel::MinePageViewModel(QObject *parent): ViewModel(parent) {
-        _apiClient = ApiClient::createShared();
+        minePageModel = std::make_shared<MinePageModel>(parent);
         requestLoadCurrentWatching();
         requestLoadFollowWant();
         requestLoadFollowWatched();
@@ -24,21 +25,13 @@ namespace biliqt::viewmodel {
     }
 
     void MinePageViewModel::onLoadCurrentWatching(const QVariantMap &args) {
-        const auto dto = PgcPagePcBangumiTabReq::createShared();
-        dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
-        const auto result = _apiClient->pgc_page_pc_bangumi_tab(dto->asSignedParams());
-        const auto body = readRespBody<PgcPagePcBangumiTabResp>(result);
-        OATPP_LOGd("MinePageViewModel::onLoadCurrentWatching", "code: {}, message: {}", body->code, body->message);
-        if (body->code != 0) {
-            return;
+        try {
+            const auto followData = minePageModel->getCurrentWatchingList();
+            OATPP_LOGd("MinePageViewModel::onLoadCurrentWatching", "current watching count: {}", followData->data->size());
+            currentWatching(dtoToQVariant(*followData->data));
+        } catch (std::runtime_error& e) {
+            // TODO: add error message
         }
-        const auto followData = body->data->findModules<PgcPagePcBangumiTabResp::Data::FollowModule>();
-        OATPP_LOGd("MinePageViewModel::onLoadCurrentWatching", "current watching count: {}", followData->size());
-        auto follows = QVariantList();
-        for (const auto& follow : *followData) {
-            follows += dtoToQVariant(*follow->items);
-        }
-        currentWatching(follows);
     }
 
     void MinePageViewModel::onLoadFollowWatching(const QVariantMap &args) {
@@ -87,25 +80,19 @@ namespace biliqt::viewmodel {
             return;
         }
         state.loading = true;
-        const auto dto = PgcFollowBangumiReq::createShared();
-        dto->access_key = qstr_to_oatstr(SettingModule::getInstance()->accessToken());
-        dto->pn = state.currentPage + 1;
-        dto->status = state.status;
-        const auto result = _apiClient->pgc_follow_bangumi(dto->asSignedParams());
-        const auto body = readRespBody<PgcFollowBangumiResp>(result);
-        OATPP_LOGd("MinePageViewModel::requestLoadFollow", "code: {}, message: {}", body->code, body->message);
-        if (body->code != 0) {
-            return;
+        try {
+            const auto& followList = minePageModel->getFollowList(state.status, state.currentPage + 1);
+            if (isRefresh) {
+                clearSignal();
+            }
+            for (const auto& item : *followList->data) {
+                addSignal(dtoToQVariant(item));
+            }
+            state.currentPage = followList->current_page;
+            state.hasNext = followList->has_next;
+        } catch (std::runtime_error& e) {
+            // TODO: add error message
         }
-        const auto followList = body->result;
-        if (isRefresh) {
-            clearSignal();
-        }
-        for (const auto& item : *body->result->follow_list) {
-            addSignal(dtoToQVariant(item));
-        }
-        state.currentPage = dto->pn;
-        state.hasNext = body->result->has_next;
         state.loading = false;
     }
 

@@ -8,8 +8,6 @@
 
 #include "core/api/bili_sign_object.h"
 #include "core/api/bili_wbi_object.h"
-#include "oatpp/codegen/dto/base_define.hpp"
-#include "oatpp/codegen/dto/base_define.hpp"
 
 #include OATPP_CODEGEN_BEGIN(DTO)
 
@@ -322,8 +320,6 @@ namespace biliqt::core::api::dto {
 
         BILI_RESP_RESULT_DTO(PgcSeasonRecommendResp, Result)
     };
-
-
 
 }
 

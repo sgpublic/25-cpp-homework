@@ -8,6 +8,7 @@
 #include "base_viewmodel.h"
 #include "core/api/client/api_client.h"
 #include "core/api/dto/api_dto.h"
+#include "model/page_mine_model.h"
 #include "utils/stdafx.h"
 
 namespace biliqt::viewmodel {
@@ -17,7 +18,7 @@ namespace biliqt::viewmodel {
     public:
         Q_PROPERTY_READONLY_AUTO(QVariantList, currentWatching);
     private:
-        std::shared_ptr<core::api::client::ApiClient> _apiClient;
+        std::shared_ptr<model::MinePageModel> minePageModel;
 
         struct PageState {
             const int status;
