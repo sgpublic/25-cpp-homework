@@ -4,7 +4,6 @@
 #pragma once
 
 #include "base_viewmodel.h"
-#include "core/api/dto/api_dto.h"
 #include "model/page_home_model.h"
 #include "utils/stdafx.h"
 

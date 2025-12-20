@@ -6,8 +6,6 @@
 #include <functional>
 
 #include "base_viewmodel.h"
-#include "core/api/client/api_client.h"
-#include "core/api/dto/api_dto.h"
 #include "model/page_mine_model.h"
 #include "utils/stdafx.h"
 

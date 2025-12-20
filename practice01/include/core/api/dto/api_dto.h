@@ -171,12 +171,12 @@ namespace biliqt::core::api::dto {
                 DTO_FIELD(Int64, pubtime);
                 DTO_FIELD(String, index_show);
 
-                class MediaScore: public oatpp::DTO {
-                    DTO_INIT(MediaScore, DTO)
-
-                    DTO_FIELD(Float32, score);
-                    DTO_FIELD(Int32, user_count);
-                };
+                // class MediaScore: public oatpp::DTO {
+                //     DTO_INIT(MediaScore, DTO)
+                //
+                //     DTO_FIELD(Float32, score);
+                //     DTO_FIELD(Int32, user_count);
+                // };
                 // DTO_FIELD(Object<MediaScore>, media_score);
             };
             DTO_FIELD(List<Object<Result>>, result);

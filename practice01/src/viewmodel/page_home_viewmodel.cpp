@@ -3,7 +3,6 @@
 //
 #include "viewmodel/page_home_viewmodel.h"
 
-#include "core/api/dto/api_dto.h"
 #include "core/module/setting_module.h"
 #include "utils/oatpp_dto.h"
 
