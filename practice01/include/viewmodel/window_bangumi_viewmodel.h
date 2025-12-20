@@ -6,13 +6,14 @@
 
 #include "base_viewmodel.h"
 #include "core/api/client/api_client.h"
+#include "model/bangumi_model.h"
 #include "utils/stdafx.h"
 
 namespace biliqt::viewmodel {
     class BangumiWindowViewModel: public ViewModel {
         Q_OBJECT
     private:
-        std::shared_ptr<core::api::client::ApiClient> _apiClient;
+        std::shared_ptr<model::BangumiModel> bangumiModel;
     public:
         explicit BangumiWindowViewModel(QObject *parent = nullptr);
         Q_PROPERTY_READONLY_AUTO(int, seasonId) = -1;
@@ -32,7 +33,7 @@ namespace biliqt::viewmodel {
 
         Q_PROPERTY_READONLY_AUTO(bool, hasSeries) = false;
         Q_PROPERTY_READONLY_AUTO(QString, seriesTitle);
-        Q_PROPERTY_READONLY_AUTO(QVariantList, seasonList);
+        Q_PROPERTY_READONLY_AUTO(QVariantList, seriesList);
 
 
         Q_PROPERTY_READONLY_AUTO(bool, hasEpisode) = false;

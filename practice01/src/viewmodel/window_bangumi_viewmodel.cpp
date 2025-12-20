@@ -14,62 +14,52 @@ using namespace biliqt::core::api::dto;
 namespace biliqt::viewmodel {
 
     BangumiWindowViewModel::BangumiWindowViewModel(QObject *parent) : ViewModel(parent) {
-        _apiClient = ApiClient::createShared();
+        bangumiModel = std::make_shared<model::BangumiModel>(parent);
         connect(GlobalSignalModule::getInstance(), &GlobalSignalModule::requestBangumiInfo, this, &BangumiWindowViewModel::onLoadBangumiSignal);
     }
 
     void BangumiWindowViewModel::onLoadBangumi(const QVariantMap &args) {
-        const auto& dto = PgcSeasonReq::createShared();
-        dto->season_id = seasonId();
-        dto->access_key = SettingModule::getInstance()->accessToken().toStdString();
-        const auto& result = _apiClient->pgc_season(dto->asSignedParams());
-        const auto& body = readRespBody<PgcSeasonResp>(result);
-        OATPP_LOGd("BangumiWindowViewModel::onLoadBangumi", "code: {}, message: {}", body->code, body->message);
-        if (body->code != 0) {
-            return;
-        }
+        const auto& data = bangumiModel->getBangumiInfo(seasonId());
 
-        title(body->data->season_title->data());
-        cover(body->data->refine_cover->data());
-        totalPlay(body->data->stat->views);
-        followers(body->data->stat->favorite);
-        danmakus(body->data->stat->danmakus);
-        pubtime(body->data->publish->release_date_show->data());
-        timeLength(body->data->publish->time_length_show->data());
-        desc(body->data->evaluate->data());
-        if (body->data->rating != nullptr) {
+        title(data->metaData->title->data());
+        cover(data->metaData->cover->data());
+        totalPlay(data->metaData->totalPlay);
+        followers(data->metaData->followers);
+        danmakus(data->metaData->danmakus);
+        pubtime(data->metaData->pubtime->data());
+        timeLength(data->metaData->state->data());
+        desc(data->metaData->desc->data());
+
+        if (data->rating != nullptr) {
+            score(data->rating->score);
+            ratingCount(data->rating->count);
             hasScore(true);
-            score(body->data->rating->score);
-            ratingCount(body->data->rating->count);
         } else {
             hasScore(false);
         }
 
-        if (body->data->celebrity != nullptr) {
+        if (data->celebrity != nullptr) {
+            celebrityList(utils::dtoToQVariant(*data->celebrity));
             hasCelebrity(true);
-            celebrityList(utils::dtoToQVariant(*body->data->celebrity));
         } else {
             hasCelebrity(false);
-            celebrityList(QVariantList());
         }
         loadCelebritySlice();
 
-        const auto& seasonModules = body->data->findModules<PgcSeasonResp::Data::SeasonModule>();
-        auto seasonList = QVariantList();
-        for (const auto& seasons : *seasonModules) {
+        if (data->series != nullptr) {
+            seriesTitle(data->series->title->data());
+            seriesList(utils::dtoToQVariant(*data->series->seasons));
             hasSeries(true);
-            seriesTitle(seasons->title->data());
-            seasonList += utils::dtoToQVariant(*seasons->data->seasons);
+        } else {
+            hasSeries(false);
         }
-        this->seasonList(seasonList);
 
-        const auto& episodeModules = body->data->findModules<PgcSeasonResp::Data::EpisodeModule>();
-        auto episodeList = QVariantList();
-        for (const auto& episodes : *episodeModules) {
+        if (data->episodes != nullptr) {
+            episodeList(utils::dtoToQVariant(*data->episodes));
             hasEpisode(true);
-            episodeList += utils::dtoToQVariant(*episodes->data->episodes);
+        } else {
+            hasEpisode(false);
         }
-        this->episodeList(episodeList);
         loadEpisodeSlice();
     }
 
@@ -114,18 +104,11 @@ namespace biliqt::viewmodel {
     }
 
     void BangumiWindowViewModel::onLoadRecommend(const QVariantMap &args) {
-        const auto& dto = PgcSeasonRecommendReq::createShared();
-        dto->season_id = seasonId();
-        dto->access_key = SettingModule::getInstance()->accessToken().toStdString();
-        const auto& result = _apiClient->pgc_season_recommend(dto->asSignedParams());
-        const auto& body = readRespBody<PgcSeasonRecommendResp>(result);
-
-        if (body->result != nullptr && body->result->season != nullptr) {
+        if (const auto& result = bangumiModel->getBangumiRecommend(seasonId()); result->data != nullptr) {
+            recommendList(utils::dtoToQVariant(*result->data));
             hasRecommend(true);
-            recommendList(utils::dtoToQVariant(*body->result->season));
         } else {
             hasRecommend(false);
-            recommendList(QVariantList());
         }
     }
 

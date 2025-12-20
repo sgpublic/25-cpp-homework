@@ -210,9 +210,7 @@ namespace biliqt::core::api::dto {
                         DTO_FIELD(Int32, season_id);
                         DTO_FIELD(String, cover);
                         DTO_FIELD(String, title);
-                        DTO_FIELD(String, season_title);
                     };
-
                     DTO_FIELD(List<Object<Season>>, seasons);
                 };
                 DTO_FIELD(Object<Data>, data);
@@ -266,7 +264,7 @@ namespace biliqt::core::api::dto {
                 DTO_FIELD(Int32, count);
                 DTO_FIELD(Float32, score);
             };
-            DTO_FIELD(Object<Rating>, rating);
+            DTO_FIELD(Object<Rating>, rating) = nullptr;
             DTO_FIELD(String, refine_cover);
             DTO_FIELD(String, season_title);
             class Stat: public oatpp::DTO {
