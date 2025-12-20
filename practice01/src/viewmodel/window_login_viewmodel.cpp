@@ -40,10 +40,14 @@ namespace biliqt::viewmodel {
             return;
         }
         startTask([this] {
-            const auto& state = userModel->checkQrcode(qrcodeKey);
-            setQrcodeState(state->state, state->url, state->authCode, state->message);
-            sleep(2);
-            startQrcodeCheck();
+            try {
+                const auto& state = userModel->checkQrcode(qrcodeKey);
+                setQrcodeState(state->state, state->url, state->authCode, state->message);
+                sleep(2);
+                startQrcodeCheck();
+            } catch (std::runtime_error& e) {
+                setQrcodeState(QrcodeState::Error, "", "", e.what());
+            }
         });
     }
 

@@ -111,27 +111,27 @@
         <translation>Please scan the QR code to log in using the Bilibili mobile app.</translation>
     </message>
     <message id="login_qrcode_loading">
-        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="59"/>
+        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="63"/>
         <source></source>
         <translation>Loading qrcode...</translation>
     </message>
     <message id="login_qrcode_doing">
-        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="71"/>
+        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="75"/>
         <source></source>
         <translation>Logining in...</translation>
     </message>
     <message id="login_qrcode_error">
-        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="76"/>
+        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="80"/>
         <source></source>
         <translation>Error occurred: %1</translation>
     </message>
     <message id="login_qrcode_confirm">
-        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="80"/>
+        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="84"/>
         <source></source>
         <translation>Scanned, please confirm login in the client.</translation>
     </message>
     <message id="login_qrcode_expire">
-        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="84"/>
+        <location filename="../../src/viewmodel/window_login_viewmodel.cpp" line="88"/>
         <source></source>
         <translation>The QR code has expired.</translation>
     </message>
@@ -175,13 +175,18 @@
         <source></source>
         <translation>Episodes</translation>
     </message>
-    <message id="bangumi_celebrity">
+    <message id="bangumi_series">
         <location filename="../qml/window/BangumiWindow.qml" line="373"/>
+        <source></source>
+        <translation>Series: %1</translation>
+    </message>
+    <message id="bangumi_celebrity">
+        <location filename="../qml/window/BangumiWindow.qml" line="428"/>
         <source></source>
         <translation>Stuff</translation>
     </message>
     <message id="bangumi_recommend">
-        <location filename="../qml/window/BangumiWindow.qml" line="444"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="499"/>
         <source></source>
         <translation>Recommend</translation>
     </message>
@@ -213,14 +218,14 @@
     <message id="search_pre">
         <location filename="../qml/pages/SearchPage.qml" line="173"/>
         <location filename="../qml/window/BangumiWindow.qml" line="346"/>
-        <location filename="../qml/window/BangumiWindow.qml" line="417"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="472"/>
         <source></source>
         <translation>Previous</translation>
     </message>
     <message id="search_next">
         <location filename="../qml/pages/SearchPage.qml" line="174"/>
         <location filename="../qml/window/BangumiWindow.qml" line="347"/>
-        <location filename="../qml/window/BangumiWindow.qml" line="418"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="473"/>
         <source></source>
         <translation>Next</translation>
     </message>

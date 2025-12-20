@@ -323,7 +323,7 @@ FluWindow {
                                         cellContentHeight: viewModel.ui_episodeList_cellContentHeight
                                         cellContentCoverHeight: viewModel.ui_episodeList_cellContentCoverHeight
                                         cellCover: modelData.cover
-                                        cellTitle: modelData.show_title
+                                        cellTitle: modelData.title
 
                                         onBangumiItemTapped: function () {
                                             // FluRouter.navigate("/bangumi")
@@ -356,6 +356,61 @@ FluWindow {
                                     viewModel.episodePageIndex = page
                                     viewModel.loadEpisodeSlice()
                                 })
+                            }
+                        }
+                    }
+
+                    Item {
+                        width: parent.width
+                        height: 20
+                    }
+
+                    Column {
+                        width: parent.width
+                        visible: viewModel.hasSeries
+
+                        FluText {
+                            text: qsTrId("bangumi_series").arg(viewModel.seriesTitle)
+                            font {
+                                pointSize: 18
+                                bold: true
+                            }
+                        }
+
+                        Item {
+                            width: parent.width
+                            height: 10
+                        }
+
+                        Grid {
+                            id: bangumi_episodes_series
+                            width: parent.width
+                            columns: viewModel.ui_seriesList_coloumn
+
+                            Repeater {
+                                model: viewModel.seriesList
+
+                                delegate: Item {
+                                    width: viewModel.ui_seriesList_cellWidth
+                                    height: viewModel.ui_seriesList_cellHeight
+
+                                    BangumiItem {
+                                        cellPadding: viewModel.ui_seriesList_cellPadding
+                                        cellContentWidth: viewModel.ui_seriesList_cellContentWidth
+                                        cellContentHeight: viewModel.ui_seriesList_cellContentHeight
+                                        cellContentCoverHeight: viewModel.ui_seriesList_cellContentCoverHeight
+                                        cellCover: modelData.cover
+                                        cellTitle: modelData.title
+
+                                        onBangumiItemTapped: function () {
+                                            FluRouter.navigate("/bangumi")
+                                            GlobalSignalModule.requestBangumiInfo({
+                                                season_id: modelData.season_id,
+                                            })
+                                            backToTop()
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

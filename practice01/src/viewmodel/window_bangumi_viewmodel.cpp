@@ -19,48 +19,52 @@ namespace biliqt::viewmodel {
     }
 
     void BangumiWindowViewModel::onLoadBangumi(const QVariantMap &args) {
-        const auto& data = bangumiModel->getBangumiInfo(seasonId());
+        try {
+            const auto& data = bangumiModel->getBangumiInfo(seasonId());
 
-        title(data->metaData->title->data());
-        cover(data->metaData->cover->data());
-        totalPlay(data->metaData->totalPlay);
-        followers(data->metaData->followers);
-        danmakus(data->metaData->danmakus);
-        pubtime(data->metaData->pubtime->data());
-        timeLength(data->metaData->state->data());
-        desc(data->metaData->desc->data());
+            title(data->metaData->title->data());
+            cover(data->metaData->cover->data());
+            totalPlay(data->metaData->totalPlay);
+            followers(data->metaData->followers);
+            danmakus(data->metaData->danmakus);
+            pubtime(data->metaData->pubtime->data());
+            timeLength(data->metaData->state->data());
+            desc(data->metaData->desc->data());
 
-        if (data->rating != nullptr) {
-            score(data->rating->score);
-            ratingCount(data->rating->count);
-            hasScore(true);
-        } else {
-            hasScore(false);
+            if (data->rating != nullptr) {
+                score(data->rating->score);
+                ratingCount(data->rating->count);
+                hasScore(true);
+            } else {
+                hasScore(false);
+            }
+
+            if (data->celebrity != nullptr) {
+                celebrityList(utils::dtoToQVariant(*data->celebrity));
+                hasCelebrity(true);
+            } else {
+                hasCelebrity(false);
+            }
+            loadCelebritySlice();
+
+            if (data->series != nullptr) {
+                seriesTitle(data->series->title->data());
+                seriesList(utils::dtoToQVariant(*data->series->seasons));
+                hasSeries(true);
+            } else {
+                hasSeries(false);
+            }
+
+            if (data->episodes != nullptr) {
+                episodeList(utils::dtoToQVariant(*data->episodes));
+                hasEpisode(true);
+            } else {
+                hasEpisode(false);
+            }
+            loadEpisodeSlice();
+        } catch (std::runtime_error& e) {
+            // TODO: add error message
         }
-
-        if (data->celebrity != nullptr) {
-            celebrityList(utils::dtoToQVariant(*data->celebrity));
-            hasCelebrity(true);
-        } else {
-            hasCelebrity(false);
-        }
-        loadCelebritySlice();
-
-        if (data->series != nullptr) {
-            seriesTitle(data->series->title->data());
-            seriesList(utils::dtoToQVariant(*data->series->seasons));
-            hasSeries(true);
-        } else {
-            hasSeries(false);
-        }
-
-        if (data->episodes != nullptr) {
-            episodeList(utils::dtoToQVariant(*data->episodes));
-            hasEpisode(true);
-        } else {
-            hasEpisode(false);
-        }
-        loadEpisodeSlice();
     }
 
     void BangumiWindowViewModel::loadEpisodeSlice() {
@@ -81,6 +85,12 @@ namespace biliqt::viewmodel {
 
         currentEpisodeList(episodeList().mid(pageStart, pageSize));
         OATPP_LOGd("BangumiWindowViewModel::loadEpisodeSlice", "episodeList size: {}, currentEpisodeList size: {}", episodeList().size(), currentEpisodeList().size());
+
+        if (ui_episodeList_coloumn() > episodeList().size()) {
+            ui_episodeList_height(ui_episodeList_cellHeight());
+        } else {
+            ui_episodeList_height(ui_episodeList_cellHeight() * 2);
+        }
     }
 
     void BangumiWindowViewModel::loadCelebritySlice() {
@@ -104,11 +114,15 @@ namespace biliqt::viewmodel {
     }
 
     void BangumiWindowViewModel::onLoadRecommend(const QVariantMap &args) {
-        if (const auto& result = bangumiModel->getBangumiRecommend(seasonId()); result->data != nullptr) {
-            recommendList(utils::dtoToQVariant(*result->data));
-            hasRecommend(true);
-        } else {
-            hasRecommend(false);
+        try {
+            if (const auto& result = bangumiModel->getBangumiRecommend(seasonId()); result->data != nullptr) {
+                recommendList(utils::dtoToQVariant(*result->data));
+                hasRecommend(true);
+            } else {
+                hasRecommend(false);
+            }
+        } catch (std::runtime_error& e) {
+            // TODO: add error message
         }
     }
 
@@ -137,11 +151,22 @@ namespace biliqt::viewmodel {
         ui_episodeList_cellContentCoverHeight(ui_episodeList_cellContentWidth() / 8 * 5);
         ui_episodeList_cellContentHeight(ui_episodeList_cellContentCoverHeight() + 20);
         ui_episodeList_cellHeight(ui_episodeList_cellContentHeight() + 2 * ui_episodeList_cellPadding());
-        ui_episodeList_height(ui_episodeList_cellHeight() * 2);
         if (preEpisodePageLineCount != newEpisodePageLineCount) {
             ui_episodeList_coloumn(newEpisodePageLineCount);
             loadEpisodeSlice();
         }
+
+        const double maxSeriesCellWidth = maxWidth / 7;
+        if (const double cellWidth = ui_contentWidth() / 6; cellWidth > maxSeriesCellWidth) {
+            ui_seriesList_coloumn(7);
+        } else {
+            ui_seriesList_coloumn(6);
+        }
+        ui_seriesList_cellWidth(ui_contentWidth() / ui_seriesList_coloumn());
+        ui_seriesList_cellContentWidth(ui_seriesList_cellWidth() - 2 * ui_seriesList_cellPadding());
+        ui_seriesList_cellContentCoverHeight(ui_seriesList_cellContentWidth() / 3 * 4);
+        ui_seriesList_cellContentHeight(ui_seriesList_cellContentCoverHeight() + 20);
+        ui_seriesList_cellHeight(ui_seriesList_cellContentHeight() + 2 * ui_seriesList_cellPadding());
 
         const int preCelebrityPageLineCount = ui_episodeList_coloumn();
         int newCelebrityPageLineCount;

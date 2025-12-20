@@ -6,7 +6,6 @@
 
 #include "core/api/dto/search_dto.h"
 #include "core/module/setting_module.h"
-#include "utils/string.h"
 
 using namespace biliqt::utils;
 using namespace biliqt::core::module;
@@ -34,9 +33,13 @@ namespace biliqt::viewmodel {
     }
 
     void MainWindowViewModel::onLoadUserInfo(const QVariantMap& args) {
-        const auto body = userModel->getUserInfo();
-        nick(body->nick != nullptr ? body->nick->data() : nullptr);
-        avatarUrl(body->avatar != nullptr ? body->avatar->data() : nullptr);
+        try {
+            const auto body = userModel->getUserInfo();
+            nick(body->nick != nullptr ? body->nick->data() : nullptr);
+            avatarUrl(body->avatar != nullptr ? body->avatar->data() : nullptr);
+        } catch (std::runtime_error& e) {
+            // TODO: add error message
+        }
     }
 
     void MainWindowViewModel::onLogout(const QVariantMap& args) {
@@ -50,7 +53,6 @@ namespace biliqt::viewmodel {
             const auto result = searchModel->suggest(searchText);
             searchSuggest(dtoToQVariant(*result->data));
         } catch (...) {
-
         }
     }
 

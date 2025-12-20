@@ -43,9 +43,9 @@ namespace biliqt::model {
 
         if (const auto& seasonModules = body->data->findModules<PgcSeasonResp::Data::SeasonModule>(); seasonModules->size() > 0) {
             bangumiInfo->series = BangumiInfoModel::Series::createShared();
-            bangumiInfo->series->title = body->data->season_title;
             bangumiInfo->series->seasons = oatpp::List<oatpp::Object<BangumiInfoModel::Series::Season>>::createShared();
             for (const auto& seasons : *seasonModules) {
+                bangumiInfo->series->title = seasons->title;
                 for (const auto season : *seasons->data->seasons) {
                     const auto& seasonItem = BangumiInfoModel::Series::Season::createShared();
                     seasonItem->season_id = season->season_id;
