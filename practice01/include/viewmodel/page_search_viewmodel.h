@@ -8,7 +8,7 @@
 #include "utils/stdafx.h"
 
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     class SearchPageViewModel: public ViewModel {
         Q_OBJECT

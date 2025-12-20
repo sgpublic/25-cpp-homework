@@ -8,7 +8,7 @@
 #include "core/api/dto/passport_dto.h"
 #include "utils/stdafx.h"
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     class LoginWindowViewModel: public ViewModel {
         Q_OBJECT

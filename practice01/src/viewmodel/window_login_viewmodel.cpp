@@ -2,7 +2,7 @@
 // Created by coder on 12/5/25.
 //
 
-#include "model/window_login_viewmodel.h"
+#include "viewmodel/window_login_viewmodel.h"
 
 #ifdef Q_OS_MACOS
 #include <unistd.h>
@@ -16,7 +16,7 @@ using namespace biliqt::core::api::client;
 using namespace biliqt::core::api::dto;
 using namespace biliqt::core::api;
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     LoginWindowViewModel::LoginWindowViewModel(QObject *parent) : ViewModel(parent) {
         _passportClient = PassportClient::createShared();

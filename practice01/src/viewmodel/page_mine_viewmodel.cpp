@@ -1,7 +1,7 @@
 //
 // Created by Haven Madray on 2025/12/12.
 //
-#include "model/page_mine_viewmodel.h"
+#include "viewmodel/page_mine_viewmodel.h"
 
 #include "core/api/dto/api_dto.h"
 #include "core/module/setting_module.h"
@@ -13,7 +13,7 @@ using namespace biliqt::core::api;
 using namespace biliqt::core::module;
 using namespace biliqt::utils;
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     MinePageViewModel::MinePageViewModel(QObject *parent): ViewModel(parent) {
         _apiClient = ApiClient::createShared();

@@ -10,7 +10,7 @@
 #include "core/api/dto/api_dto.h"
 #include "utils/stdafx.h"
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     class MinePageViewModel: public ViewModel {
         Q_OBJECT

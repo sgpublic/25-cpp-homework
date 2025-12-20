@@ -6,14 +6,14 @@
 
 #include <QObject>
 
-#include "model/page_home_viewmodel.h"
-#include "model/page_mine_viewmodel.h"
-#include "model/page_search_viewmodel.h"
-#include "model/window_bangumi_viewmodel.h"
-#include "model/window_login_viewmodel.h"
-#include "model/window_main_viewmodel.h"
+#include "viewmodel/page_home_viewmodel.h"
+#include "viewmodel/page_mine_viewmodel.h"
+#include "viewmodel/page_search_viewmodel.h"
+#include "viewmodel/window_bangumi_viewmodel.h"
+#include "viewmodel/window_login_viewmodel.h"
+#include "viewmodel/window_main_viewmodel.h"
 
-using namespace biliqt::model;
+using namespace biliqt::viewmodel;
 
 namespace biliqt::core::module {
 

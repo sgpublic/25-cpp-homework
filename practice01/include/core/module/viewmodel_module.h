@@ -6,7 +6,7 @@
 
 #include <QMap>
 
-#include "model/base_viewmodel.h"
+#include "viewmodel/base_viewmodel.h"
 #include "utils/singleton.h"
 
 namespace biliqt::core::module {

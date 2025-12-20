@@ -130,7 +130,7 @@ add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}_lrelease)
 
 ## CPP
 
-### 1. undefined reference to `vtable for biliqt::model::LoginWindowViewModel'
+### 1. undefined reference to `vtable for biliqt::viewmodel::LoginWindowViewModel'
 
 父类中有纯虚函数，但子类没实现。
 
@@ -168,3 +168,9 @@ Failed to initialize graphics backend for OpenGL.
 model: list // 原始代码
 model: [...list] // 改为这一行
 ```
+
+### 5. 组件侵入标题栏时，标题栏被遮挡
+
+鉴定为 FluentUI 的 BUG：[zhuzichu520/FluentUI#619](https://github.com/zhuzichu520/FluentUI/issues/619)。
+
+已提交修复 PR：[zhuzichu520/FluentUI#620](https://github.com/zhuzichu520/FluentUI/pull/620)，现已合并。

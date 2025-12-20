@@ -8,7 +8,7 @@
 #include "core/api/client/api_client.h"
 #include "utils/stdafx.h"
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
     class BangumiWindowViewModel: public ViewModel {
         Q_OBJECT
     private:

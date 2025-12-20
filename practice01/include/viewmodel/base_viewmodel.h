@@ -9,7 +9,7 @@
 #include "base_viewmodel.h"
 #include <oatpp/Types.hpp>
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     class ViewModel : public QObject {
     private:

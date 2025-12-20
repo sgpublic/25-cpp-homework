@@ -8,7 +8,7 @@
 #include "core/api/client/search_client.h"
 #include "core/api/client/api_client.h"
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     class MainWindowViewModel: public ViewModel {
         Q_OBJECT

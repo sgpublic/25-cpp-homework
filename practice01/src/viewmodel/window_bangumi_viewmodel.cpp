@@ -2,7 +2,7 @@
 // Created by Haven Madray on 2025/12/12.
 //
 
-#include "model/window_bangumi_viewmodel.h"
+#include "viewmodel/window_bangumi_viewmodel.h"
 #include "core/api/dto/api_dto.h"
 #include "core/module/global_signal_module.h"
 
@@ -11,7 +11,7 @@ using namespace biliqt::core::module;
 using namespace biliqt::core::api::client;
 using namespace biliqt::core::api::dto;
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     BangumiWindowViewModel::BangumiWindowViewModel(QObject *parent) : ViewModel(parent) {
         _apiClient = ApiClient::createShared();

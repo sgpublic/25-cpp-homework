@@ -1,7 +1,7 @@
 //
 // Created by coder on 12/4/25.
 //
-#include "model/page_home_viewmodel.h"
+#include "viewmodel/page_home_viewmodel.h"
 
 #include "core/api/dto/api_dto.h"
 #include "core/module/setting_module.h"
@@ -13,7 +13,7 @@ using namespace biliqt::core::api;
 using namespace biliqt::core::api::client;
 using namespace biliqt::core::api::dto;
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     HomePageViewModel::HomePageViewModel(QObject *parent): ViewModel(parent) {
         _apiClient = ApiClient::createShared();

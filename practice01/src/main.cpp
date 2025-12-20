@@ -9,7 +9,7 @@
 
 #include "core/module/translate_module.h"
 #include "core/module/viewmodel_module.h"
-#include "model/window_login_viewmodel.h"
+#include "viewmodel/window_login_viewmodel.h"
 
 using namespace biliqt::utils;
 using namespace biliqt::core::module;
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
     QApplication application(argc, argv);
 
-    qmlRegisterType<biliqt::model::LoginWindowViewModel::QrcodeState>("BiliQt.ViewModel.LoginWindow", 1, 0, "QrcodeState");
+    qmlRegisterType<biliqt::viewmodel::LoginWindowViewModel::QrcodeState>("BiliQt.ViewModel.LoginWindow", 1, 0, "QrcodeState");
 
     QQmlApplicationEngine engine;
 

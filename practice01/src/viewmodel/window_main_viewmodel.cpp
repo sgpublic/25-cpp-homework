@@ -2,7 +2,7 @@
 // Created by coder on 12/5/25.
 //
 
-#include "model/window_main_viewmodel.h"
+#include "viewmodel/window_main_viewmodel.h"
 
 #include "core/api/dto/api_dto.h"
 #include "core/api/dto/search_dto.h"
@@ -16,7 +16,7 @@ using namespace biliqt::core::api;
 using namespace biliqt::core::api::client;
 using namespace biliqt::core::api::dto;
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     MainWindowViewModel::MainWindowViewModel(QObject *parent) : ViewModel(parent) {
         _apiClient = ApiClient::createShared();

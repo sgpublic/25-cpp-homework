@@ -1,7 +1,7 @@
 //
 // Created by Haven Madray on 2025/12/15.
 //
-#include "model/page_search_viewmodel.h"
+#include "viewmodel/page_search_viewmodel.h"
 
 #include <iomanip>
 
@@ -13,7 +13,7 @@ using namespace biliqt::core::api;
 using namespace biliqt::core::api::dto;
 using namespace biliqt::core::api::client;
 
-namespace biliqt::model {
+namespace biliqt::viewmodel {
 
     SearchPageViewModel::SearchPageViewModel(QObject *parent): ViewModel(parent) {
         _apiClient = ApiClient::createShared();
