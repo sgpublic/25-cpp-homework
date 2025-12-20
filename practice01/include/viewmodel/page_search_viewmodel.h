@@ -4,7 +4,7 @@
 #pragma once
 
 #include "base_viewmodel.h"
-#include "model/page_search_model.h"
+#include "model/search_model.h"
 #include "utils/stdafx.h"
 
 
@@ -13,7 +13,7 @@ namespace biliqt::viewmodel {
     class SearchPageViewModel: public ViewModel {
         Q_OBJECT
     private:
-        std::shared_ptr<model::SearchPageModel> searchPageModel;
+        std::shared_ptr<model::SearchModel> searchModel;
     public:
         explicit SearchPageViewModel(QObject *parent = nullptr);
         Q_PROPERTY_AUTO(QString, searchText);

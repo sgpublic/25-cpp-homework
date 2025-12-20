@@ -7,12 +7,14 @@
 #include "utils/stdafx.h"
 #include "core/api/client/search_client.h"
 #include "core/api/client/api_client.h"
+#include "model/search_model.h"
+#include "model/user_model.h"
 
 namespace biliqt::viewmodel {
 
     class MainWindowViewModel: public ViewModel {
         Q_OBJECT
-
+    public:
         Q_PROPERTY_READONLY_AUTO(bool, hasLogin) = false;
         Q_PROPERTY_READONLY_AUTO(QString, nick);
         Q_PROPERTY_READONLY_AUTO(QString, avatarUrl);
@@ -20,8 +22,8 @@ namespace biliqt::viewmodel {
         Q_PROPERTY_AUTO(QString, searchText);
         Q_PROPERTY_READONLY_AUTO(QVariantList, searchSuggest);
     private:
-        std::shared_ptr<core::api::client::ApiClient> _apiClient;
-        std::shared_ptr<core::api::client::SearchClient> _searchClient;
+        std::shared_ptr<model::UserModel> userModel;
+        std::shared_ptr<model::SearchModel> searchModel;
     public:
         explicit MainWindowViewModel(QObject *parent = nullptr);
 

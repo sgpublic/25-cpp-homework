@@ -4,7 +4,7 @@
 #pragma once
 
 #include "base_viewmodel.h"
-#include "model/page_home_model.h"
+#include "model/home_model.h"
 #include "utils/stdafx.h"
 
 namespace biliqt::viewmodel {
@@ -14,7 +14,7 @@ namespace biliqt::viewmodel {
     public:
         Q_PROPERTY_READONLY_AUTO(QVariantList, bannerData);
     private:
-        std::shared_ptr<model::HomePageModel> homePageModel;
+        std::shared_ptr<model::HomeModel> homeModel;
         std::string _bangumiListCursor = "0";
         bool _bangumiListHasNext = true;
         bool _isLoadBangumiList = false;

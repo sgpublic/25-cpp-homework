@@ -6,19 +6,18 @@
 #include <oatpp/Types.hpp>
 
 #include "core/api/client/api_client.h"
-#include "core/api/dto/api_dto.h"
-#include "dto/page_home_dto.h"
+#include "dto/home_dto.h"
 
 #include OATPP_CODEGEN_BEGIN(DTO)
 
 namespace biliqt::model {
 
-    class HomePageModel: public QObject {
+    class HomeModel: public QObject {
         Q_OBJECT
     private:
         std::shared_ptr<core::api::client::ApiClient> apiClient;
     public:
-        explicit HomePageModel(QObject *parent = nullptr);
+        explicit HomeModel(QObject *parent = nullptr);
 
         oatpp::Object<dto::HomeBannerModel> getBannerData();
 

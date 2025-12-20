@@ -11,17 +11,16 @@ using namespace biliqt::model;
 using namespace biliqt::core::module;
 using namespace biliqt::core::api;
 using namespace biliqt::core::api::client;
-using namespace biliqt::core::api::dto;
 
 namespace biliqt::viewmodel {
 
     HomePageViewModel::HomePageViewModel(QObject *parent): ViewModel(parent) {
-        homePageModel = std::make_shared<HomePageModel>(parent);
+        homeModel = std::make_shared<HomeModel>(parent);
     }
 
     void HomePageViewModel::onLoadBannerData(const QVariantMap& args) {
         try {
-            const auto& bannerDataList = homePageModel->getBannerData();
+            const auto& bannerDataList = homeModel->getBannerData();
             OATPP_LOGd("HomePageViewModel::onLoadBannerData", "banner image count: {}", bannerDataList->data->size());
             bannerData(dtoToQVariant(*bannerDataList->data));
         } catch (std::runtime_error& e) {
@@ -36,7 +35,7 @@ namespace biliqt::viewmodel {
         try {
             _isLoadBangumiList = true;
             const int isRefresh = args.value("is_refresh").toBool() ? 1 : 0;
-            const auto& body = homePageModel->getBangumiList(_bangumiListCursor, isRefresh);
+            const auto& body = homeModel->getBangumiList(_bangumiListCursor, isRefresh);
             _bangumiListCursor = body->next_cursor;
             _bangumiListHasNext = body->has_next;
             OATPP_LOGd("HomePageViewModel::onLoadBangumiList", "bangumi item count: {}", body->data->size());

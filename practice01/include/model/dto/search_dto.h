@@ -6,6 +6,9 @@
 #include <oatpp/Types.hpp>
 #include <oatpp/macro/codegen.hpp>
 
+#include "oatpp/codegen/dto/base_define.hpp"
+#include "oatpp/codegen/dto/base_define.hpp"
+
 #include OATPP_CODEGEN_BEGIN(DTO)
 
 namespace biliqt::model::dto {
@@ -36,6 +39,16 @@ namespace biliqt::model::dto {
             //     DTO_FIELD(Int32, user_count);
             // };
             // DTO_FIELD(Object<MediaScore>, media_score);
+        };
+        DTO_FIELD(List<Object<Item>>, data);
+    };
+
+    class SearchSuggestModel: public oatpp::DTO {
+        DTO_INIT(SearchSuggestModel, DTO)
+
+        class Item: public oatpp::DTO {
+            DTO_INIT(Item, DTO)
+            DTO_FIELD(String, title);
         };
         DTO_FIELD(List<Object<Item>>, data);
     };

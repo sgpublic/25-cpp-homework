@@ -6,7 +6,7 @@
 #include <functional>
 
 #include "base_viewmodel.h"
-#include "model/page_mine_model.h"
+#include "model/follow_model.h"
 #include "utils/stdafx.h"
 
 namespace biliqt::viewmodel {
@@ -16,7 +16,7 @@ namespace biliqt::viewmodel {
     public:
         Q_PROPERTY_READONLY_AUTO(QVariantList, currentWatching);
     private:
-        std::shared_ptr<model::MinePageModel> minePageModel;
+        std::shared_ptr<model::FollowModel> followModel;
 
         struct PageState {
             const int status;

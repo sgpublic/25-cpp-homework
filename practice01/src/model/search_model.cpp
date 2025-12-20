@@ -1,7 +1,10 @@
 //
 // Created by Haven Madray on 2025/12/20.
 //
-#include "model/page_search_model.h"
+#include "model/search_model.h"
+
+#include "core/api/dto/api_dto.h"
+#include "core/api/dto/search_dto.h"
 
 using namespace biliqt::core::api;
 using namespace biliqt::core::api::dto;
@@ -11,17 +14,18 @@ using namespace biliqt::core::module;
 
 namespace biliqt::model {
 
-    SearchPageModel::SearchPageModel(QObject *parent): QObject(parent) {
+    SearchModel::SearchModel(QObject *parent): QObject(parent) {
         apiClient = ApiClient::createShared();
+        searchClient = SearchClient::createShared();
     }
 
-    oatpp::Object<SearchResultModel> SearchPageModel::search(std::string keyword, int page) {
+    oatpp::Object<SearchResultModel> SearchModel::search(const std::string &keyword, const int page) {
         const auto& dto = WebSearchTypeReq::createShared();
         dto->keyword = keyword;
         dto->page = page;
         const auto& result = apiClient->web_search_type(dto->asWbiParams());
         const auto& body = readRespBody<WebSearchTypeResp>(result);
-        OATPP_LOGd("SearchPageModel::search", "code: {}, message: {}", body->code, body->message);
+        OATPP_LOGd("SearchModel::search", "code: {}, message: {}", body->code, body->message);
         if (body->code != 0) {
             throw std::runtime_error(body->message);
         }
@@ -48,8 +52,28 @@ namespace biliqt::model {
             }
         }
         searchResult->data = resultList;
-        OATPP_LOGd("SearchPageModel::search", "search result count: {}", resultList->size());
+        OATPP_LOGd("SearchModel::search", "search result count: {}", resultList->size());
         return searchResult;
     }
 
+    oatpp::Object<SearchSuggestModel> SearchModel::suggest(const std::string &keyword) {
+        const auto& dto = SearchSuggestReq::createShared();
+        dto->term = keyword;
+        const auto& result = searchClient->suggest(dto->asSignedParams());
+        const auto& body = readRespBody<SearchSuggestResp>(result);
+        OATPP_LOGd("MainWindowViewModel::onLoadSearchSuggest", "code: {}", body->code);
+        if (body->code != 0) {
+            throw std::runtime_error("error");
+        }
+
+        const auto& suggests = SearchSuggestModel::createShared();
+        const auto& suggestList = oatpp::List<oatpp::Object<SearchSuggestModel::Item>>::createShared();
+        for (const auto& suggestItem : *body->result->tag) {
+            const auto& suggestDto = SearchSuggestModel::Item::createShared();
+            suggestDto->title = suggestItem->name;
+            suggestList->emplace_back(suggestDto);
+        }
+        suggests->data = suggestList;
+        return suggests;
+    }
 }

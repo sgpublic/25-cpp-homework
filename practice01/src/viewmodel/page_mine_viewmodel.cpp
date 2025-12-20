@@ -7,7 +7,6 @@
 #include "utils/oatpp_dto.h"
 
 using namespace biliqt::core::api::client;
-using namespace biliqt::core::api::dto;
 using namespace biliqt::core::api;
 using namespace biliqt::core::module;
 using namespace biliqt::utils;
@@ -16,7 +15,7 @@ using namespace biliqt::model;
 namespace biliqt::viewmodel {
 
     MinePageViewModel::MinePageViewModel(QObject *parent): ViewModel(parent) {
-        minePageModel = std::make_shared<MinePageModel>(parent);
+        followModel = std::make_shared<FollowModel>(parent);
         requestLoadCurrentWatching();
         requestLoadFollowWant();
         requestLoadFollowWatched();
@@ -25,7 +24,7 @@ namespace biliqt::viewmodel {
 
     void MinePageViewModel::onLoadCurrentWatching(const QVariantMap &args) {
         try {
-            const auto followData = minePageModel->getCurrentWatchingList();
+            const auto followData = followModel->getCurrentWatchingList();
             OATPP_LOGd("MinePageViewModel::onLoadCurrentWatching", "current watching count: {}", followData->data->size());
             currentWatching(dtoToQVariant(*followData->data));
         } catch (std::runtime_error& e) {
@@ -80,7 +79,7 @@ namespace biliqt::viewmodel {
         }
         state.loading = true;
         try {
-            const auto& followList = minePageModel->getFollowList(state.status, state.currentPage + 1);
+            const auto& followList = followModel->getFollowList(state.status, state.currentPage + 1);
             if (isRefresh) {
                 clearSignal();
             }

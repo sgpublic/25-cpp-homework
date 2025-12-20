@@ -118,7 +118,7 @@ FluWindow {
                     }
                 }
                 iconDelegate: viewModel.avatarUrl === "" ? null : avatarImg
-                title: viewModel.nick
+                title: viewModel.nick === "" ? qsTrId("main_nick_unknown") : viewModel.nick
                 onTapListener: function () {
                     home_navView_logout_dialog.open()
                 }

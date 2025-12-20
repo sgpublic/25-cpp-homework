@@ -136,7 +136,7 @@
         <translation>The QR code has expired.</translation>
     </message>
     <message id="main_nick_unknown">
-        <location filename="../../src/viewmodel/window_main_viewmodel.cpp" line="43"/>
+        <location filename="../qml/window/MainWindow.qml" line="121"/>
         <source></source>
         <translation>Unknown User</translation>
     </message>

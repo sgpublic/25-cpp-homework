@@ -9,13 +9,13 @@
 
 using namespace biliqt::core::module;
 using namespace biliqt::core::api;
-using namespace biliqt::core::api::dto;
+using namespace biliqt::model;
 using namespace biliqt::core::api::client;
 
 namespace biliqt::viewmodel {
 
     SearchPageViewModel::SearchPageViewModel(QObject *parent): ViewModel(parent) {
-        searchPageModel = std::make_shared<model::SearchPageModel>(parent);
+        searchModel = std::make_shared<SearchModel>(parent);
     }
 
     void SearchPageViewModel::onLoadSearchResult(const QVariantMap &args) {
@@ -28,7 +28,7 @@ namespace biliqt::viewmodel {
         try {
             const std::string searchText = (args.contains("search_text") ? args.value("search_text").toString() : this->searchText()).toStdString();
             const int page = args.contains("page") ? args.value("page").toInt() : 1;
-            const auto& result = searchPageModel->search(searchText, page);
+            const auto& result = searchModel->search(searchText, page);
 
             searchResultList(utils::dtoToQVariant(*result->data));
             pageCount(result->pageCount);
