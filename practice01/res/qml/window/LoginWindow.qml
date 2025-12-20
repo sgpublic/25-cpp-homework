@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import FluentUI 1.0
-import BiliQt.ViewModel.LoginWindow 1.0
+import BiliQt.Model.UserModel 1.0
 
 FluWindow {
     id: window_login

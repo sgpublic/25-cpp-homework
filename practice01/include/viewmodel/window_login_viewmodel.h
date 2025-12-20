@@ -4,8 +4,7 @@
 #pragma once
 
 #include "base_viewmodel.h"
-#include "core/api/client/passport_client.h"
-#include "core/api/dto/passport_dto.h"
+#include "model/user_model.h"
 #include "utils/stdafx.h"
 
 namespace biliqt::viewmodel {
@@ -13,25 +12,17 @@ namespace biliqt::viewmodel {
     class LoginWindowViewModel: public ViewModel {
         Q_OBJECT
     public:
-        enum QrcodeState {
-            Loading, // 加载二维码
-            Waiting, // 等待扫描
-            Success, // 扫描成功
-            Error, // 出错
-            Scanned, // 已扫描，等待确认
-            Expired, // 已过期
-        };
-        Q_ENUM(QrcodeState)
-        Q_PROPERTY_READONLY_AUTO(QrcodeState, qrcodeState) = Loading;
+        Q_PROPERTY_READONLY_AUTO(biliqt::model::dto::QrcodeState, qrcodeState) = model::dto::QrcodeState::Loading;
         Q_PROPERTY_READONLY_AUTO(QString, qrcodeUrl);
-        Q_PROPERTY_READONLY_AUTO(QString, qrcodeKey);
         Q_PROPERTY_READONLY_AUTO(int, ui_statusMode) = 0;
         Q_PROPERTY_READONLY_AUTO(QString, ui_loadingText);
         Q_PROPERTY_READONLY_AUTO(QString, ui_errorText);
+    private:
+        std::string qrcodeKey = "";
     signals:
         void closeWindowSignal();
     private:
-        std::shared_ptr<core::api::client::PassportClient> _passportClient;
+        std::shared_ptr<model::UserModel> userModel;
 
     public:
         explicit LoginWindowViewModel(QObject *parent = nullptr);
@@ -40,7 +31,7 @@ namespace biliqt::viewmodel {
     private:
         void startQrcodeCheck();
         void doLoginPostWork(const oatpp::Object<core::api::dto::LoginQrcodeTvPollResp::Data>& data);
-        void setQrcodeState(const QrcodeState& state, const std::string& url, const std::string& authCode, const std::string& message);
+        void setQrcodeState(const model::dto::QrcodeState& state, const std::string& url, const std::string& authCode, const std::string& message);
     };
 
 }

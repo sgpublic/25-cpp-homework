@@ -41,6 +41,7 @@ namespace biliqt::viewmodel {
 
     void MainWindowViewModel::onLogout(const QVariantMap& args) {
         userModel->logout();
+        hasLogin(false);
     }
 
     void MainWindowViewModel::onLoadSearchSuggest(const QVariantMap& args) {

@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
     QApplication application(argc, argv);
 
-    qmlRegisterType<biliqt::viewmodel::LoginWindowViewModel::QrcodeState>("BiliQt.ViewModel.LoginWindow", 1, 0, "QrcodeState");
+    qmlRegisterType<biliqt::model::dto::QrcodeState>("BiliQt.Model.UserModel", 1, 0, "QrcodeState");
 
     QQmlApplicationEngine engine;
 
