@@ -158,5 +158,12 @@ FluWindow {
                 viewModel.requestLoginSucceed()
             }
         })
+        GlobalSignalModule.showToastOnMainWindow.connect(function (isSuccess, text) {
+            if (isSuccess) {
+                showSuccess(text)
+            } else {
+                showError(text)
+            }
+        })
     }
 }

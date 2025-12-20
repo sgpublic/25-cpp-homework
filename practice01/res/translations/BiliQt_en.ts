@@ -91,10 +91,6 @@
         <source></source>
         <translation>Settings</translation>
     </message>
-    <message id="page_mine_title">
-        <source></source>
-        <translation type="vanished">My Watchlist</translation>
-    </message>
     <message id="about_title">
         <location filename="../qml/window/AboutWindow.qml" line="9"/>
         <source></source>
@@ -228,6 +224,46 @@
         <location filename="../qml/window/BangumiWindow.qml" line="473"/>
         <source></source>
         <translation>Next</translation>
+    </message>
+    <message id="err_bannerData_load">
+        <location filename="../../src/viewmodel/page_home_viewmodel.cpp" line="28"/>
+        <source></source>
+        <translation>Failed to load banner data: %1</translation>
+    </message>
+    <message id="err_bangumiList_load">
+        <location filename="../../src/viewmodel/page_home_viewmodel.cpp" line="51"/>
+        <source></source>
+        <translation>Failed to load homepage recommendations: %1</translation>
+    </message>
+    <message id="err_currentWatching_load">
+        <location filename="../../src/viewmodel/page_mine_viewmodel.cpp" line="32"/>
+        <source></source>
+        <translation>Failed to get currently watching data: %1</translation>
+    </message>
+    <message id="err_follow_load">
+        <location filename="../../src/viewmodel/page_mine_viewmodel.cpp" line="93"/>
+        <source></source>
+        <translation>Failed to load follow list (target: %1): %2</translation>
+    </message>
+    <message id="err_search_load">
+        <location filename="../../src/viewmodel/page_search_viewmodel.cpp" line="42"/>
+        <source></source>
+        <translation>Failed to retrieve search results: %1</translation>
+    </message>
+    <message id="err_bangumiInfo_load">
+        <location filename="../../src/viewmodel/window_bangumi_viewmodel.cpp" line="66"/>
+        <source></source>
+        <translation>Failed to load bangumi information: %1</translation>
+    </message>
+    <message id="main_loginSuccess">
+        <location filename="../../src/viewmodel/window_main_viewmodel.cpp" line="34"/>
+        <source></source>
+        <translation>Login successful</translation>
+    </message>
+    <message id="err_userInfo_load">
+        <location filename="../../src/viewmodel/window_main_viewmodel.cpp" line="43"/>
+        <source></source>
+        <translation>Failed to load user information: %1</translation>
     </message>
 </context>
 </TS>

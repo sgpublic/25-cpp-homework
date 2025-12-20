@@ -63,7 +63,7 @@ namespace biliqt::viewmodel {
             }
             loadEpisodeSlice();
         } catch (std::runtime_error& e) {
-            // TODO: add error message
+            emit GlobalSignalModule::getInstance()->showToastOnBangumiWindow(false, qtTrId("err_bangumiInfo_load").arg(e.what()));
         }
     }
 

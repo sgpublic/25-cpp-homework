@@ -583,5 +583,12 @@ FluWindow {
         GlobalSignalModule.loginStatusChanged.connect(function (isLogin) {
             window_bangumi.close()
         })
+        GlobalSignalModule.showToastOnBangumiWindow.connect(function (isSuccess, text) {
+            if (isSuccess) {
+                showSuccess(text)
+            } else {
+                showError(text)
+            }
+        })
     }
 }

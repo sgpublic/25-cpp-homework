@@ -5,6 +5,7 @@
 
 #include <iomanip>
 
+#include "core/module/global_signal_module.h"
 #include "utils/oatpp_dto.h"
 
 using namespace biliqt::core::module;
@@ -38,7 +39,7 @@ namespace biliqt::viewmodel {
 
             OATPP_LOGd("SearchPageViewModel::onLoadSearchResult", "search page count: {}", pageCount());
         } catch (std::runtime_error &e) {
-            // TODO: add error message
+            emit GlobalSignalModule::getInstance()->showToastOnMainWindow(false, qtTrId("err_search_load").arg(e.what()));
         }
     }
 

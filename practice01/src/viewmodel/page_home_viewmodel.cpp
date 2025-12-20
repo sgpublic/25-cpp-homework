@@ -3,6 +3,7 @@
 //
 #include "viewmodel/page_home_viewmodel.h"
 
+#include "core/module/global_signal_module.h"
 #include "core/module/setting_module.h"
 #include "utils/oatpp_dto.h"
 
@@ -24,7 +25,7 @@ namespace biliqt::viewmodel {
             OATPP_LOGd("HomePageViewModel::onLoadBannerData", "banner image count: {}", bannerDataList->data->size());
             bannerData(dtoToQVariant(*bannerDataList->data));
         } catch (std::runtime_error& e) {
-            // TODO: add error message
+            emit GlobalSignalModule::getInstance()->showToastOnMainWindow(false, qtTrId("err_bannerData_load").arg(e.what()));
         }
     }
 
@@ -47,7 +48,7 @@ namespace biliqt::viewmodel {
                 emit addBangumiData(map);
             }
         } catch (std::runtime_error& e) {
-            // TODO: add error message
+            emit GlobalSignalModule::getInstance()->showToastOnMainWindow(false, qtTrId("err_bangumiList_load").arg(e.what()));
         }
         _isLoadBangumiList = false;
     }

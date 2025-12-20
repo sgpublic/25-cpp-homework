@@ -5,6 +5,7 @@
 #include "viewmodel/window_main_viewmodel.h"
 
 #include "core/api/dto/search_dto.h"
+#include "core/module/global_signal_module.h"
 #include "core/module/setting_module.h"
 
 using namespace biliqt::utils;
@@ -30,6 +31,7 @@ namespace biliqt::viewmodel {
     void MainWindowViewModel::onLoginSucceed(const QVariantMap& args) {
         hasLogin(true);
         requestLoadUserInfo();
+        emit GlobalSignalModule::getInstance()->showToastOnMainWindow(true, qtTrId("main_loginSuccess"));
     }
 
     void MainWindowViewModel::onLoadUserInfo(const QVariantMap& args) {
@@ -38,7 +40,7 @@ namespace biliqt::viewmodel {
             nick(body->nick != nullptr ? body->nick->data() : nullptr);
             avatarUrl(body->avatar != nullptr ? body->avatar->data() : nullptr);
         } catch (std::runtime_error& e) {
-            // TODO: add error message
+            emit GlobalSignalModule::getInstance()->showToastOnMainWindow(false, qtTrId("err_userInfo_load").arg(e.what()));
         }
     }
 

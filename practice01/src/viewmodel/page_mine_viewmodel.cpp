@@ -3,6 +3,7 @@
 //
 #include "viewmodel/page_mine_viewmodel.h"
 
+#include "core/module/global_signal_module.h"
 #include "core/module/setting_module.h"
 #include "utils/oatpp_dto.h"
 
@@ -28,7 +29,7 @@ namespace biliqt::viewmodel {
             OATPP_LOGd("MinePageViewModel::onLoadCurrentWatching", "current watching count: {}", followData->data->size());
             currentWatching(dtoToQVariant(*followData->data));
         } catch (std::runtime_error& e) {
-            // TODO: add error message
+            emit GlobalSignalModule::getInstance()->showToastOnMainWindow(false, qtTrId("err_currentWatching_load").arg(e.what()));
         }
     }
 
@@ -89,7 +90,7 @@ namespace biliqt::viewmodel {
             state.currentPage = followList->current_page;
             state.hasNext = followList->has_next;
         } catch (std::runtime_error& e) {
-            // TODO: add error message
+            emit GlobalSignalModule::getInstance()->showToastOnMainWindow(false, qtTrId("err_follow_load").arg(state.status).arg(e.what()));
         }
         state.loading = false;
     }

@@ -19,6 +19,8 @@ namespace biliqt::core::module {
         void requestBangumiInfo(const QVariantMap& args);
         void loginStatusChanged(const bool& isLogin);
         void requestSearch(const QString& searchText);
+        void showToastOnMainWindow(bool isSuccess, const QString& searchText);
+        void showToastOnBangumiWindow(bool isSuccess, const QString& searchText);
     };
 
 }
