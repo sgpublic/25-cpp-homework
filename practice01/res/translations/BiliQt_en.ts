@@ -182,7 +182,7 @@
         <translation>Stuff</translation>
     </message>
     <message id="bangumi_recommend">
-        <location filename="../qml/window/BangumiWindow.qml" line="499"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="500"/>
         <source></source>
         <translation>Recommend</translation>
     </message>

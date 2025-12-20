@@ -182,7 +182,7 @@
         <translation>演职人员</translation>
     </message>
     <message id="bangumi_recommend">
-        <location filename="../qml/window/BangumiWindow.qml" line="499"/>
+        <location filename="../qml/window/BangumiWindow.qml" line="500"/>
         <source></source>
         <translation>相关推荐</translation>
     </message>

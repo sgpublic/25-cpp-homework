@@ -277,11 +277,6 @@ FluWindow {
                     }
                 }
 
-                Item {
-                    width: parent.width
-                    height: 20
-                }
-
                 ColumnLayout {
                     width: viewModel.ui_contentWidth
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -289,6 +284,11 @@ FluWindow {
                     Column {
                         width: parent.width
                         visible: viewModel.hasEpisode
+
+                        Item {
+                            width: parent.width
+                            height: 20
+                        }
 
                         FluText {
                             text: qsTrId("bangumi_episodes")
@@ -360,14 +360,14 @@ FluWindow {
                         }
                     }
 
-                    Item {
-                        width: parent.width
-                        height: 20
-                    }
-
                     Column {
                         width: parent.width
                         visible: viewModel.hasSeries
+
+                        Item {
+                            width: parent.width
+                            height: 20
+                        }
 
                         FluText {
                             text: qsTrId("bangumi_series").arg(viewModel.seriesTitle)
@@ -415,14 +415,14 @@ FluWindow {
                         }
                     }
 
-                    Item {
-                        width: parent.width
-                        height: 20
-                    }
-
                     Column {
                         width: parent.width
                         visible: viewModel.hasCelebrity
+
+                        Item {
+                            width: parent.width
+                            height: 20
+                        }
 
                         FluText {
                             text: qsTrId("bangumi_celebrity")
@@ -486,14 +486,15 @@ FluWindow {
                         }
                     }
 
-                    Item {
-                        width: parent.width
-                        height: 20
-                    }
-
                     Column {
                         width: parent.width
                         visible: viewModel.hasRecommend
+
+                        Item {
+                            width: parent.width
+                            height: 20
+                        }
+
 
                         FluText {
                             text: qsTrId("bangumi_recommend")
